@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-07-31 06:55:46
+Date: 2017-08-01 19:50:22
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -39,12 +39,12 @@ INSERT INTO `master_customer` VALUES ('2', 'Dewi Sandra', 'Jl. Kalimantan Raya N
 DROP TABLE IF EXISTS `master_merk`;
 CREATE TABLE `master_merk` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `nama` varchar(30) COLLATE latin1_general_ci DEFAULT NULL,
-  `non_active_flag` tinyint(1) NOT NULL DEFAULT '0',
+  `nama` varchar(30) COLLATE latin1_general_ci NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` date DEFAULT NULL,
   `updated_at` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 -- ----------------------------
 -- Records of master_merk
@@ -58,6 +58,49 @@ INSERT INTO `master_merk` VALUES ('6', 'ROCKET', '1', '2017-07-31', '2017-07-31'
 INSERT INTO `master_merk` VALUES ('7', 'X123', '1', '2017-07-31', '2017-07-31');
 INSERT INTO `master_merk` VALUES ('8', '1234', '1', '2017-07-31', '2017-07-31');
 INSERT INTO `master_merk` VALUES ('9', '112233', '1', '2017-07-31', '2017-07-31');
+INSERT INTO `master_merk` VALUES ('10', 'as', '0', '2017-08-01', '2017-08-01');
+INSERT INTO `master_merk` VALUES ('11', 'ac', '0', '2017-08-01', '2017-08-01');
+INSERT INTO `master_merk` VALUES ('12', 'as', '0', '2017-08-01', '2017-08-01');
+INSERT INTO `master_merk` VALUES ('13', 'abc', '0', '2017-08-01', '2017-08-01');
+INSERT INTO `master_merk` VALUES ('14', 'Rocket', '1', '2017-08-01', '2017-08-01');
+INSERT INTO `master_merk` VALUES ('15', 'xfiles', '1', '2017-08-01', '2017-08-01');
+INSERT INTO `master_merk` VALUES ('16', 'afsfsa', '1', '2017-08-01', '2017-08-01');
+INSERT INTO `master_merk` VALUES ('17', 'sdfsdf', '1', '2017-08-01', '2017-08-01');
+INSERT INTO `master_merk` VALUES ('18', 'asskk', '0', '2017-08-01', '2017-08-01');
+INSERT INTO `master_merk` VALUES ('19', 'asdasd', '1', '2017-08-01', '2017-08-01');
+INSERT INTO `master_merk` VALUES ('20', 'qweqwe', '1', '2017-08-01', '2017-08-01');
+INSERT INTO `master_merk` VALUES ('21', 'qwedsf', '0', '2017-08-01', '2017-08-01');
+INSERT INTO `master_merk` VALUES ('22', 'zxc', '1', '2017-08-01', '2017-08-01');
+INSERT INTO `master_merk` VALUES ('23', 'asdasd', '1', '2017-08-01', '2017-08-01');
+INSERT INTO `master_merk` VALUES ('24', 'qweq', '1', '2017-08-01', '2017-08-01');
+INSERT INTO `master_merk` VALUES ('25', 'qaqa', '1', '2017-08-01', '2017-08-01');
+INSERT INTO `master_merk` VALUES ('26', 'adasdasd', '0', '2017-08-01', '2017-08-01');
+INSERT INTO `master_merk` VALUES ('27', 'asdasdxzc', '0', '2017-08-01', '2017-08-01');
+INSERT INTO `master_merk` VALUES ('28', 'hahaha', '1', '2017-08-01', '2017-08-01');
+INSERT INTO `master_merk` VALUES ('29', 'cvxcv', '0', '2017-08-01', '2017-08-01');
+INSERT INTO `master_merk` VALUES ('30', 'zxczx', '1', '2017-08-01', '2017-08-01');
+INSERT INTO `master_merk` VALUES ('31', 'sdasdasdadasdasdasdasdasd', '1', '2017-08-01', '2017-08-01');
+
+-- ----------------------------
+-- Table structure for master_pembayaran
+-- ----------------------------
+DROP TABLE IF EXISTS `master_pembayaran`;
+CREATE TABLE `master_pembayaran` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `created_at` date DEFAULT NULL,
+  `udpated_at` date DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of master_pembayaran
+-- ----------------------------
+INSERT INTO `master_pembayaran` VALUES ('1', 'Cash On Delivery', null, null);
+INSERT INTO `master_pembayaran` VALUES ('2', 'Transfer Bank', null, null);
+INSERT INTO `master_pembayaran` VALUES ('3', 'Kartu Debit', null, null);
+INSERT INTO `master_pembayaran` VALUES ('4', 'Kartu Kredit', null, null);
+INSERT INTO `master_pembayaran` VALUES ('5', 'Cash', null, null);
 
 -- ----------------------------
 -- Table structure for master_unit
@@ -178,6 +221,7 @@ CREATE TABLE `transaction` (
   `qty` int(11) DEFAULT NULL,
   `amount` decimal(15,2) DEFAULT NULL,
   `alamat_kirim` varchar(255) COLLATE latin1_general_ci DEFAULT NULL,
+  `pembayaran_id` tinyint(1) DEFAULT NULL,
   `remark` varchar(255) COLLATE latin1_general_ci DEFAULT NULL,
   `status` tinyint(4) DEFAULT NULL,
   `latitude` varchar(11) COLLATE latin1_general_ci DEFAULT '-7.7876785',
@@ -197,52 +241,52 @@ CREATE TABLE `transaction` (
 -- ----------------------------
 -- Records of transaction
 -- ----------------------------
-INSERT INTO `transaction` VALUES ('1', '1', '2017-07-28', '11H5NUPP612', '1', '1', '1', '50000000.00', 'Jl. Raya Solo-Jogja KM. 3, Depan Bandara Adisucipto Yogyakarta', 'GS 40NZA Hybrid', '1', '-7.7876785', '110.4295726', null, null, '2017-07-30 17:55:50', '2016-08-22 13:14:43', '4', '2016-08-22 13:14:43', null, null, null);
-INSERT INTO `transaction` VALUES ('2', '1', '2017-07-28', '2', null, null, null, '10000.00', null, '', '0', null, '1', null, null, '2017-07-28 16:40:18', '2016-09-02 13:33:28', '48', '2016-09-02 13:33:28', null, null, null);
-INSERT INTO `transaction` VALUES ('3', '1', '2017-07-28', '3', null, null, null, '200000.00', null, 'ssaldo', '1', null, '5', null, null, '2017-07-28 16:41:05', '2016-09-20 17:10:31', '51', '2016-09-20 17:10:31', null, null, null);
-INSERT INTO `transaction` VALUES ('4', '1', '2017-07-28', '2', null, null, null, '5000.00', null, 'kopi', '1', null, '5', null, null, '2017-07-28 16:40:19', '2016-09-20 17:10:58', '51', '2016-09-20 17:10:58', null, null, null);
-INSERT INTO `transaction` VALUES ('7', '1', '2017-07-28', '2', null, null, null, '200000.00', null, 'tes', '1', null, '9', null, null, '2017-07-28 16:40:42', '2016-09-21 10:51:20', '51', '2016-09-21 10:51:20', null, null, null);
-INSERT INTO `transaction` VALUES ('8', '1', '2017-07-28', '2', null, null, null, '20000.00', null, 'tes', '0', null, '9', null, null, '2017-07-28 16:40:20', '2016-09-21 10:51:21', '51', '2016-09-21 10:51:21', null, null, null);
-INSERT INTO `transaction` VALUES ('9', '1', '2017-07-27', '2', null, null, null, '3000000.00', null, 'tes', '1', null, '9', null, null, '2017-07-28 16:41:24', '2016-09-21 10:54:02', '51', '2016-09-21 10:54:02', null, null, null);
-INSERT INTO `transaction` VALUES ('10', '1', '2016-09-19', '4', null, null, null, '20000.00', null, 'tes', '1', null, '9', null, null, '2016-09-21 11:04:22', '2016-09-21 11:09:51', '51', '2016-09-21 11:09:51', null, null, null);
-INSERT INTO `transaction` VALUES ('11', '1', '2016-09-19', '4', null, null, null, '20000.00', null, 'tes', '0', null, '9', null, null, '2016-09-21 11:04:23', '2016-09-21 11:09:52', '51', '2016-09-21 11:09:52', null, null, null);
-INSERT INTO `transaction` VALUES ('12', '1', '2016-09-19', '4', null, null, null, '20000.00', null, 'tes', '1', null, '9', null, null, '2016-09-21 11:05:48', '2016-09-21 11:11:17', '51', '2016-09-21 11:11:17', null, null, null);
-INSERT INTO `transaction` VALUES ('13', '1', '2016-09-19', '4', null, null, null, '20000.00', null, 'tes', '0', null, '9', null, null, '2016-09-21 11:05:50', '2016-09-21 11:11:18', '51', '2016-09-21 11:11:18', null, null, null);
-INSERT INTO `transaction` VALUES ('14', '1', '2016-09-19', '1', null, null, null, '20000.00', null, 'tes', '1', null, '9', null, null, '2016-09-21 11:06:53', '2016-09-21 11:12:22', '51', '2016-09-21 11:12:22', null, null, null);
-INSERT INTO `transaction` VALUES ('15', '1', '2016-09-19', '1', null, null, null, '20000.00', null, 'tes', '0', null, '9', null, null, '2016-09-21 11:06:54', '2016-09-21 11:12:23', '51', '2016-09-21 11:12:23', null, null, null);
-INSERT INTO `transaction` VALUES ('16', '1', '2016-09-19', '1', null, null, null, '20000.00', null, 'tes', '1', null, '9', null, null, '2016-09-21 11:08:03', '2016-09-21 11:13:32', '51', '2016-09-21 11:13:32', null, null, null);
-INSERT INTO `transaction` VALUES ('17', '1', '2016-09-19', '2', null, null, null, '20000.00', null, 'tes', '0', null, '9', null, null, '2016-09-21 11:08:05', '2016-09-21 11:13:34', '51', '2016-09-21 11:13:34', null, null, null);
-INSERT INTO `transaction` VALUES ('18', '1', '2016-09-21', '1', null, null, null, '20000.00', null, 'tes', '1', null, '9', null, null, '2016-09-21 11:08:31', '2016-09-21 11:14:00', '51', '2016-09-21 11:14:00', null, null, null);
-INSERT INTO `transaction` VALUES ('19', '1', '2016-09-21', '2', null, null, null, '20000.00', null, 'tes', '0', null, '9', null, null, '2016-09-21 11:08:32', '2016-09-21 11:14:00', '51', '2016-09-21 11:14:00', null, null, null);
-INSERT INTO `transaction` VALUES ('20', '1', '2016-09-21', '1', null, null, null, '20000.00', null, 'tes', '1', null, '9', null, null, '2016-09-21 12:52:39', '2016-09-21 12:58:07', '51', '2016-09-21 12:58:07', null, null, null);
-INSERT INTO `transaction` VALUES ('21', '1', '2016-09-21', '2', null, null, null, '20000.00', null, 'tes', '1', null, '9', null, null, '2016-09-21 12:52:41', '2016-09-21 12:58:10', '51', '2016-09-21 12:58:10', null, null, null);
-INSERT INTO `transaction` VALUES ('22', '1', '2016-09-21', '1', null, null, null, '20000.00', null, 'tes', '1', null, '9', null, null, '2016-09-21 12:54:37', '2016-09-21 13:00:06', '51', '2016-09-21 13:00:06', null, null, null);
-INSERT INTO `transaction` VALUES ('23', '1', '2016-09-21', '2', null, null, null, '20000.00', null, 'tes', '1', null, '9', null, null, '2016-09-21 12:54:40', '2016-09-21 13:00:08', '51', '2016-09-21 13:00:08', null, null, null);
-INSERT INTO `transaction` VALUES ('24', '1', '2016-09-21', '3', null, null, null, '20000.00', null, 'tes', '1', null, '9', null, null, '2016-09-21 12:54:42', '2016-09-21 13:00:11', '51', '2016-09-21 13:00:11', null, null, null);
-INSERT INTO `transaction` VALUES ('25', '1', '2016-09-21', '1', null, null, null, '20000.00', null, 'tes', '0', null, '9', null, null, '2017-07-30 15:22:43', '2016-09-21 13:00:29', '51', '2016-09-21 13:00:29', null, null, null);
-INSERT INTO `transaction` VALUES ('26', '1', '2016-09-21', '2', null, null, null, '20000.00', null, 'tes', '1', null, '9', null, null, '2016-09-21 12:55:03', '2016-09-21 13:00:32', '51', '2016-09-21 13:00:32', null, null, null);
-INSERT INTO `transaction` VALUES ('27', '1', '2016-09-21', '3', null, null, null, '20000.00', null, 'tes', '1', null, '9', null, null, '2016-09-21 12:55:05', '2016-09-21 13:00:34', '51', '2016-09-21 13:00:34', null, null, null);
-INSERT INTO `transaction` VALUES ('28', '1', '2016-09-21', '1', null, null, null, '20000.00', null, 'tes', '1', null, '9', null, null, '2016-09-21 12:55:49', '2016-09-21 13:01:18', '51', '2016-09-21 13:01:18', null, null, null);
-INSERT INTO `transaction` VALUES ('29', '1', '2016-09-21', '2', null, null, null, '20000.00', null, 'tes', '1', null, '9', null, null, '2016-09-21 12:55:49', '2016-09-21 13:01:18', '51', '2016-09-21 13:01:18', null, null, null);
-INSERT INTO `transaction` VALUES ('30', '1', '2016-09-21', '3', null, null, null, '20000.00', null, 'tes', '1', null, '9', null, null, '2016-09-21 12:55:49', '2016-09-21 13:01:18', '51', '2016-09-21 13:01:18', null, null, null);
-INSERT INTO `transaction` VALUES ('31', '1', '2016-09-21', '1', null, null, null, '20000.00', null, 'tes', '1', null, '9', null, null, '2016-09-22 10:06:04', '2016-09-22 10:11:33', '51', '2016-09-22 10:11:33', null, null, null);
-INSERT INTO `transaction` VALUES ('32', '1', '2016-09-21', '2', null, null, null, '20000.00', null, 'tes', '1', null, '9', null, null, '2016-09-22 10:06:05', '2016-09-22 10:11:34', '51', '2016-09-22 10:11:34', null, null, null);
-INSERT INTO `transaction` VALUES ('33', '1', '2016-09-21', '3', null, null, null, '20000.00', null, 'tes', '1', null, '9', null, null, '2016-09-22 10:06:05', '2016-09-22 10:11:34', '51', '2016-09-22 10:11:34', null, null, null);
-INSERT INTO `transaction` VALUES ('34', '1', '2016-09-21', '1', null, null, null, '20000.00', null, 'tes', '1', null, '5', null, null, '2016-09-22 10:13:43', '2016-09-22 10:19:12', '51', '2016-09-22 10:19:12', null, null, null);
-INSERT INTO `transaction` VALUES ('35', '1', '2016-09-21', '2', null, null, null, '20000.00', null, 'tes', '1', null, '5', null, null, '2016-09-22 10:13:43', '2016-09-22 10:19:12', '51', '2016-09-22 10:19:12', null, null, null);
-INSERT INTO `transaction` VALUES ('36', '1', '2016-09-21', '3', null, null, null, '20000.00', null, 'tes', '1', null, '5', null, null, '2016-09-22 10:13:44', '2016-09-22 10:19:12', '51', '2016-09-22 10:19:13', null, null, null);
-INSERT INTO `transaction` VALUES ('37', '1', '2016-09-22', '1', null, null, null, '20000.00', null, 'tes', '1', null, '9', null, null, '2016-09-22 11:12:08', '2016-09-22 11:17:37', '51', '2016-09-22 11:17:37', null, null, null);
-INSERT INTO `transaction` VALUES ('38', '1', '2016-09-23', '2', null, null, null, '20000.00', null, 'tes', '1', null, '9', null, null, '2016-09-22 11:12:08', '2016-09-22 11:17:37', '51', '2016-09-22 11:17:37', null, null, null);
-INSERT INTO `transaction` VALUES ('39', '1', '2016-09-24', '3', null, null, null, '20000.00', null, 'tes', '1', null, '9', null, null, '2016-09-22 11:12:08', '2016-09-22 11:17:37', '51', '2016-09-22 11:17:37', null, null, null);
-INSERT INTO `transaction` VALUES ('40', '1', '2016-09-22', '1', null, null, null, '20000.00', null, 'tes', '1', '-7.7876785', '110.4295726', null, null, '2017-07-30 11:18:02', '2016-09-22 11:20:25', '51', '2016-09-22 11:20:25', null, null, null);
-INSERT INTO `transaction` VALUES ('41', '1', '2016-09-23', '2', null, null, null, '20000.00', null, 'tes', '1', null, '9', null, null, '2016-09-22 11:14:56', '2016-09-22 11:20:25', '51', '2016-09-22 11:20:25', null, null, null);
-INSERT INTO `transaction` VALUES ('42', '1', '2016-09-24', '3', null, null, null, '20000.00', null, 'tes', '1', null, '9', null, null, '2016-09-22 11:14:57', '2016-09-22 11:20:26', '51', '2016-09-22 11:20:26', null, null, null);
-INSERT INTO `transaction` VALUES ('43', '1', '1900-01-22', '2', null, null, null, '300000.00', null, 'tes', '1', null, '9', null, null, '2016-09-22 13:17:14', '2016-09-22 13:22:43', '51', '2016-09-22 13:22:43', null, null, null);
-INSERT INTO `transaction` VALUES ('44', '1', '1905-07-08', '2', null, null, null, '350000.00', null, null, '1', null, '9', null, null, '2016-09-22 13:21:43', '2016-09-22 13:27:12', '51', '2016-09-22 13:27:12', null, null, null);
-INSERT INTO `transaction` VALUES ('45', '1', '1900-01-22', '2', null, null, null, '350000.00', null, 'tes', '1', null, '9', null, null, '2016-09-22 13:47:05', '2016-09-22 13:52:34', '51', '2016-09-22 13:52:34', null, null, null);
-INSERT INTO `transaction` VALUES ('46', '1', '2016-09-22', '2', null, null, null, '350000.00', null, 'tes', '1', null, '9', null, null, '2016-09-22 13:48:05', '2016-09-22 13:53:34', '51', '2016-09-22 13:53:34', null, null, null);
-INSERT INTO `transaction` VALUES ('47', '1', '1900-01-29', 'X12AA8P0KL', '1', '1', '1', '400000.00', 'Kirim no 47', 'Ini Catatan Saja', '1', '7.11', '110.4295726', null, null, '2017-07-30 18:00:21', '2016-09-22 14:18:09', '51', '2017-07-30 12:31:38', null, null, null);
-INSERT INTO `transaction` VALUES ('48', '2', '2016-09-22', '11H5NUPP61', '2', '1', '2', '500000.00', 'Kirim no 48', 'Ini catatannya dewi sandra', '1', '-7.7876785', '110.4295726', null, null, '2017-07-30 18:04:55', '2016-09-22 14:19:23', '51', '2017-07-30 12:33:29', null, null, null);
+INSERT INTO `transaction` VALUES ('1', '1', '2017-07-28', '11H5NUPP612', '1', '1', '1', '50000000.00', 'Jl. Raya Solo-Jogja KM. 3, Depan Bandara Adisucipto Yogyakarta', null, 'GS 40NZA Hybrid', '1', '-7.7876785', '110.4295726', null, null, '2017-07-30 17:55:50', '2016-08-22 13:14:43', '4', '2016-08-22 13:14:43', null, null, null);
+INSERT INTO `transaction` VALUES ('2', '1', '2017-07-28', '2', null, null, null, '10000.00', null, null, '', '0', null, '1', null, null, '2017-07-28 16:40:18', '2016-09-02 13:33:28', '48', '2016-09-02 13:33:28', null, null, null);
+INSERT INTO `transaction` VALUES ('3', '1', '2017-07-28', '3', null, null, null, '200000.00', null, null, 'ssaldo', '1', null, '5', null, null, '2017-07-28 16:41:05', '2016-09-20 17:10:31', '51', '2016-09-20 17:10:31', null, null, null);
+INSERT INTO `transaction` VALUES ('4', '1', '2017-07-28', '2', null, null, null, '5000.00', null, null, 'kopi', '1', null, '5', null, null, '2017-07-28 16:40:19', '2016-09-20 17:10:58', '51', '2016-09-20 17:10:58', null, null, null);
+INSERT INTO `transaction` VALUES ('7', '1', '2017-07-28', '2', null, null, null, '200000.00', null, null, 'tes', '1', null, '9', null, null, '2017-07-28 16:40:42', '2016-09-21 10:51:20', '51', '2016-09-21 10:51:20', null, null, null);
+INSERT INTO `transaction` VALUES ('8', '1', '2017-07-28', '2', null, null, null, '20000.00', null, null, 'tes', '0', null, '9', null, null, '2017-07-28 16:40:20', '2016-09-21 10:51:21', '51', '2016-09-21 10:51:21', null, null, null);
+INSERT INTO `transaction` VALUES ('9', '1', '2017-07-27', '2', null, null, null, '3000000.00', null, null, 'tes', '1', null, '9', null, null, '2017-07-28 16:41:24', '2016-09-21 10:54:02', '51', '2016-09-21 10:54:02', null, null, null);
+INSERT INTO `transaction` VALUES ('10', '1', '2016-09-19', '4', null, null, null, '20000.00', null, null, 'tes', '1', null, '9', null, null, '2016-09-21 11:04:22', '2016-09-21 11:09:51', '51', '2016-09-21 11:09:51', null, null, null);
+INSERT INTO `transaction` VALUES ('11', '1', '2016-09-19', '4', null, null, null, '20000.00', null, null, 'tes', '0', null, '9', null, null, '2016-09-21 11:04:23', '2016-09-21 11:09:52', '51', '2016-09-21 11:09:52', null, null, null);
+INSERT INTO `transaction` VALUES ('12', '1', '2016-09-19', '4', null, null, null, '20000.00', null, null, 'tes', '1', null, '9', null, null, '2016-09-21 11:05:48', '2016-09-21 11:11:17', '51', '2016-09-21 11:11:17', null, null, null);
+INSERT INTO `transaction` VALUES ('13', '1', '2016-09-19', '4', null, null, null, '20000.00', null, null, 'tes', '0', null, '9', null, null, '2016-09-21 11:05:50', '2016-09-21 11:11:18', '51', '2016-09-21 11:11:18', null, null, null);
+INSERT INTO `transaction` VALUES ('14', '1', '2016-09-19', '1', null, null, null, '20000.00', null, null, 'tes', '1', null, '9', null, null, '2016-09-21 11:06:53', '2016-09-21 11:12:22', '51', '2016-09-21 11:12:22', null, null, null);
+INSERT INTO `transaction` VALUES ('15', '1', '2016-09-19', '1', null, null, null, '20000.00', null, null, 'tes', '0', null, '9', null, null, '2016-09-21 11:06:54', '2016-09-21 11:12:23', '51', '2016-09-21 11:12:23', null, null, null);
+INSERT INTO `transaction` VALUES ('16', '1', '2016-09-19', '1', null, null, null, '20000.00', null, null, 'tes', '1', null, '9', null, null, '2016-09-21 11:08:03', '2016-09-21 11:13:32', '51', '2016-09-21 11:13:32', null, null, null);
+INSERT INTO `transaction` VALUES ('17', '1', '2016-09-19', '2', null, null, null, '20000.00', null, null, 'tes', '0', null, '9', null, null, '2016-09-21 11:08:05', '2016-09-21 11:13:34', '51', '2016-09-21 11:13:34', null, null, null);
+INSERT INTO `transaction` VALUES ('18', '1', '2016-09-21', '1', null, null, null, '20000.00', null, null, 'tes', '1', null, '9', null, null, '2016-09-21 11:08:31', '2016-09-21 11:14:00', '51', '2016-09-21 11:14:00', null, null, null);
+INSERT INTO `transaction` VALUES ('19', '1', '2016-09-21', '2', null, null, null, '20000.00', null, null, 'tes', '0', null, '9', null, null, '2016-09-21 11:08:32', '2016-09-21 11:14:00', '51', '2016-09-21 11:14:00', null, null, null);
+INSERT INTO `transaction` VALUES ('20', '1', '2016-09-21', '1', null, null, null, '20000.00', null, null, 'tes', '1', null, '9', null, null, '2016-09-21 12:52:39', '2016-09-21 12:58:07', '51', '2016-09-21 12:58:07', null, null, null);
+INSERT INTO `transaction` VALUES ('21', '1', '2016-09-21', '2', null, null, null, '20000.00', null, null, 'tes', '1', null, '9', null, null, '2016-09-21 12:52:41', '2016-09-21 12:58:10', '51', '2016-09-21 12:58:10', null, null, null);
+INSERT INTO `transaction` VALUES ('22', '1', '2016-09-21', '1', null, null, null, '20000.00', null, null, 'tes', '1', null, '9', null, null, '2016-09-21 12:54:37', '2016-09-21 13:00:06', '51', '2016-09-21 13:00:06', null, null, null);
+INSERT INTO `transaction` VALUES ('23', '1', '2016-09-21', '2', null, null, null, '20000.00', null, null, 'tes', '1', null, '9', null, null, '2016-09-21 12:54:40', '2016-09-21 13:00:08', '51', '2016-09-21 13:00:08', null, null, null);
+INSERT INTO `transaction` VALUES ('24', '1', '2016-09-21', '3', null, null, null, '20000.00', null, null, 'tes', '1', null, '9', null, null, '2016-09-21 12:54:42', '2016-09-21 13:00:11', '51', '2016-09-21 13:00:11', null, null, null);
+INSERT INTO `transaction` VALUES ('25', '1', '2016-09-21', '1', null, null, null, '20000.00', null, null, 'tes', '0', null, '9', null, null, '2017-07-30 15:22:43', '2016-09-21 13:00:29', '51', '2016-09-21 13:00:29', null, null, null);
+INSERT INTO `transaction` VALUES ('26', '1', '2016-09-21', '2', null, null, null, '20000.00', null, null, 'tes', '1', null, '9', null, null, '2016-09-21 12:55:03', '2016-09-21 13:00:32', '51', '2016-09-21 13:00:32', null, null, null);
+INSERT INTO `transaction` VALUES ('27', '1', '2016-09-21', '3', null, null, null, '20000.00', null, null, 'tes', '1', null, '9', null, null, '2016-09-21 12:55:05', '2016-09-21 13:00:34', '51', '2016-09-21 13:00:34', null, null, null);
+INSERT INTO `transaction` VALUES ('28', '1', '2016-09-21', '1', null, null, null, '20000.00', null, null, 'tes', '1', null, '9', null, null, '2016-09-21 12:55:49', '2016-09-21 13:01:18', '51', '2016-09-21 13:01:18', null, null, null);
+INSERT INTO `transaction` VALUES ('29', '1', '2016-09-21', '2', null, null, null, '20000.00', null, null, 'tes', '1', null, '9', null, null, '2016-09-21 12:55:49', '2016-09-21 13:01:18', '51', '2016-09-21 13:01:18', null, null, null);
+INSERT INTO `transaction` VALUES ('30', '1', '2016-09-21', '3', null, null, null, '20000.00', null, null, 'tes', '1', null, '9', null, null, '2016-09-21 12:55:49', '2016-09-21 13:01:18', '51', '2016-09-21 13:01:18', null, null, null);
+INSERT INTO `transaction` VALUES ('31', '1', '2016-09-21', '1', null, null, null, '20000.00', null, null, 'tes', '1', null, '9', null, null, '2016-09-22 10:06:04', '2016-09-22 10:11:33', '51', '2016-09-22 10:11:33', null, null, null);
+INSERT INTO `transaction` VALUES ('32', '1', '2016-09-21', '2', null, null, null, '20000.00', null, null, 'tes', '1', null, '9', null, null, '2016-09-22 10:06:05', '2016-09-22 10:11:34', '51', '2016-09-22 10:11:34', null, null, null);
+INSERT INTO `transaction` VALUES ('33', '1', '2016-09-21', '3', null, null, null, '20000.00', null, null, 'tes', '1', null, '9', null, null, '2016-09-22 10:06:05', '2016-09-22 10:11:34', '51', '2016-09-22 10:11:34', null, null, null);
+INSERT INTO `transaction` VALUES ('34', '1', '2016-09-21', '1', null, null, null, '20000.00', null, null, 'tes', '1', null, '5', null, null, '2016-09-22 10:13:43', '2016-09-22 10:19:12', '51', '2016-09-22 10:19:12', null, null, null);
+INSERT INTO `transaction` VALUES ('35', '1', '2016-09-21', '2', null, null, null, '20000.00', null, null, 'tes', '1', null, '5', null, null, '2016-09-22 10:13:43', '2016-09-22 10:19:12', '51', '2016-09-22 10:19:12', null, null, null);
+INSERT INTO `transaction` VALUES ('36', '1', '2016-09-21', '3', null, null, null, '20000.00', null, null, 'tes', '1', null, '5', null, null, '2016-09-22 10:13:44', '2016-09-22 10:19:12', '51', '2016-09-22 10:19:13', null, null, null);
+INSERT INTO `transaction` VALUES ('37', '1', '2016-09-22', '1', null, null, null, '20000.00', null, null, 'tes', '1', null, '9', null, null, '2016-09-22 11:12:08', '2016-09-22 11:17:37', '51', '2016-09-22 11:17:37', null, null, null);
+INSERT INTO `transaction` VALUES ('38', '1', '2016-09-23', '2', null, null, null, '20000.00', null, null, 'tes', '1', null, '9', null, null, '2016-09-22 11:12:08', '2016-09-22 11:17:37', '51', '2016-09-22 11:17:37', null, null, null);
+INSERT INTO `transaction` VALUES ('39', '1', '2016-09-24', '3', null, null, null, '20000.00', null, null, 'tes', '1', null, '9', null, null, '2016-09-22 11:12:08', '2016-09-22 11:17:37', '51', '2016-09-22 11:17:37', null, null, null);
+INSERT INTO `transaction` VALUES ('40', '1', '2016-09-22', '1', null, null, null, '20000.00', null, null, 'tes', '1', '-7.7876785', '110.4295726', null, null, '2017-07-30 11:18:02', '2016-09-22 11:20:25', '51', '2016-09-22 11:20:25', null, null, null);
+INSERT INTO `transaction` VALUES ('41', '1', '2016-09-23', '2', null, null, null, '20000.00', null, null, 'tes', '1', null, '9', null, null, '2016-09-22 11:14:56', '2016-09-22 11:20:25', '51', '2016-09-22 11:20:25', null, null, null);
+INSERT INTO `transaction` VALUES ('42', '1', '2016-09-24', '3', null, null, null, '20000.00', null, null, 'tes', '1', null, '9', null, null, '2016-09-22 11:14:57', '2016-09-22 11:20:26', '51', '2016-09-22 11:20:26', null, null, null);
+INSERT INTO `transaction` VALUES ('43', '1', '1900-01-22', '2', null, null, null, '300000.00', null, null, 'tes', '1', null, '9', null, null, '2016-09-22 13:17:14', '2016-09-22 13:22:43', '51', '2016-09-22 13:22:43', null, null, null);
+INSERT INTO `transaction` VALUES ('44', '1', '1905-07-08', '2', null, null, null, '350000.00', null, null, null, '1', null, '9', null, null, '2016-09-22 13:21:43', '2016-09-22 13:27:12', '51', '2016-09-22 13:27:12', null, null, null);
+INSERT INTO `transaction` VALUES ('45', '1', '1900-01-22', '2', null, null, null, '350000.00', null, null, 'tes', '1', null, '9', null, null, '2016-09-22 13:47:05', '2016-09-22 13:52:34', '51', '2016-09-22 13:52:34', null, null, null);
+INSERT INTO `transaction` VALUES ('46', '2', '2017-08-01', 'P0OOH761MM', '1', '1', '1', '675000.00', 'Depan Hotel Jentra Dagen Malioboro', '1', 'Kirim cepet ya mass', '1', '-7.7937601', '110.3629656', null, null, '2017-08-01 10:25:21', '2016-09-22 13:53:34', '51', '2017-08-01 05:25:21', null, null, null);
+INSERT INTO `transaction` VALUES ('47', '1', '1900-01-29', 'X12AA8P0KL', '1', '1', '1', '400000.00', 'Kirim no 47', '1', 'Ini Catatan Saja', '1', '7.11', '110.4295726', null, null, '2017-08-01 10:25:33', '2016-09-22 14:18:09', '51', '2017-08-01 05:25:33', null, null, null);
+INSERT INTO `transaction` VALUES ('48', '2', '2016-09-22', '11H5NUPP61', '2', '1', '2', '500000.00', 'Kirim no 48', '2', 'Ini catatannya dewi sandra', '1', '-7.7876785', '110.4295726', null, null, '2017-08-01 10:25:05', '2016-09-22 14:19:23', '51', '2017-08-01 05:25:05', null, null, null);
 
 -- ----------------------------
 -- Table structure for users
