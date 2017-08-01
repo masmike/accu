@@ -1,0 +1,238 @@
+{% extends 'templates/dash_app.twig' %}
+{% block styles %}
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/dataTables.bootstrap4.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/buttons.bootstrap4.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/datatables.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/select2.min_def.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/select2.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/iziModal.min_def.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/izi-modal.min.css') }}">
+{% endblock %}
+{% block content %}
+<div class="ks-page-container ks-dashboard-tabbed-sidebar-fixed-tabs">
+    
+<div class="ks-column ks-page">
+        <div class="ks-page-header">
+            <section class="ks-title-and-subtitle">
+                <div class="ks-title-block">
+                    <h3 class="ks-main-title">Merk</h3>
+                    <div class="ks-sub-title">Daftar merk accu</div>
+                </div>
+                <button class="btn btn-primary-outline ks-solid ks-izi-modal-trigger" data-target="#ks-izi-modal-basic">
+                    Tambah
+                </button>
+            </section>
+        </div>
+
+<div class="ks-page-content">
+            <div class="ks-page-content-body">
+                <div class="ks-dashboard-tabbed-sidebar">
+                    <div class="ks-dashboard-tabbed-sidebar-widgets">
+ 
+                <div class="ks-nav-body">
+                    <div class="ks-nav-body-wrapper">
+                        <div class="container-fluid">
+                            <table id="ks-datatable" class="table table-striped table-bordered" width="100%">
+                        <thead>
+                        <tr>
+                            <th data-field="id" data-sortable="true">ID</th>
+                            <th data-field="merk" data-sortable="true" class="col-xs-1">Merk</th>
+                            <th data-field="status" data-sortable="true" class="col-xs-1">Status</th>
+                        </tr>
+                        </thead>
+                        
+                        <tbody id="dTable">
+						{% for row in allMerk %}
+                        <tr>
+                            <td>{{ row.id }}</td>
+                            <td>{{ row.nama }}</td>
+                            <td>
+                            	{% if row.non_active_flag == 1 %}
+                                    <span class="badge badge-mantis">Aktif</span>
+                                {% else %}
+                                   	<span class="badge badge-danger">Tidak Aktif</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+					
+<div id="ks-izi-modal-basic"
+     class="ks-izi-modal"
+     
+     data-iziModal-title="Master Merk"
+     data-iziModal-subtitle="Tambah, Edit dan Hapus Master Merk"
+     data-iziModal-icon="la la-edit"
+     data-iziModal-padding="20"
+     data-iziModal-autoopen="false"
+     data-iziModal-headercolor="#25628f">
+    <div class="row">
+    <div class="col-lg-12 ks-panels-column-section">
+        <div class="card" style="border:0px">
+            <div class="card-block">
+                <h5 class="card-title">Data Accu</h5>
+                <!-- <form action="{{ path_for('dashboard.master.merk') }}" method="post"> -->
+                <div class="col-sm-12 row">
+                    <div class="col-sm-4">
+                        <p class="form-control-static">Merk / Brand</p>
+                    </div>
+                        <div class="col-sm-8">
+                            <input class="form-control" id="namaMerk" name="namaMerk" placeholder="Merk/Brand" type="text" maxlength="25" autofocus>
+                    </div>
+                </div>
+                <div class="col-sm-12 row">
+                    <div class="col-sm-4">
+                        <p class="form-control-static">Status Aktif</p>
+                    </div>
+                    <div class="col-sm-8">
+                        <label class="ks-checkbox-slider ks-on-off ks-solid ks-primary">
+                            <input id ="statusActive" name="statusActive" type="hidden" value="0">
+                            <input id="checkonoff" name="checkonoff" value="0" type="checkbox">
+                                <span class="ks-indicator"></span>
+                                <span class="ks-on">ON</span>
+                                <span class="ks-off">OFF</span>
+                        </label>
+                        {{ csrf.field | raw }}
+                    </div>
+                </div>
+                <div class="col-sm-12 row" style="text-align: right;">
+                    <div class="ks-item-block">
+                        <button class="btn btn-success simpan" onclick="xx();">Simpan</button>
+                        <button class="btn btn-danger" data-izimodal-close="" data-izimodal-transitionout="flipOutX">Keluar</button>
+                    </div>
+                </div>
+                <!--</form> -->
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+<div id="ks-izi-modal-alert"></div>
+{% endblock %}		
+
+{% block scripts %}
+<script src="{{ asset('js/jquery.min.js') }}"></script>
+<script src="{{ asset('js/response.min.js') }}"></script>
+<script src="{{ asset('js/loadingoverlay.min.js') }}"></script>
+<script src="{{ asset('js/tether.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/jquery.jscrollpane.min.js') }}"></script>
+<script src="{{ asset('js/jquery.mousewheel.js') }}"></script>
+<script src="{{ asset('js/flexibility.js') }}"></script>
+<script src="{{ asset('js/common.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap-notify.min.js') }}"></script>
+<script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('js/buttons.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('js/jszip.min.js') }}"></script>
+<script src="{{ asset('js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('js/select2.min.js') }}"></script>
+<script src="{{ asset('js/iziModal.min.js') }}"></script>
+
+<script type="application/javascript">
+(function ($) {
+    $(document).ready(function() {
+        $('#ks-izi-modal-basic').iziModal({
+            width: 600,
+           // restoreDefaultContent: true
+        });
+
+        var table = $('#ks-datatable').DataTable({
+            lengthChange: false,
+            "order": [[ 0, "desc" ]],
+            buttons: [
+                'copyHtml5',
+                'excelHtml5'
+            ],
+            columnDefs: [
+                { width: "95%", targets: 1 },
+                { width: "5%", targets: 2 },
+                {
+                    "targets": [ 0 ],
+                    "visible": false,
+                    "searchable": false
+                },
+            ],
+            initComplete: function () {
+                $('.dataTables_wrapper select').select2({
+                    minimumResultsForSearch: Infinity
+                });
+            }
+        });
+
+        table.buttons().container().appendTo( '#ks-datatable_wrapper .col-md-6:eq(0)' );
+
+        $('#dTable').on('dblclick', 'tr', function () {
+            var data = table.row( this ).data();
+            $.ajax({
+                type: "GET",
+                url: "merk/"+data[0],
+                crossDomain: true,
+                success: function(response) {
+                    //console.error(JSON.stringify(response));
+                    $("#ks-izi-modal-basic .iziModal-content").html(response);
+                    $('#ks-izi-modal-basic').iziModal('open');
+                },
+                error: function() {
+                    console.log(response);
+                }
+            });
+        });      
+
+        $("#ks-izi-modal-alert").iziModal({
+            title: "Data berhasil disimpan!",
+            icon: 'la la-check',
+            headerColor: '#00af66',
+            width: 600,
+            timeout: 5000,
+            timeoutProgressbar: true,
+            transitionIn: 'fadeInUp',
+            transitionOut: 'fadeOutDown',
+            attached: 'top',
+            pauseOnHover: true,
+            autoOpen: false
+        });
+    
+        $('.ks-izi-modal-trigger').on('click', function (e) {
+            $($(this).data('target')).iziModal('open');
+        });
+
+        $(document).on('click','#statusActive',function(e){
+            if($('#statusActive').is(':checked')){
+                $('#statusActive').val('1');
+                $('#statusActive').attr('checked', true);
+            } else {
+                $('#statusActive').val('0');
+                $('#statusActive').attr('checked', false);
+            }
+            
+        });
+        $(document).on('opening', '#ks-izi-modal-basic', function (e) {
+            $('#namaMerk').val('1');
+        });
+        $('.simpan').click(function() {
+            alert('blar');
+        });
+
+
+    });
+
+})(jQuery);
+</script>
+<script>
+function xx() {
+    alert('xx');
+}
+</script>
+
+{% endblock %}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title is defined ? title : getenv('APP_NAME', 'Q.Informatics') }}</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/fonts/line-awesome/css/line-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/fonts/montserrat/styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/tether.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery.jscrollpane.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/common.min.css') }}">
+    <!-- END GLOBAL MANDATORY STYLES -->
+
+    <!-- BEGIN THEME STYLES -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/primary.min.css') }}">
+    <link class="ks-sidebar-dark-style" rel="stylesheet" type="text/css" href="{{ asset('css/sidebar-black.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-notify.min.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/fonts/kosmo/styles.css') }}">
+   <!--  <link rel="stylesheet" type="text/css" href="assets/fonts/weather/css/weather-icons.min.css">
+    <link rel="stylesheet" type="text/css" href="libs/c3js/c3.min.css">
+    <link rel="stylesheet" type="text/css" href="libs/noty/noty.css"> -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/panels.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/payment.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/tabbed-sidebar.min.css') }}">
+    {% block styles %}{% endblock %}
+    <!-- END THEME STYLES -->
+
+</head>
+<body class="ks-navbar-fixed ks-sidebar-empty ks-sidebar-position-fixed ks-page-header-fixed ks-theme-primary ks-page-loading">
+{% include 'templates/partials/dash_nav.twig' %}
+{% include 'templates/partials/dash_menu.twig' %}
+{% include 'templates/partials/alerts.twig'%}
+{% block content %}
+{% include 'templates/partials/dash_front.twig' %}
+{% endblock %}
+
+{% block scripts %}
+<!-- <script src="//cdn.jsdelivr.net/velocity/1.5/velocity.min.js"></script> -->
+
+{% endblock %}
+
+<div class="ks-mobile-overlay"></div>
+
+</body>
+</html>

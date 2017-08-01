@@ -1,0 +1,173 @@
+<div class="row">
+	<div class="col-lg-6 ks-panels-column-section">
+		<div class="card" style="border:0px">
+			<div class="card-block">
+				<h5 class="card-title">Data Order</h5>
+					<div class="col-sm-12 row" style="margin-bottom:0px; margin-top:0px;">
+						<div class="col-sm-4">
+							<p class="form-control-static">No. Order</p>
+						</div>
+							<div class="col-sm-8">
+								<p class="form-control-static">: {{ order.no_order }} </p>
+						</div>
+					</div>
+					<div class="col-sm-12 row" style="margin-bottom:0px; margin-top:0px;">
+						<div class="col-sm-4">
+							<p class="form-control-static">Tanggal</p>
+						</div>
+							<div class="col-sm-8">
+								<p class="form-control-static">: {{ order.unit.kode }} </p>
+						</div>
+					</div>
+					<div class="col-sm-12 row" style="margin-bottom:0px; margin-top:0px;">
+						<div class="col-sm-4">
+							<p class="form-control-static">Merk</p>
+						</div>
+							<div class="col-sm-8">
+								<p class="form-control-static">: {{ order.merk.nama }} </p>
+						</div>
+					</div>
+					<div class="col-sm-12 row" style="margin-bottom:0px; margin-top:0px;">
+						<div class="col-sm-4">
+							<p class="form-control-static">Type</p>
+						</div>
+							<div class="col-sm-8">
+								<p class="form-control-static">: {{ order.tanggal|date('d-m-Y') }} </p>
+						</div>
+					</div>
+					<div class="col-sm-12 row" style="margin-bottom:0px; margin-top:0px;">
+						<div class="col-sm-4">
+							<p class="form-control-static">Jumlah Order</p>
+						</div>
+							<div class="col-sm-8">
+								<p class="form-control-static">: {{ order.qty }} (unit)</p>
+						</div>
+					</div>
+					<div class="col-sm-12 row" style="margin-bottom:0px; margin-top:0px;">
+						<div class="col-sm-4">
+							<p class="form-control-static">Total Bayar</p>
+						</div>
+							<div class="col-sm-8">
+								<p class="form-control-static">: {{ order.amount|number_format(2, ',', '.') }} </p>
+						</div>
+					</div>
+					<div class="col-sm-12 row" style="margin-bottom:0px; margin-top:0px;">
+						<div class="col-sm-4">
+							<p class="form-control-static">Pembayaran</p>
+						</div>
+						<div class="col-sm-8">
+							<p class="form-control-static">: {{ order.pembayaran.name }} </p>
+						</div>
+					</div>				
+			</div>
+			<div class="card-block">
+				<h5 class="card-title">Data Customer</h5>
+				<div class="col-sm-12 row" style="margin-bottom:0px; margin-top:0px;">
+					<div class="col-sm-4">
+						<p class="form-control-static">Nama</p>
+					</div>
+					<div class="col-sm-8">
+							<p class="form-control-static">: {{ order.customer.nama }} </p>
+					</div>
+				</div>
+				<div class="col-sm-12 row" style="margin-bottom:0px; margin-top:0px;">
+					<div class="col-sm-4">
+						<p class="form-control-static">No. Telepon</p>
+					</div>
+					<div class="col-sm-8">
+							<p class="form-control-static">: {{ order.customer.no_telepon }} </p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-6 ks-panels-column-section">
+		<div class="card" style="border:0px">
+			<div class="card-block">
+				<h5 class="card-title">Pengiriman</h5>
+				<div class="col-sm-12 row" style="margin-bottom:0px; margin-top:0px;">
+                    <div class="col-sm-4">
+						<p class="form-control-static">Alamat Kirim</p>
+					</div>
+					<div class="col-sm-8">
+							<p class="form-control-static">: {{ order.alamat_kirim }} </p>
+					</div>
+                </div>
+                <div class="col-sm-12 row" style="margin-bottom:0px; margin-top:0px;">
+                    <div class="col-sm-4">
+						<p class="form-control-static">Catatan</p>
+					</div>
+					<div class="col-sm-8">
+							<p class="form-control-static">: {{ order.remark }} </p>
+					</div>
+                </div>
+			</div>
+			<div class="card-block">
+				<h5 class="card-title">Peta</h5>
+				<div class="col-sm-12 row" style="margin-bottom:0px; margin-top:0px;">
+                    <div id="map"></div>
+                    {{ csrf.field | raw }}
+                </div>
+                <div class="col-sm-12 row" style="margin-bottom:0px; margin-top:20px;">
+                	<div class="ks-item-block">
+						<button class="btn btn-success {{ order.status == "1" ? 'disabled ' : ' konfirmasi' }}">Konfirmasi</button>
+						<button class="btn btn-danger" data-izimodal-close="" data-izimodal-transitionout="flipOutX">Keluar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+
+</div>
+<style>
+	#map {
+        height: 200px;
+        width: 100%;
+       }
+
+</style>
+<script type="application/javascript">
+$('.konfirmasi').click(function() { 
+	var oID = {{ order.id }};
+	var qName = $('input:hidden[name=csrf_name]').val();
+	var qValue = $('input:hidden[name=csrf_value]').val();
+
+        $.ajax({
+            url: 'orders/'+oID,
+            type: 'POST',
+            crossDomain: true,
+            data: {
+            	'orderID': oID,
+            	'csrf_name': qName,
+            	'csrf_value': qValue
+            },
+            success: function (response) {
+              $('#ks-izi-modal-basic').iziModal('close');
+              $('#ks-izi-modal-alert').iziModal('open');
+            }
+        });  
+
+});
+$(document).on('closed', '#ks-izi-modal-alert', function (e) {
+	window.open('orders', '_self');
+});
+</script>
+
+<script>
+      function initMap() {
+        var uluru = {lat: {{ order.latitude }}, lng: {{ order.longitude }}};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 17,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      }
+    </script>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB14Z_UjUToQIQ_AXJg_IeC3Nr-ZkFq4Pc&callback=initMap">
+    </script>

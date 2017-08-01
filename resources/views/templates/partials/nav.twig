@@ -1,0 +1,42 @@
+<nav class="navbar fixed-top navbar-toggleable-md navbar-light bg-faded">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="container">
+    <a class="navbar-brand" href="{{ path_for('home') }}">{{ getenv('APP_NAME', 'My App') }}</a>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="nav navbar-nav mr-auto">
+        <li class="nav-item{{ page == "home" ? ' active' : '' }}">
+          <a class="nav-link" href="{{ path_for('home') }}">Home</a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav">
+        {% if auth.check %}
+          {% if auth.user.isAdmin() or auth.user.isSuperAdmin() %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ path_for('admin.home') }}">Admin Dashboard</a>
+            </li>
+          {% endif %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="{{ path_for('home') }}" id="accountMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ auth.user.username }}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="accountMenu">
+            <a class="dropdown-item" href="{{ path_for('auth.settings') }}">Settings</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{ path_for('auth.logout') }}">Logout</a>
+          </div>
+        </li>
+        {% else %}
+          <li class="nav-item{{ page == "login" ? ' active' : '' }}">
+            <a class="nav-link" href="{{ path_for('auth.login') }}">Login</a>
+          </li>
+
+          <li class="nav-item{{ page == "register" ? ' active' : '' }}">
+            <a class="nav-link" href="{{ path_for('auth.register') }}">Register</a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>

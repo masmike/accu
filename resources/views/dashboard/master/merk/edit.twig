@@ -1,0 +1,105 @@
+<div class="row">
+    <div class="col-lg-12 ks-panels-column-section">
+        <div class="card" style="border:0px">
+            <div class="card-block">
+                <h5 class="card-title">Data Accu</h5>
+                <div class="col-sm-12 row">
+                    <div class="col-sm-4">
+                        <p class="form-control-static">Merk / Brand</p>
+                    </div>
+                        <div class="col-sm-8">
+                            <fieldset id="fsUbahMerk" class="form-group">
+                            <input class="form-control requireds" id="nama" name="nama" placeholder="Merk/Brand" type="text" maxlength="25" value="{{ old.nama ? old.nama : merk.nama }}">
+                            </fieldset>
+                    </div>
+                </div>
+                <div class="col-sm-12 row" style="margin-top: 0px;">
+                    <div class="col-sm-4">
+                        <p class="form-control-static">Status Aktif</p>
+                    </div>
+                    <div class="col-sm-8">
+                        <label class="ks-checkbox-slider ks-on-off ks-solid ks-primary">
+                            <input id ="statusAktif" name="statusAktif" type="hidden" value="{{ merk.status }}">
+                            <input id="checkOnOff" name="checkOnOff"  type="checkbox" {{ merk.status == "1" ? ' checked' : '' }}>
+                                <span class="ks-indicator"></span>
+                                <span class="ks-on">ON</span>
+                                <span class="ks-off">OFF</span>
+                        </label>
+                        {{ csrf.field | raw }}
+                    </div>
+                </div>
+                <div class="col-sm-12 row" style="text-align: right;">
+                    <div class="ks-item-block">
+                        <button class="btn btn-success rubah">Simpan</button>
+                        <button class="btn btn-danger" data-izimodal-close="" data-izimodal-transitionout="flipOutX">Keluar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="application/javascript">
+$('.rubah').on('click', function (e) {
+	e.preventDefault();
+
+	var formValid = true;
+    var qId = {{ merk.id }};
+    var qMerk = $('input[name=nama]').val();
+    var qStatus = $('input:hidden[name=statusAktif]').val();
+    var qName = $('input:hidden[name=csrf_name]').val();
+    var qValue = $('input:hidden[name=csrf_value]').val();  
+
+    $(".requireds").each(function(){
+        if ($.trim($(this).val()).length <= 1){
+            $("#fsUbahMerk").addClass("has-warning");
+            $(this).addClass("form-control-warning");
+            formValid = false;
+        } else {
+            $("#fsUbahMerk").removeClass("has-warning");
+            $(this).removeClass("form-control-warning");
+        }
+    });
+
+    if (formValid == false) {
+        $.alert({
+            title: 'Error..',
+            type: 'red',
+            content: 'Silahkan melengkapi data yang diperlukan!',
+        });
+	} else {
+        $.ajax({
+    	    url: 'merk/'+qId,
+            type: 'POST',
+            crossDomain: true,
+            data: {
+                'merkID': qId,
+                'merkName': qMerk,
+                'merkStatus': qStatus,
+                'csrf_name': qName,
+                'csrf_value': qValue
+            },
+            success: function (response) {
+              $('#q-edit').iziModal('close');
+              $('#q-alert').iziModal('open');
+            }
+        });  
+    };
+
+});
+
+$(document).on('closed', '#q-alert', function (e) {
+    window.open('merk', '_self');
+});
+
+$(document).on('click','#checkOnOff',function(e){
+    if($('#checkOnOff').is(':checked')){
+        $('#statusAktif').val('1');
+        $('#checkOnOff').attr('checked', true);
+    } else {
+        $('#statusAktif').val('0');
+        $('#checkOnOff').attr('checked', false);
+    }
+            
+});
+</script>

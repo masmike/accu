@@ -1,0 +1,316 @@
+{% extends 'templates/dash_app.twig' %}
+{% block styles %}
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/dataTables.bootstrap4.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/buttons.bootstrap4.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/datatables.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/select2.min_def.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/select2.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/iziModal.min_def.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/izi-modal.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery-confirm.min_def.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery-confirm.min.css') }}">
+
+{% endblock %}
+{% block content %}
+<div class="ks-page-container ks-dashboard-tabbed-sidebar-fixed-tabs">
+    
+<div class="ks-column ks-page">
+        <div class="ks-page-header">
+            <section class="ks-title-and-subtitle">
+                <div class="ks-title-block">
+                    <h3 class="ks-main-title">Merk</h3>
+                    <div class="ks-sub-title">Daftar merk accu</div>
+                </div>
+                <button class="btn btn-primary-outline ks-solid ks-izi-modal-trigger" data-target="#q-main">
+                    Tambah
+                </button>
+            </section>
+        </div>
+
+<div class="ks-page-content">
+            <div class="ks-page-content-body">
+                <div class="ks-dashboard-tabbed-sidebar">
+                    <div class="ks-dashboard-tabbed-sidebar-widgets">
+ 
+                <div class="ks-nav-body">
+                    <div class="ks-nav-body-wrapper">
+                        <div class="container-fluid">
+                            <table id="ks-datatable" class="table table-striped table-bordered" width="100%">
+                        <thead>
+                        <tr>
+                            <th data-field="id" data-sortable="true">ID</th>
+                            <th data-field="merk" data-sortable="true" class="col-xs-1">Merk</th>
+                            <th data-field="status" data-sortable="true" class="col-xs-1">Status</th>
+                        </tr>
+                        </thead>
+                        
+                        <tbody id="dTable">
+						{% for row in allMerk %}
+                        <tr>
+                            <td>{{ row.id }}</td>
+                            <td>{{ row.nama }}</td>
+                            <td>
+                            	{% if row.status == 1 %}
+                                    <span class="badge badge-mantis">Aktif</span>
+                                {% else %}
+                                   	<span class="badge badge-danger">Tidak Aktif</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+					
+<div id="q-main"
+     class="ks-izi-modal"
+     
+     data-iziModal-title="Master Merk"
+     data-iziModal-subtitle="Tambah, Edit dan Hapus Master Merk"
+     data-iziModal-icon="la la-edit"
+     data-iziModal-padding="20"
+     data-iziModal-autoopen="false"
+     data-iziModal-headercolor="#25628f">
+    <div class="row">
+    <div class="col-lg-12 ks-panels-column-section">
+        <div class="card" style="border:0px">
+            <div class="card-block">
+                <h5 class="card-title">Data Accu</h5>
+                <div class="col-sm-12 row">
+                    <div class="col-sm-4">
+                        <p class="form-control-static">Merk / Brand</p>
+                    </div>
+                        <div class="col-sm-8">
+                            <fieldset id="fsMerk" class="form-group">
+                            <input class="form-control required" id="namaMerk" name="namaMerk" placeholder="Merk/Brand" type="text" maxlength="25">
+                            </fieldset>
+                    </div>
+                </div>
+                <div class="col-sm-12 row" style="margin-top: 0px;">
+                    <div class="col-sm-4">
+                        <p class="form-control-static">Status Aktif</p>
+                    </div>
+                    <div class="col-sm-8">
+                        <label class="ks-checkbox-slider ks-on-off ks-solid ks-primary">
+                            <input id ="statusActive" name="statusActive" type="hidden" value="0">
+                            <input id="checkonoff" name="checkonoff" value="0" type="checkbox">
+                                <span class="ks-indicator"></span>
+                                <span class="ks-on">ON</span>
+                                <span class="ks-off">OFF</span>
+                        </label>
+                        {{ csrf.field | raw }}
+                    </div>
+                </div>
+                <div class="col-sm-12 row" style="text-align: right;">
+                    <div class="ks-item-block">
+                        <button class="btn btn-success simpan">Simpan</button>
+                        <button class="btn btn-danger" data-izimodal-close="" data-izimodal-transitionout="flipOutX">Keluar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+<div id="q-alert"></div>
+<div id="q-danger"
+     data-iziModal-title="Server Error. Silahkan hubungi Administrator!!"
+     data-iziModal-autoopen="false"
+     data-iziModal-headercolor="#ec644b"
+     data-iziModal-width="600"
+     data-iziModal-timeout="3000"
+     data-iziModal-timeoutProgressbar="true"
+     data-iziModal-attached="top"
+></div>
+<div id="q-edit"
+     class="ks-izi-modal"
+     data-iziModal-title="Master Merk"
+     data-iziModal-subtitle="Edit data Master Merk"
+     data-iziModal-icon="la la-edit"
+     data-iziModal-padding="20"
+     data-iziModal-autoopen="false"
+     data-iziModal-headercolor="#25628f">
+    
+</div>
+{% endblock %}		
+
+{% block scripts %}
+<script src="{{ asset('js/jquery.min.js') }}"></script>
+<script src="{{ asset('js/response.min.js') }}"></script>
+<script src="{{ asset('js/loadingoverlay.min.js') }}"></script>
+<script src="{{ asset('js/tether.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/jquery.jscrollpane.min.js') }}"></script>
+<script src="{{ asset('js/jquery.mousewheel.js') }}"></script>
+<script src="{{ asset('js/flexibility.js') }}"></script>
+<script src="{{ asset('js/common.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap-notify.min.js') }}"></script>
+<script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('js/buttons.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('js/jszip.min.js') }}"></script>
+<script src="{{ asset('js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('js/select2.min.js') }}"></script>
+<script src="{{ asset('js/iziModal.min.js') }}"></script>
+<script src="{{ asset('js/jquery-confirm.min.js') }}"></script>
+
+<script type="application/javascript">
+(function ($) {
+    $(document).ready(function() {
+        $('#q-main').iziModal({
+            width: 600,
+            //restoreDefaultContent: true
+        });
+
+        $('#q-edit').iziModal({
+            width: 600,
+            //restoreDefaultContent: true
+        });
+
+        $(document).on('opening', '#q-main', function (e) {
+            $('#namaMerk').val('');
+            $("#fsMerk").removeClass("has-warning");
+            $('.required').removeClass("form-control-warning");
+        });
+
+        var table = $('#ks-datatable').DataTable({
+            lengthChange: false,
+            "order": [[ 0, "desc" ]],
+            buttons: [
+                'copyHtml5',
+                'excelHtml5'
+            ],
+            columnDefs: [
+                { width: "95%", targets: 1 },
+                { width: "5%", targets: 2 },
+                {
+                    "targets": [ 0 ],
+                    "visible": false,
+                    "searchable": false
+                },
+            ],
+            initComplete: function () {
+                $('.dataTables_wrapper select').select2({
+                    minimumResultsForSearch: Infinity
+                });
+            }
+        });
+
+        table.buttons().container().appendTo( '#ks-datatable_wrapper .col-md-6:eq(0)' );
+
+        $('#dTable').on('dblclick', 'tr', function () {
+            var data = table.row(this).data();
+            $.ajax({
+                type: "GET",
+                url: "merk/"+data[0],
+                crossDomain: true,
+                success: function(response) {
+                    //console.error(JSON.stringify(response));
+                    $('#q-edit .iziModal-content').html(response);
+                    $('#q-edit').iziModal('open');
+                },
+                error: function() {
+                    console.log(response);
+                }
+            });
+        });      
+
+        $("#q-alert").iziModal({
+            title: "Data berhasil disimpan!",
+            icon: 'la la-check',
+            headerColor: '#00af66',
+            width: 600,
+            timeout: 1500,
+            timeoutProgressbar: true,
+            transitionIn: 'fadeInUp',
+            transitionOut: 'fadeOutDown',
+            attached: 'top',
+            pauseOnHover: true,
+            autoOpen: false
+        });
+        
+        $(document).on('closing', '#q-alert', function (e) {
+            window.open('merk', '_self');
+        });
+
+        $('.ks-izi-modal-trigger').on('click', function (e) {
+            $($(this).data('target')).iziModal('open');
+        });
+
+        $(document).on('click','#checkonoff',function(e){
+            if($('#checkonoff').is(':checked')){
+                $('#statusActive').val('1');
+                $('#checkonoff').attr('checked', true);
+            } else {
+                $('#statusActive').val('0');
+                $('#checkonoff').attr('checked', false);
+            }
+            
+        });
+
+        $('.simpan').on('click', function (e) {
+            e.preventDefault();
+
+            var isFormValid = true;
+            var qMerk = $('input[name=namaMerk]').val();
+            var qStatus = $('input:hidden[name=statusActive]').val();
+            var qName = $('input:hidden[name=csrf_name]').val();
+            var qValue = $('input:hidden[name=csrf_value]').val();
+
+            $(".required").each(function(){
+                if ($.trim($(this).val()).length <= 1){
+                    $("#fsMerk").addClass("has-warning");
+                    $(this).addClass("form-control-warning");
+                    isFormValid = false;
+                }
+                else{
+                    $("#fsMerk").removeClass("has-warning");
+                    $(this).removeClass("form-control-warning");
+                }
+            });
+
+            if (!isFormValid) {
+                $.alert({
+                    title: 'Error..',
+                    type: 'red',
+                    content: 'Silahkan melengkapi data yang diperlukan!',
+                });
+
+            } else {
+                $.ajax({
+                    url: 'merk',
+                    type: 'POST',
+                    crossDomain: true,
+                    data: {
+                        'namaMerk' : qMerk,
+                        'statusActive': qStatus,
+                        'csrf_name': qName,
+                        'csrf_value': qValue
+                    },
+                    success: function (response) {
+                        if(response) {
+                            $('#q-main').iziModal('close');
+                            $('#q-alert').iziModal('open');
+                        } else {
+                            $('#q-danger').iziModal('open');
+                        }
+                    }
+                });
+            };    
+        });
+
+    });
+
+})(jQuery);
+</script>
+
+
+{% endblock %}

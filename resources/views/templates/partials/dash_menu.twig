@@ -1,0 +1,31 @@
+<div class="ks-navbar-horizontal ks-icons-top ks-info">
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link {{ page == "dashboard.home" ? ' active' : '' }}" href="{{ path_for('dashboard.home') }}">
+                <span class="ks-icon la la-dashboard"></span>
+                <span class="ks-text">Dashboard</span>
+            </a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <span class="ks-icon la la-database"></span>
+                <span class="ks-text">Master</span>
+            </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="{{ path_for('dashboard.master.merk') }}">Merk/Brand</a>
+                <a class="dropdown-item" href="../horizontal_navbar_iconbar-primary/index.html" target="_blank">Detail Produk</a>
+                <a class="dropdown-item" href="../horizontal_navbar_iconbar-primary/index.html" target="_blank">Customer</a>
+            </div>
+
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link {{ page == "dashboard.orderlist" ? ' active' : '' }}"" href="{{ path_for('dashboard.orderlist') }}">
+                <span class="ks-icon la la-cubes"></span>
+                <span class="ks-text">Orders</span>
+            </a>
+        </li>
+
+ 
+    </ul>
+</div>
