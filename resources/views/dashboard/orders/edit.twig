@@ -159,8 +159,10 @@ $(document).on('closed', '#ks-izi-modal-alert', function (e) {
       function initMap() {
         var uluru = {lat: {{ order.latitude }}, lng: {{ order.longitude }}};
         var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 17,
-          center: uluru
+          zoom: 16,
+          center: uluru,
+          disableDefaultUI: true
+
         });
         var marker = new google.maps.Marker({
           position: uluru,

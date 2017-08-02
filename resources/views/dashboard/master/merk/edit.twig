@@ -1,3 +1,4 @@
+<form id="editMerk"> 
 <div class="row">
     <div class="col-lg-12 ks-panels-column-section">
         <div class="card" style="border:0px">
@@ -25,12 +26,13 @@
                                 <span class="ks-on">ON</span>
                                 <span class="ks-off">OFF</span>
                         </label>
+                        <input type="hidden" name="id" value="{{ merk.id }}">
                         {{ csrf.field | raw }}
                     </div>
                 </div>
                 <div class="col-sm-12 row" style="text-align: right;">
                     <div class="ks-item-block">
-                        <button class="btn btn-success rubah">Simpan</button>
+                        <button class="btn btn-success" type="submit">Simpan</button>
                         <button class="btn btn-danger" data-izimodal-close="" data-izimodal-transitionout="flipOutX">Keluar</button>
                     </div>
                 </div>
@@ -38,54 +40,100 @@
         </div>
     </div>
 </div>
+</form>
 
 <script type="application/javascript">
-$('.rubah').on('click', function (e) {
-	e.preventDefault();
 
-	var formValid = true;
-    var qId = {{ merk.id }};
-    var qMerk = $('input[name=nama]').val();
-    var qStatus = $('input:hidden[name=statusAktif]').val();
-    var qName = $('input:hidden[name=csrf_name]').val();
-    var qValue = $('input:hidden[name=csrf_value]').val();  
-
-    $(".requireds").each(function(){
-        if ($.trim($(this).val()).length <= 1){
-            $("#fsUbahMerk").addClass("has-warning");
-            $(this).addClass("form-control-warning");
-            formValid = false;
+$('input').each(function(){ 
+    $(this).blur(function(){ 
+        if (! $(this).val()){
+            return get_error_text(this);
         } else {
-            $("#fsUbahMerk").removeClass("has-warning");
-            $(this).removeClass("form-control-warning");
+            $(this).removeClass('form-control-danger'); 
+            $(this).closest('div').removeClass('has-danger');
+            $(this).closest('div').addClass('has-success');
+            $(this).addClass('form-control-success');
         }
     });
+});
 
-    if (formValid == false) {
-        $.alert({
-            title: 'Error..',
-            type: 'red',
-            content: 'Silahkan melengkapi data yang diperlukan!',
-        });
-	} else {
-        $.ajax({
-    	    url: 'merk/'+qId,
-            type: 'POST',
-            crossDomain: true,
-            data: {
-                'merkID': qId,
-                'merkName': qMerk,
-                'merkStatus': qStatus,
-                'csrf_name': qName,
-                'csrf_value': qValue
-            },
-            success: function (response) {
-              $('#q-edit').iziModal('close');
-              $('#q-alert').iziModal('open');
+$('#nama').blur(function(){
+    var nama= $(this).val();
+    var len= nama.length;
+    if(len>0){
+        if(!valid_nama(nama)){
+            $.alert({
+                title: 'Error..',
+                type: 'red',
+                content: 'Merk tidak Valid!',
+            });
+            return apply_feedback_error(this);
+        } else {
+            if (len < 2 ){
+                $.alert({
+                    title: 'Error..',
+                    type: 'red',
+                    content: 'Merk harus alphanumerik 2-20 karakter!',
+                });
+                return apply_feedback_error(this);
             }
-        });  
-    };
+        }
+    } 
+});
 
+$('#editMerk').submit(function(e){
+    e.preventDefault();
+    var valid=true;     
+    $(this).find('.required').each(function(){
+        if (! $(this).val()){
+            get_error_text(this);
+            valid = false;
+        } 
+        if ($(this).hasClass('form-control-danger')){
+            valid = false;
+            $.alert({
+                title: 'Error..',
+                type: 'red',
+                content: 'Silahkan lengkapi data yang masih kosong / diperlukan!',
+            });
+        }
+    });
+    if (valid){
+        $.confirm({
+            title: 'Simpan Data',
+            content: 'Apakah anda akan meproses data ini?',
+            icon: 'la la-question-circle',
+            animation: 'scale',
+            closeAnimation: 'scale',
+            opacity: 0.5,
+            type: 'orange',
+            buttons: {
+                'confirm': {
+                    text: 'OK',
+                    btnClass: 'btn-info',
+                    action: function () {
+                        $.ajax({
+                            url: "merk/"+{{ merk.id }},
+                            type: "POST",
+                            data: $('#editMerk').serialize(),
+                            dataType: "html",
+                            success: function(){                
+                                $('#q-main').iziModal('close');
+                                $('#q-alert').iziModal('open');
+                            },
+                            error: function (xhr, ajaxOptions, thrownError) {
+                                setTimeout(function(){
+                                    $('#q-alert2').iziModal('open');
+                                }, 2000);
+                            }
+                        });
+                    }
+                },
+                cancel: function () {
+                }
+            }
+        });
+    }
 });
 
 $(document).on('opened', '#q-alert', function (e) {
@@ -102,4 +150,19 @@ $(document).on('click','#checkOnOff',function(e){
     }
             
 });
+
+function valid_nama(nama) {
+    var pola = new RegExp(/^[a-z A-Z]+$/);
+    return pola.test(nama);
+}
+
+function apply_feedback_error(textbox){
+    $(textbox).addClass('form-control-danger');
+    $(textbox).closest('div').removeClass('has-success');
+    $(textbox).closest('div').addClass('has-danger');
+}
+
+function get_error_text(textbox){
+    return apply_feedback_error(textbox);
+}
 </script>

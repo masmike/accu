@@ -144,7 +144,6 @@
                 url: "orders/"+data[0],
                 crossDomain: true,
                 success: function(response) {
-                    //console.error(JSON.stringify(response));
                     $("#ks-izi-modal-basic .iziModal-content").html(response);
                     $('#ks-izi-modal-basic').iziModal('open');
                 },

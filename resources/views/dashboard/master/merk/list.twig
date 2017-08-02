@@ -121,15 +121,7 @@
     </form>
 </div>
 <div id="q-alert"></div>
-<div id="q-danger"
-     data-iziModal-title="Server Error. Silahkan hubungi Administrator!!"
-     data-iziModal-autoopen="false"
-     data-iziModal-headercolor="#ec644b"
-     data-iziModal-width="600"
-     data-iziModal-timeout="3000"
-     data-iziModal-timeoutProgressbar="true"
-     data-iziModal-attached="top"
-></div>
+<div id="q-alert2"></div>
 <div id="q-edit"
      class="ks-izi-modal"
      data-iziModal-title="Master Merk"
@@ -224,6 +216,10 @@
             window.open('merk', '_self');
         });
 
+        $(document).on('closed', '#q-alert2', function (e) {
+            window.open('merk', '_self');
+        });
+
         $('.ks-izi-modal-trigger').on('click', function (e) {
             $($(this).data('target')).iziModal('open');
         });     
@@ -238,6 +234,20 @@
             transitionIn: 'fadeInUp',
             transitionOut: 'fadeOutDown',
             attached: 'top',
+            pauseOnHover: true,
+            autoOpen: false
+        });
+
+        $("#q-alert2").iziModal({
+            title: "Error!",
+            subtitle: 'Silahkan hubungi Administrator...',
+            icon: 'fa fa-home',
+            headerColor: '#BD5B5B',
+            width: 600,
+            timeout: 1500,
+            timeoutProgressbar: true,
+            transitionIn: 'fadeInDown',
+            transitionOut: 'fadeOutDown',
             pauseOnHover: true,
             autoOpen: false
         });    
@@ -259,10 +269,8 @@
                     return get_error_text(this);
                 } else {
                     $(this).removeClass('form-control-danger'); 
-                    //$(this).parent().find('.text-warning').hide();//cari element dengan class has-warning dari element induk text yang sedang focus
                     $(this).closest('div').removeClass('has-danger');
                     $(this).closest('div').addClass('has-success');
-                    //$(this).parent().find('.form-control-feedback').removeClass('glyphicon glyphicon-warning-sign');
                     $(this).addClass('form-control-success');
                 }
             });
@@ -270,8 +278,8 @@
         $('#namaMerk').blur(function(){
             var nama= $(this).val();
             var len= nama.length;
-            if(len>0){ //jika ada isinya
-                if(!valid_nama(nama)){ //jika nama tidak valid
+            if(len>0){
+                if(!valid_nama(nama)){
                     $.alert({
                         title: 'Error..',
                         type: 'red',
@@ -279,7 +287,7 @@
                     });
                     return apply_feedback_error(this);
                 } else {
-                    if (len < 2 ){ //jika karakter >30
+                    if (len < 2 ){
                         $.alert({
                             title: 'Error..',
                             type: 'red',
@@ -291,7 +299,6 @@
             } 
         });
         
-        //post data
         $('#newMerk').submit(function(e){
             e.preventDefault();
             var valid=true;     
@@ -299,11 +306,6 @@
                 if (! $(this).val()){
                     get_error_text(this);
                     valid = false;
-                    $.alert({
-                        title: 'Error..',
-                        type: 'red',
-                        content: 'Silahkan lengkapi data yang masih kosong / diperlukan!',
-                    });
                 } 
                 if ($(this).hasClass('form-control-danger')){
                     valid = false;
@@ -315,50 +317,65 @@
                 }
             });
             if (valid){
-                        $.ajax({
-                            url: "simpan.php",
-                            type: "POST",
-                            data: $('#newMerk').serialize(),
-                            dataType: "html",
-                            success: function(){                
-                                //setTimeout(function(){
-                                //  swal({
-                                //    title:"Data Berhasil Disimpan",
-                                //    text: "Terimakasih",
-                                //    type: "success"
-                                //  }, function(){
-                                    window.location="tampil.php";
-                                //  });
-                                //}, 2000);
-                            },
-                            error: function (xhr, ajaxOptions, thrownError) {
-                                //setTimeout(function(){
-                                //    swal("Error", "Tolong Cek Koneksi Lalu Ulangi", "error");
-                                //}, 2000);
-                                }
+                $.confirm({
+                    title: 'Simpan Data',
+                    content: 'Apakah anda akan meproses data ini?',
+                    icon: 'la la-question-circle',
+                    animation: 'scale',
+                    closeAnimation: 'scale',
+                    opacity: 0.5,
+                    type: 'orange',
+                    buttons: {
+                        'confirm': {
+                            text: 'OK',
+                            btnClass: 'btn-info',
+                            action: function () {
+                                $.ajax({
+                                    url: "merk",
+                                    type: "POST",
+                                    data: $('#newMerk').serialize(),
+                                    dataType: "json",
+                                    success: function(response){                  
+                                        if (response.status == 'OK'){
+                                            $('#q-main').iziModal('close');
+                                            $('#q-alert').iziModal('open');
+                                        } else {
+                                            $('#q-main').iziModal('close');
+                                            $('#q-alert2').iziModal('setTitle', 'Error!');
+                                            $('#q-alert2').iziModal('setSubtitle', response.message);
+                                            $('#q-alert2').iziModal('open');
+                                        }
+                                    
+                                    },
+                                    error: function (xhr, ajaxOptions, thrownError) {
+                                        setTimeout(function(){
+                                            $('#q-alert2').iziModal('open');
+                                        }, 2000);
+                                    }
+                                });
+                            }
+                        },
+                        cancel: function () {
+                        }
+                    }
                 });
             }
         });
 
     });
 
-        function valid_nama(nama) {
-            var pola = new RegExp(/^[a-z A-Z]+$/);
-            return pola.test(nama);
-        }
-        function apply_feedback_error(textbox){
-            $(textbox).addClass('form-control-danger'); //menambah class no valid
-            //$(textbox).parent().find('.text-warning').show();
-            $(textbox).closest('div').removeClass('has-success');
-            $(textbox).closest('div').addClass('has-danger');
-            //$(textbox).parent().find('.form-control-feedback').removeClass('glyphicon glyphicon-ok');
-            //$(textbox).parent().find('.form-control-feedback').addClass('glyphicon glyphicon-warning-sign');
-        }
-        function get_error_text(textbox){
-            //$(textbox).parent().find('.text-warning').text("");
-            //$(textbox).parent().find('.text-warning').text("Text Box Ini Tidak Boleh Kosong");
-            return apply_feedback_error(textbox);
-        }
+    function valid_nama(nama) {
+        var pola = new RegExp(/^[a-z A-Z]+$/);
+        return pola.test(nama);
+    }
+    function apply_feedback_error(textbox){
+        $(textbox).addClass('form-control-danger');
+        $(textbox).closest('div').removeClass('has-success');
+        $(textbox).closest('div').addClass('has-danger');
+    }
+    function get_error_text(textbox){
+        return apply_feedback_error(textbox);
+    }
 
 })(jQuery);
 </script>

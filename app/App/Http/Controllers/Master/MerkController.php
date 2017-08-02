@@ -19,19 +19,20 @@ class MerkController extends Controller
     	$namaMerk = $this->param('namaMerk');
     	$statusActive = $this->param('statusActive');
 
-    	$validator = $this->validator()->validate([
-    		'nama|Merk' => [$namaMerk, 'required|min(2)'],
-    	]);
+        $isExist = Merk::where('nama', $namaMerk)->first();
+        
+        if(!($isExist)) {
+            $merk = Merk::create([
+               'nama' => $namaMerk,
+               'status' => $statusActive,
+            ]);
 
-    	if($validator->passes()) {
-
-    		$merk = Merk::create([
-    			'nama' => $namaMerk,
-    			'status' => $statusActive,
-    		]);
+            return json_encode(array('status' => 'OK'));
+        } else {
             
-            return json_encode(array('status' => '200'));
-    	} 
+            return json_encode(array('status' => 'Failed',
+                'message' => 'Merk '.$namaMerk.' sudah pernah terdaftar sebelumnya!'));
+        }
     }
 
     public function getDetail($merkID)
@@ -44,9 +45,9 @@ class MerkController extends Controller
 
     public function postDetail()
     {
-        $merkID = $this->param('merkID');
-        $merkName = $this->param('merkName');
-        $merkStatus = $this->param('merkStatus');
+        $merkID = $this->param('id');
+        $merkName = $this->param('nama');
+        $merkStatus = $this->param('statusAktif');
 
         $merk = Merk::where('id', $merkID)->first();
         $merk->update([
