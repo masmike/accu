@@ -1,0 +1,104 @@
+<form id="frCustomer">
+<div class="row">
+    <div class="col-lg-6 ks-panels-column-section">
+        <div class="card" style="border:0px">
+            <div class="card-block">
+                <h5 class="card-title">Data Customer</h5>
+                <div class="col-sm-12 row" style="margin-bottom:0px; margin-top:0px;">
+                    <div class="col-sm-4">
+                        <p class="form-control-static">Nama</p>
+                    </div>
+                        <div class="col-sm-8">
+                            <fieldset id="fsNama" class="form-group">
+                            <input class="form-control required" id="cname" name="cname" placeholder="Nama" type="text" maxlength="25" value="{{ old.nama ? old.nama : customer.nama }}">
+                            </fieldset>
+                    </div>
+                </div>
+                <div class="col-sm-12 row" style="margin-bottom:0px; margin-top:0px;">
+                    <div class="col-sm-4">
+                        <p class="form-control-static">Alamat</p>
+                    </div>
+                        <div class="col-sm-8">
+                            <fieldset id="fsAlamat" class="form-group">
+                            <textarea class="form-control required" id="caddr" name="caddr" placeholder="Alamat" value="{{ old.alamat ? old.alamat : customer.alamat }}"></textarea>
+                            </fieldset>
+                    </div>
+                </div>
+                <div class="col-sm-12 row" style="margin-bottom:0px; margin-top:0px;">
+                    <div class="col-sm-4">
+                        <p class="form-control-static">No. Telepon 1</p>
+                    </div>
+                        <div class="col-sm-8">
+                            <fieldset id="fsNoTel1" class="form-group">
+                            <input class="form-control required" id="cphone1" name="cphone1" placeholder="No. Telepon 1" type="text" maxlength="20" value="{{ old.phone1 ? old.phone1 : customer.phone1 }}">
+                            </fieldset>
+                    </div>
+                </div>
+                <div class="col-sm-12 row" style="margin-bottom:0px; margin-top:0px;">
+                    <div class="col-sm-4">
+                        <p class="form-control-static">No. Telepon 2</p>
+                    </div>
+                        <div class="col-sm-8">
+                            <fieldset id="fsNoTel2" class="form-group">
+                            <input class="form-control required" id="cphone2" name="cphone2" placeholder="No. Telepon 2" type="text" maxlength="20" value="{{ old.phone2 ? old.phone2 : customer.phone2 }}">
+                            </fieldset>
+                    </div>
+                </div>
+                <div class="col-sm-12 row" style="margin-bottom:0px; margin-top:0px;">
+                    <div class="col-sm-4">
+                        <p class="form-control-static">Email</p>
+                    </div>
+                        <div class="col-sm-8">
+                            <fieldset id="fsEmail" class="form-group">
+                            <input class="form-control required" id="cemail" name="cemail" placeholder="E-Mail" type="text" maxlength="50" value="{{ old.email ? old.email : customer.email }}">
+                            </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 ks-panels-column-section">
+        <div class="card" style="border:0px">
+            <div class="card-block">
+                <h5 class="card-title">Options</h5>
+                <div class="col-sm-12 row" style="margin-bottom: 0px; margin-top: 0px;">
+                    <div class="col-sm-4">
+                        <p class="form-control-static">Mobile Apps</p>
+                    </div>
+                    <div class="col-sm-8">
+                        <label class="ks-checkbox-slider ks-on-off ks-solid ks-primary">
+                            <input id ="csmobile" name="csmobile" type="hidden" value="{{ customer.statusMobile }}">
+                            <input id="onOffMobile" name="onOffMobile"  type="checkbox" {{ customer.statusMobile == "1" ? ' checked' : '' }}>
+                                <span class="ks-indicator"></span>
+                                <span class="ks-on">ON</span>
+                                <span class="ks-off">OFF</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-12 row" style="margin-bottom: 0px; margin-top: 0px;">
+                    <div class="col-sm-4">
+                        <p class="form-control-static">Status Aktif</p>
+                    </div>
+                    <div class="col-sm-8">
+                        <label class="ks-checkbox-slider ks-on-off ks-solid ks-primary">
+                            <input id ="cstatus" name="cstatus" type="hidden" value="{{ customer.status }}">
+                            <input id="checkOnOff" name="checkOnOff"  type="checkbox" {{ customer.status == "1" ? ' checked' : '' }}>
+                                <span class="ks-indicator"></span>
+                                <span class="ks-on">ON</span>
+                                <span class="ks-off">OFF</span>
+                        </label>
+                        <input name="cid" value="{{ customer.id }}" type="hidden">
+                        {{ csrf.field | raw }}
+                    </div>
+                </div>
+                <div class="col-sm-12 row" style="text-align: right;">
+                    <div class="ks-item-block">
+                        <button class="btn btn-success simpan" type="submit">Simpan</button>
+                        <button class="btn btn-danger" data-izimodal-close="" data-izimodal-transitionout="flipOutX">Keluar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</form>

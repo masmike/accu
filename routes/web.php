@@ -59,4 +59,8 @@ $app->group('/dashboard', function() {
     $this->route(['GET', 'POST'], '/merk', App\Http\Controllers\Master\MerkController::class)->add(new App\Http\Middleware\AuthMiddleware($this->getContainer()))->setName('dashboard.master.merk');
 
     $this->route(['GET', 'POST'], '/merk/{merkId}[/]', App\Http\Controllers\Master\MerkController::class, 'detail')->add(new App\Http\Middleware\AuthMiddleware($this->getContainer()))->setName('dashboard.master.merk.edit');
+
+    $this->route(['GET'], '/customer', App\Http\Controllers\Master\CustomerController::class)->add(new App\Http\Middleware\AuthMiddleware($this->getContainer()))->setName('dashboard.master.customer');
+
+    $this->route(['GET', 'POST'], '/customer/{custId}[/]', App\Http\Controllers\Master\CustomerController::class, 'detail')->setName('dashboard.master.customer.detail');
 });
