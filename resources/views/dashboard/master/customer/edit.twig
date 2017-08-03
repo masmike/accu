@@ -30,7 +30,7 @@
                     </div>
                         <div class="col-sm-8">
                             <fieldset id="fsNoTel1" class="form-group">
-                            <input class="form-control required" id="cphone1" name="cphone1" placeholder="No. Telepon 1" type="text" maxlength="20" value="{{ old.phone1 ? old.phone1 : customer.phone1 }}">
+                            <input class="form-control required" id="cphone1" name="cphone1" placeholder="No. Telepon 1" type="text" maxlength="30" value="{{ old.phone1 ? old.phone1 : customer.phone1 }}">
                             </fieldset>
                     </div>
                 </div>
@@ -102,3 +102,94 @@
     </div>
 </div>
 </form>
+
+<script type="application/javascript">
+$('input').each(function(){ 
+    $(this).blur(function(){ 
+        if (! $(this).val()){
+            return get_error_text(this);
+        } else {
+            $(this).removeClass('form-control-danger'); 
+            $(this).closest('div').removeClass('has-danger');
+            $(this).closest('div').addClass('has-success');
+            $(this).addClass('form-control-success');
+        }
+    });
+});
+
+$('#cname').blur(function(){
+    var nama= $(this).val();
+    var len= nama.length;
+    if(len>0){
+        if(!valid_nama(nama)){
+            $.alert({
+                title: 'Error..',
+                type: 'red',
+                content: 'Nama tidak Valid!',
+            });
+            return apply_feedback_error(this);
+        } else {
+            if (len < 2 ){
+                $.alert({
+                    title: 'Error..',
+                    type: 'red',
+                    content: 'Nama harus alphanumerik 2-30 karakter!',
+                });
+                return apply_feedback_error(this);
+            }
+        }
+    } 
+});
+
+$('#cphone1').blur(function(){
+    var hp=$(this).val();
+    var len=hp.length;
+    if (len>0 && len<=10){
+        $.alert({
+            title: 'Error..',
+            type: 'red',
+            content: 'Nomor Hanphone terlalu pendek!',
+        });
+        return apply_feedback_error(this);
+    } else {
+        if(!valid_hp(hp)){
+            $.alert({
+                title: 'Error..',
+                type: 'red',
+                content: 'Format nomor Hanphone salah! Karakter yang diperbolehkan +, - dan numerik!',
+            });
+            return apply_feedback_error(this);
+        } else {
+            if (len >13){
+                $.alert({
+                    title: 'Error..',
+                    type: 'red',
+                    content: 'Nomor Hanphone terlalu panjang!',
+                });
+                return apply_feedback_error(this);
+            }
+        }
+    }
+});
+
+function valid_nama(nama) {
+    var pola = new RegExp(/^[a-z A-Z]+$/);
+    return pola.test(nama);
+}
+
+function valid_hp(hp) {
+    var pola = new RegExp(/^[0-9+]+$/);
+    return pola.test(hp);
+}
+
+function apply_feedback_error(textbox){
+    $(textbox).addClass('form-control-danger');
+    $(textbox).closest('div').removeClass('has-success');
+    $(textbox).closest('div').addClass('has-danger');
+}
+
+function get_error_text(textbox){
+    return apply_feedback_error(textbox);
+}
+
+</script>
