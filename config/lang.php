@@ -34,8 +34,8 @@ return [
             ],
 
             'login' => [
-                'invalid' => "You have supplied invalid credentials.",
-                'error' => "Please enter your credentials to continue.",
+                'invalid' => "Username/Password Salah!",
+                'error' => "Masukkan Username dan Password untuk melanjutkan.",
                 'resend_activation' => "Another activation e-mail has been sent. Please check your e-mail for instructions.",
             ],
 

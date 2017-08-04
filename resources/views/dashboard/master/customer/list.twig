@@ -71,6 +71,8 @@
 	    </div>
 	</div>
 </div>
+<div id="q-alert"></div>
+<div id="q-alert2"></div>
 <div id="q-edit"
      class="ks-izi-modal"
      data-iziModal-title="Master Customer"
@@ -101,6 +103,7 @@
 <script src="{{ asset('js/select2.min.js') }}"></script>
 <script src="{{ asset('js/iziModal.min.js') }}"></script>
 <script src="{{ asset('js/jquery-confirm.min.js') }}"></script>
+
 
 <script type="application/javascript">
 (function ($) {
@@ -150,10 +153,46 @@
                 }
             });
         });
+
         $('#q-edit').iziModal({
             width: 1000,
         });
 
+        $(document).on('opened', '#q-alert', function (e) {
+            window.open('customer', '_self');
+        });
+
+        $(document).on('closed', '#q-alert2', function (e) {
+            window.open('customer', '_self');
+        });
+
+        $("#q-alert").iziModal({
+            title: "Data berhasil disimpan!",
+            icon: 'la la-check',
+            headerColor: '#00af66',
+            width: 600,
+            timeout: 1500,
+            timeoutProgressbar: true,
+            transitionIn: 'fadeInUp',
+            transitionOut: 'fadeOutDown',
+            attached: 'top',
+            pauseOnHover: true,
+            autoOpen: false
+        });
+
+        $("#q-alert2").iziModal({
+            title: "Error!",
+            subtitle: 'Silahkan hubungi Administrator...',
+            icon: 'fa fa-home',
+            headerColor: '#BD5B5B',
+            width: 600,
+            timeout: 1500,
+            timeoutProgressbar: true,
+            transitionIn: 'fadeInDown',
+            transitionOut: 'fadeOutDown',
+            pauseOnHover: true,
+            autoOpen: false
+        });
 	});
 })(jQuery);
 </script>

@@ -1,4 +1,4 @@
-<form id="frCustomer">
+<form id="editCustomer">
 <div class="row">
     <div class="col-lg-6 ks-panels-column-section">
         <div class="card" style="border:0px">
@@ -11,6 +11,7 @@
                         <div class="col-sm-8">
                             <fieldset id="fsNama" class="form-group">
                             <input class="form-control required" id="cname" name="cname" placeholder="Nama" type="text" maxlength="25" value="{{ old.nama ? old.nama : customer.nama }}">
+                            <small class="form-text text-muted"></small>
                             </fieldset>
                     </div>
                 </div>
@@ -20,27 +21,30 @@
                     </div>
                         <div class="col-sm-8">
                             <fieldset id="fsAlamat" class="form-group">
-                            <textarea class="form-control required" id="caddr" name="caddr" placeholder="Alamat" value="{{ old.alamat ? old.alamat : customer.alamat }}"></textarea>
+                            <textarea class="form-control required" id="caddr" name="caddr" placeholder="Alamat">{{ old.alamat ? old.alamat : customer.alamat }}</textarea>
+                            <small class="form-text text-muted"></small>
                             </fieldset>
                     </div>
                 </div>
                 <div class="col-sm-12 row" style="margin-bottom:0px; margin-top:0px;">
                     <div class="col-sm-4">
-                        <p class="form-control-static">No. Telepon 1</p>
+                        <p class="form-control-static">No. Handphone</p>
                     </div>
                         <div class="col-sm-8">
                             <fieldset id="fsNoTel1" class="form-group">
-                            <input class="form-control required" id="cphone1" name="cphone1" placeholder="No. Telepon 1" type="text" maxlength="30" value="{{ old.phone1 ? old.phone1 : customer.phone1 }}">
+                            <input class="form-control required" id="cphone1" name="cphone1" placeholder="No. Handphone" type="text" maxlength="30" value="{{ old.phone1 ? old.phone1 : customer.phone1 }}">
+                            <small class="form-text text-muted"></small>
                             </fieldset>
                     </div>
                 </div>
                 <div class="col-sm-12 row" style="margin-bottom:0px; margin-top:0px;">
                     <div class="col-sm-4">
-                        <p class="form-control-static">No. Telepon 2</p>
+                        <p class="form-control-static">No. Telepon</p>
                     </div>
                         <div class="col-sm-8">
                             <fieldset id="fsNoTel2" class="form-group">
-                            <input class="form-control required" id="cphone2" name="cphone2" placeholder="No. Telepon 2" type="text" maxlength="20" value="{{ old.phone2 ? old.phone2 : customer.phone2 }}">
+                            <input class="form-control" id="cphone2" name="cphone2" placeholder="No. Telepon" type="text" maxlength="20" value="{{ old.phone2 ? old.phone2 : customer.phone2 }}">
+                            <small class="form-text text-muted"></small>
                             </fieldset>
                     </div>
                 </div>
@@ -51,6 +55,7 @@
                         <div class="col-sm-8">
                             <fieldset id="fsEmail" class="form-group">
                             <input class="form-control required" id="cemail" name="cemail" placeholder="E-Mail" type="text" maxlength="50" value="{{ old.email ? old.email : customer.email }}">
+                            <small class="form-text text-muted"></small>
                             </fieldset>
                     </div>
                 </div>
@@ -104,92 +109,277 @@
 </form>
 
 <script type="application/javascript">
-$('input').each(function(){ 
-    $(this).blur(function(){ 
-        if (! $(this).val()){
-            return get_error_text(this);
-        } else {
-            $(this).removeClass('form-control-danger'); 
-            $(this).closest('div').removeClass('has-danger');
-            $(this).closest('div').addClass('has-success');
-            $(this).addClass('form-control-success');
-        }
-    });
-});
+(function ($) {
+    $(document).ready(function() {
 
-$('#cname').blur(function(){
-    var nama= $(this).val();
-    var len= nama.length;
-    if(len>0){
-        if(!valid_nama(nama)){
-            $.alert({
-                title: 'Error..',
-                type: 'red',
-                content: 'Nama tidak Valid!',
+        $('.text-muted').hide();
+        $('input').each(function(){ 
+            $(this).blur(function(){ 
+                if (! $(this).val()){
+                    return get_error_text(this);
+                } else {
+                    $(this).removeClass('form-control-danger');
+                    $(this).parent().find('.text-muted').hide();
+                    $(this).closest('div').removeClass('has-danger');
+                    $(this).closest('div').addClass('has-success');
+                    $(this).addClass('form-control-success');
+                }
             });
-            return apply_feedback_error(this);
-        } else {
-            if (len < 2 ){
-                $.alert({
-                    title: 'Error..',
-                    type: 'red',
-                    content: 'Nama harus alphanumerik 2-30 karakter!',
-                });
-                return apply_feedback_error(this);
-            }
-        }
-    } 
-});
-
-$('#cphone1').blur(function(){
-    var hp=$(this).val();
-    var len=hp.length;
-    if (len>0 && len<=10){
-        $.alert({
-            title: 'Error..',
-            type: 'red',
-            content: 'Nomor Hanphone terlalu pendek!',
         });
-        return apply_feedback_error(this);
-    } else {
-        if(!valid_hp(hp)){
-            $.alert({
-                title: 'Error..',
-                type: 'red',
-                content: 'Format nomor Hanphone salah! Karakter yang diperbolehkan +, - dan numerik!',
+
+        $('textarea').each(function(){ 
+            $(this).blur(function(){ 
+                if (! $(this).val()){
+                    return get_error_text(this);
+                } else {
+                    $(this).removeClass('form-control-danger');
+                    $(this).parent().find('.text-muted').hide();
+                    $(this).closest('div').removeClass('has-danger');
+                    $(this).closest('div').addClass('has-success');
+                    $(this).addClass('form-control-success');
+                }
             });
-            return apply_feedback_error(this);
-        } else {
-            if (len >13){
+        });
+
+        $('#cname').blur(function(){
+            var nama= $(this).val();
+            var len= nama.length;
+            if(len>0){
+                if(!valid_nama(nama)){
+                    $.alert({
+                        title: 'Error..',
+                        type: 'red',
+                        content: 'Nama tidak Valid!',
+                    });
+                    return apply_feedback_error(this);
+                } else {
+                    if (len<2){
+                        $.alert({
+                            title: 'Error..',
+                            type: 'red',
+                            content: 'Nama harus alphanumerik 2-30 karakter!',
+                        });
+                        return apply_feedback_error(this);
+                    }
+                }
+            }
+        });
+
+        $('#caddr').blur(function(){
+            var addr = $(this).val();
+            var len = addr.length;
+            if(len>0){
+                if(!valid_addr(addr)){
+                    $.alert({
+                        title: 'Error..',
+                        type: 'red',
+                        content: 'Alamat tidak Valid!',
+                    });
+                    return apply_feedback_error(this);
+                } else {
+                    if(len<5) {
+                        $.alert({
+                        title: 'Error..',
+                        type: 'red',
+                        content: 'Alamat terlalu pendek!',
+                    });
+                    return apply_feedback_error(this);
+                    }
+                }
+            }
+        });
+
+        $('#cphone1').blur(function(){
+            var hp=$(this).val();
+            var len=hp.length;
+            if (len>0 && len<=9){
                 $.alert({
                     title: 'Error..',
                     type: 'red',
-                    content: 'Nomor Hanphone terlalu panjang!',
+                    content: 'Nomor Hanphone terlalu pendek!',
                 });
                 return apply_feedback_error(this);
+            } else {
+                if(!valid_hp(hp)){
+                    $.alert({
+                        title: 'Error..',
+                        type: 'red',
+                        content: 'Format nomor Hanphone salah! Silahkan periksa kembali!',
+                    });
+                    return apply_feedback_error(this);
+                } else {
+                    if (len > 13){
+                        $.alert({
+                            title: 'Error..',
+                            type: 'red',
+                            content: 'Nomor Hanphone terlalu panjang!',
+                        });
+                        return apply_feedback_error(this);
+                    }
+                }
             }
+        });
+
+        $('#cphone2').blur(function(){
+            var hp=$(this).val();
+            var len=hp.length;
+            if (len>0 && len<=9){
+                $.alert({
+                    title: 'Error..',
+                    type: 'red',
+                    content: 'Nomor Telepon terlalu pendek!',
+                });
+                return apply_feedback_error(this);
+            } else {
+                if(!valid_hp(hp)){
+                    $.alert({
+                        title: 'Error..',
+                        type: 'red',
+                        content: 'Format nomor Telepon salah! Silahkan periksa kembali!',
+                    });
+                    return apply_feedback_error(this);
+                } else {
+                    if (len > 15){
+                        $.alert({
+                            title: 'Error..',
+                            type: 'red',
+                            content: 'Nomor Telepon terlalu panjang!',
+                        });
+                        return apply_feedback_error(this);
+                    }
+                }
+            }
+        });
+
+        $('#cemail').blur(function(){
+            var email= $(this).val();
+            var len= email.length;
+            if(len>0){ 
+                if(!valid_email(email)){ 
+                    $.alert({
+                        title: 'Error..',
+                        type: 'red',
+                        content: 'Format email tidak valid! Periksa kembali!!',
+                    });
+                    return apply_feedback_error(this);
+                } else {
+                    if (len>30){ 
+                        $.alert({
+                            title: 'Error..',
+                            type: 'red',
+                            content: 'E-Mail maksimal 30 karakter!',
+                        });
+                        return apply_feedback_error(this);
+                    }
+                }
+            }
+        });
+
+        $('#editCustomer').submit(function(e){
+            e.preventDefault();
+            var valid=true;     
+            $(this).find('.required').each(function(){
+                if (! $(this).val()){
+                    get_error_text(this);
+                    valid = false;
+                } 
+                if ($(this).hasClass('form-control-danger')){
+                    valid = false;
+                }
+            });
+            if (valid){
+            $.confirm({
+                title: 'Simpan Data',
+                content: 'Apakah anda akan meproses data ini?',
+                icon: 'la la-question-circle',
+                animation: 'scale',
+                closeAnimation: 'scale',
+                opacity: 0.5,
+                type: 'orange',
+                buttons: {
+                    'confirm': {
+                        text: 'OK',
+                        btnClass: 'btn-info',
+                        action: function () {
+                            $.ajax({
+                                url: "customer/"+{{ customer.id }},
+                                type: "POST",
+                                data: $('#editCustomer').serialize(),
+                                dataType: "html",
+                                success: function(){                
+                                    $('#q-main').iziModal('close');
+                                    $('#q-alert').iziModal('open');
+                                },
+                                error: function (xhr, ajaxOptions, thrownError) {
+                                    setTimeout(function(){
+                                        $('#q-alert2').iziModal('open');
+                                    }, 2000);
+                                }
+                            });
+                        }
+                    },
+                    cancel: function () {
+                    }
+                }
+            });
         }
-    }
-});
+        });
 
-function valid_nama(nama) {
-    var pola = new RegExp(/^[a-z A-Z]+$/);
-    return pola.test(nama);
-}
+        $(document).on('click','#onOffMobile',function(e){
+            if($('#onOffMobile').is(':checked')){
+                $('#csmobile').val('1');
+                $('#onOffMobile').attr('checked', true);
+            } else {
+                $('#csmobile').val('0');
+                $('#onOffMobile').attr('checked', false);
+            }
+                    
+        });
 
-function valid_hp(hp) {
-    var pola = new RegExp(/^[0-9+]+$/);
-    return pola.test(hp);
-}
+        $(document).on('click','#checkOnOff',function(e){
+            if($('#checkOnOff').is(':checked')){
+                $('#cstatus').val('1');
+                $('#checkOnOff').attr('checked', true);
+            } else {
+                $('#cstatus').val('0');
+                $('#checkOnOff').attr('checked', false);
+            }
+                    
+        });
 
-function apply_feedback_error(textbox){
-    $(textbox).addClass('form-control-danger');
-    $(textbox).closest('div').removeClass('has-success');
-    $(textbox).closest('div').addClass('has-danger');
-}
+        function valid_nama(nama) {
+            var pola = new RegExp(/^[a-z A-Z]+$/);
+            return pola.test(nama);
+        }
 
-function get_error_text(textbox){
-    return apply_feedback_error(textbox);
-}
+        function valid_hp(hp) {
+            var pola = new RegExp(/^(^\+62\s?|^0)(\d{3,4}-?){2}\d{3,4}$/g);
+            return pola.test(hp);
+        }
 
+        function valid_email(email){
+            var pola= new RegExp(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]+$/);
+            return pola.test(email);
+        }
+
+        function valid_addr(addr){
+            var pola = new RegExp(/^[^\n]+$/);
+            return pola.test(addr);
+        }
+
+        function apply_feedback_error(textbox){
+            $(textbox).addClass('form-control-danger');
+            $(textbox).parent().find('.text-muted').show();
+            $(textbox).closest('div').removeClass('has-success');
+            $(textbox).closest('div').addClass('has-danger');
+        }
+
+        function get_error_text(textbox){
+            $(textbox).parent().find('.text-muted').text("");
+            $(textbox).parent().find('.text-muted').text("Isian Ini Tidak Boleh Kosong");
+            return apply_feedback_error(textbox);
+        }
+
+    });
+})(jQuery);
 </script>

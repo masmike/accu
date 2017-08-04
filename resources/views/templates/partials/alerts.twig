@@ -44,6 +44,13 @@
         {{ flash.getMessage('error').0 }}
     </p>
 </div>
+<script type="application/javascript">
+    $.alert({
+                            title: 'Error..',
+                            type: 'red',
+                            content: 'Merk harus alphanumerik 2-20 karakter!',
+                        });
+</script>
 {% endif %}
 
 {% if flash.getMessage('raw_error').0 %}
@@ -56,6 +63,9 @@
         {{ flash.getMessage('raw_error').0|raw }}
     </p>
 </div>
+<script>
+console.log('error');
+</script>
 {% endif %}
 
 {% if flash.getMessage('raw_warning').0 %}

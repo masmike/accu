@@ -24,17 +24,18 @@ class CustomerController extends Controller
 
     public function postDetail()
     {
-	    $custId = $this->params('cid');
-	    $custName = $this->params('cname');
-	    $custAddr = $this->params('caddr');
-	    $custP1 = $this->params('cphone1');
-	    $custP2 = $this->params('cphone2');
-	    $custEmail = $this->params('cemail');
-	    $custStatus = $this->params('cstatus');
-	    $custMobile = $this->params('csmobile');
+	    $custId = $this->param('cid');
+	    $custName = $this->param('cname');
+	    $custAddr = $this->param('caddr');
+	    $custP1 = $this->param('cphone1');
+	    $custP2 = $this->param('cphone2');
+	    $custEmail = $this->param('cemail');
+	    $custStatus = $this->param('cstatus');
+	    $custMobile = $this->param('csmobile');
 
-	    $upd = Customer::where('id', $custId)->first();
-	    $upd->update([
+	    $customer = Customer::where('id', $custId)->first();
+	    //print_r($custName); die();
+	    $customer->update([
 	    	'nama' => $custName,
 	    	'alamat' => $custAddr,
 	    	'phone1' => $custP1,
