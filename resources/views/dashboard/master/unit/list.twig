@@ -17,12 +17,12 @@
         <div class="ks-page-header">
             <section class="ks-title-and-subtitle">
                 <div class="ks-title-block">
-                    <h3 class="ks-main-title">Master Customer</h3>
-                    <div class="ks-sub-title">Daftar Customer / Member</div>
+                    <h3 class="ks-main-title">Master Unit</h3>
+                    <div class="ks-sub-title">Daftar Detail Unit Accu</div>
                 </div>
-                <!-- <button class="btn btn-primary-outline ks-solid ks-izi-modal-trigger" data-target="#q-tambah">
+                <button class="btn btn-primary-outline ks-solid ks-izi-modal-trigger" data-target="#q-addunit">
                     Tambah
-                </button> -->
+                </button>
             </section>
         </div>
 	    <div class="ks-page-content">
@@ -32,24 +32,26 @@
 	                	<div class="ks-nav-body">
 		                    <div class="ks-nav-body-wrapper">
 		                        <div class="container-fluid">
-		                            <table id="cust-datatable" class="table table-striped table-bordered" width="100%">
+		                            <table id="unit-datatable" class="table table-striped table-bordered" width="100%">
 				                        <thead>
 				                        <tr>
 				                            <th data-field="id" data-sortable="true">Id</th>
-				                            <th data-field="Customer" data-sortable="true">Nama Customer</th>
-				                            <th data-field="Phone1" data-sortable="true">No. Telepon 1</th>
-				                            <th data-field="Phone2" data-sortable="true">No. Telepon 2</th>
-				                            <th data-field="Status" data-sortable="true">Status</th>
+				                            <th data-field="merk" data-sortable="true">Merk</th>
+				                            <th data-field="kode" data-sortable="true">Kode Unit</th>
+				                            <th data-field="type" data-sortable="true">Type</th>
+				                            <th data-field="harga" data-sortable="true">Harga</th>
+				                            <th data-field="status" data-sortable="true">Status</th>
 				                        </tr>
 				                        </thead>
 				                        
-				                        <tbody id="custTable">
-										{% for row in allCustomer %}
+				                        <tbody id="unitTable">
+										{% for row in allUnit %}
 				                        <tr>
 				                            <td>{{ row.id }}</td>
-				                            <td>{{ row.nama }}</td>
-				                            <td>{{ row.phone1 }}</td>
-				                            <td>{{ row.phone2 }}</td>
+				                            <td>{{ row.merk.nama }}</td>
+				                            <td>{{ row.kode }}</td>
+				                            <td>{{ row.type }}</td>
+				                            <td align="right">{{ row.harga|number_format('2', ',', '.') }}</td>
 				                            <td>
 				                            	{% if row.status == 1 %}
 				                                    <span class="badge badge-mantis">Aktif</span>
@@ -75,12 +77,22 @@
 <div id="q-alert2"></div>
 <div id="q-edit"
      class="ks-izi-modal"
-     data-iziModal-title="Master Customer"
-     data-iziModal-subtitle="Edit data Master Customer"
+     data-iziModal-title="Master Unit"
+     data-iziModal-subtitle="Edit data Master Unit"
      data-iziModal-icon="la la-edit"
      data-iziModal-padding="20"
      data-iziModal-autoopen="false"
      data-iziModal-headercolor="#25628f">
+</div>
+<div id="q-addunit"
+     class="ks-izi-modal"     
+     data-iziModal-title="Master Unit"
+     data-iziModal-subtitle="Tambah, Edit dan Hapus Master Unit"
+     data-iziModal-icon="la la-edit"
+     data-iziModal-padding="20"
+     data-iziModal-autoopen="false"
+     data-iziModal-headercolor="#25628f">
+     
 </div>
 {% endblock %}
 
@@ -109,7 +121,7 @@
 (function ($) {
     $(document).ready(function() {
 
-		var table = $('#cust-datatable').DataTable({
+		var table = $('#unit-datatable').DataTable({
 	        lengthChange: false,
 	        "order": [[ 1, "asc" ]],
 	        buttons: [
@@ -117,10 +129,11 @@
 	            'excelHtml5'
 	        ],
 	        columnDefs: [
-	            { width: "55%", targets: 1 },
-	            { width: "20%", targets: 2 },
+	            { width: "15%", targets: 1 },
+	            { width: "40%", targets: 2 },
 	            { width: "20%", targets: 3 },
-	            { width: "5%", targets: 4 },
+	            { width: "20%", targets: 3 },
+	            { width: "5%", targets: 5 },
 	            {
 	                "targets": [ 0 ],
 	                "visible": false,
@@ -133,15 +146,15 @@
 	            });
 	        }
 	    });    
-	    table.buttons().container().appendTo( '#cust-datatable_wrapper .col-md-6:eq(0)' );
+	    table.buttons().container().appendTo( '#unit-datatable_wrapper .col-md-6:eq(0)' );
 
-	    $('#custTable').on('dblclick', 'tr', function () {
+	    $('#unitTable').on('dblclick', 'tr', function () {
             var data = table.row(this).data();
             
             $('#q-edit').iziModal('open');
             $.ajax({
                 type: "GET",
-                url: "customer/"+data[0],
+                url: "unit/"+data[0],
                 crossDomain: true,
                 success: function(response) {
                     //console.error(JSON.stringify(response));
@@ -152,6 +165,10 @@
                     console.log(response);
                 }
             });
+        });
+
+        $('#q-addunit').iziModal({
+            width: 600,
         });
 
         $('#q-edit').iziModal({

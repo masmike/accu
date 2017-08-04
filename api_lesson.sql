@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-08-01 19:50:22
+Date: 2017-08-05 05:54:48
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -21,17 +21,23 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `master_customer`;
 CREATE TABLE `master_customer` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `nama` varchar(100) COLLATE latin1_general_ci DEFAULT NULL,
+  `nama` varchar(100) COLLATE latin1_general_ci NOT NULL,
   `alamat` varchar(255) COLLATE latin1_general_ci DEFAULT NULL,
-  `no_telepon` varchar(20) COLLATE latin1_general_ci DEFAULT NULL,
+  `phone1` varchar(20) COLLATE latin1_general_ci NOT NULL,
+  `phone2` varchar(20) COLLATE latin1_general_ci DEFAULT NULL,
+  `email` varchar(50) COLLATE latin1_general_ci DEFAULT NULL,
+  `status` tinyint(1) DEFAULT '0',
+  `statusMobile` tinyint(1) DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 -- ----------------------------
 -- Records of master_customer
 -- ----------------------------
-INSERT INTO `master_customer` VALUES ('1', 'Franz Kafka', 'Jl. Imogiri Barat No. 12 Yogyakarta', '087754321190');
-INSERT INTO `master_customer` VALUES ('2', 'Dewi Sandra', 'Jl. Kalimantan Raya No. 20 A Jakarta Barat 11530', '0811987756');
+INSERT INTO `master_customer` VALUES ('1', 'Franz Kafka', 'Jl. Imogiri Barat No. 12 Yogyakarta', '087754321190', '', 'franz@yahoo.com', '1', '0', null, '2017-08-04 04:28:33');
+INSERT INTO `master_customer` VALUES ('2', 'Dewi Sandrax', 'Jl. Kalimantan Raya No. 20 A Jakarta Barat 11530. INDONESIA', '0811987756', '0274555666', 'abc@abc.com', '0', '1', null, '2017-08-04 04:28:58');
 
 -- ----------------------------
 -- Table structure for master_merk
@@ -41,10 +47,10 @@ CREATE TABLE `master_merk` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nama` varchar(30) COLLATE latin1_general_ci NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '0',
-  `created_at` date DEFAULT NULL,
-  `updated_at` date DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 -- ----------------------------
 -- Records of master_merk
@@ -52,34 +58,36 @@ CREATE TABLE `master_merk` (
 INSERT INTO `master_merk` VALUES ('1', 'JB', '1', null, null);
 INSERT INTO `master_merk` VALUES ('2', 'GS', '1', null, null);
 INSERT INTO `master_merk` VALUES ('3', 'GSY', '1', null, null);
-INSERT INTO `master_merk` VALUES ('4', 'INCOE', '1', '2017-07-30', '2017-07-30');
-INSERT INTO `master_merk` VALUES ('5', 'YUASA', '1', '2017-07-30', '2017-07-30');
-INSERT INTO `master_merk` VALUES ('6', 'ROCKET', '1', '2017-07-31', '2017-07-31');
-INSERT INTO `master_merk` VALUES ('7', 'X123', '1', '2017-07-31', '2017-07-31');
-INSERT INTO `master_merk` VALUES ('8', '1234', '1', '2017-07-31', '2017-07-31');
-INSERT INTO `master_merk` VALUES ('9', '112233', '1', '2017-07-31', '2017-07-31');
-INSERT INTO `master_merk` VALUES ('10', 'as', '0', '2017-08-01', '2017-08-01');
-INSERT INTO `master_merk` VALUES ('11', 'ac', '0', '2017-08-01', '2017-08-01');
-INSERT INTO `master_merk` VALUES ('12', 'as', '0', '2017-08-01', '2017-08-01');
-INSERT INTO `master_merk` VALUES ('13', 'abc', '0', '2017-08-01', '2017-08-01');
-INSERT INTO `master_merk` VALUES ('14', 'Rocket', '1', '2017-08-01', '2017-08-01');
-INSERT INTO `master_merk` VALUES ('15', 'xfiles', '1', '2017-08-01', '2017-08-01');
-INSERT INTO `master_merk` VALUES ('16', 'afsfsa', '1', '2017-08-01', '2017-08-01');
-INSERT INTO `master_merk` VALUES ('17', 'sdfsdf', '1', '2017-08-01', '2017-08-01');
-INSERT INTO `master_merk` VALUES ('18', 'asskk', '0', '2017-08-01', '2017-08-01');
-INSERT INTO `master_merk` VALUES ('19', 'asdasd', '1', '2017-08-01', '2017-08-01');
-INSERT INTO `master_merk` VALUES ('20', 'qweqwe', '1', '2017-08-01', '2017-08-01');
-INSERT INTO `master_merk` VALUES ('21', 'qwedsf', '0', '2017-08-01', '2017-08-01');
-INSERT INTO `master_merk` VALUES ('22', 'zxc', '1', '2017-08-01', '2017-08-01');
-INSERT INTO `master_merk` VALUES ('23', 'asdasd', '1', '2017-08-01', '2017-08-01');
-INSERT INTO `master_merk` VALUES ('24', 'qweq', '1', '2017-08-01', '2017-08-01');
-INSERT INTO `master_merk` VALUES ('25', 'qaqa', '1', '2017-08-01', '2017-08-01');
-INSERT INTO `master_merk` VALUES ('26', 'adasdasd', '0', '2017-08-01', '2017-08-01');
-INSERT INTO `master_merk` VALUES ('27', 'asdasdxzc', '0', '2017-08-01', '2017-08-01');
-INSERT INTO `master_merk` VALUES ('28', 'hahaha', '1', '2017-08-01', '2017-08-01');
-INSERT INTO `master_merk` VALUES ('29', 'cvxcv', '0', '2017-08-01', '2017-08-01');
-INSERT INTO `master_merk` VALUES ('30', 'zxczx', '1', '2017-08-01', '2017-08-01');
-INSERT INTO `master_merk` VALUES ('31', 'sdasdasdadasdasdasdasdasd', '1', '2017-08-01', '2017-08-01');
+INSERT INTO `master_merk` VALUES ('4', 'INCOE', '1', '2017-07-30 00:00:00', '2017-07-30 00:00:00');
+INSERT INTO `master_merk` VALUES ('5', 'YUASA', '1', '2017-07-30 00:00:00', '2017-07-30 00:00:00');
+INSERT INTO `master_merk` VALUES ('6', 'ROCKET', '1', '2017-07-31 00:00:00', '2017-07-31 00:00:00');
+INSERT INTO `master_merk` VALUES ('7', 'X123', '1', '2017-07-31 00:00:00', '2017-07-31 00:00:00');
+INSERT INTO `master_merk` VALUES ('8', '1234', '1', '2017-07-31 00:00:00', '2017-07-31 00:00:00');
+INSERT INTO `master_merk` VALUES ('9', '112233', '1', '2017-07-31 00:00:00', '2017-07-31 00:00:00');
+INSERT INTO `master_merk` VALUES ('10', 'as', '0', '2017-08-01 00:00:00', '2017-08-01 00:00:00');
+INSERT INTO `master_merk` VALUES ('11', 'ac', '0', '2017-08-01 00:00:00', '2017-08-01 00:00:00');
+INSERT INTO `master_merk` VALUES ('12', 'as', '0', '2017-08-01 00:00:00', '2017-08-01 00:00:00');
+INSERT INTO `master_merk` VALUES ('13', 'abc', '0', '2017-08-01 00:00:00', '2017-08-01 00:00:00');
+INSERT INTO `master_merk` VALUES ('14', 'Rocket', '1', '2017-08-01 00:00:00', '2017-08-01 00:00:00');
+INSERT INTO `master_merk` VALUES ('15', 'xfiles', '1', '2017-08-01 00:00:00', '2017-08-01 00:00:00');
+INSERT INTO `master_merk` VALUES ('16', 'afsfsa', '1', '2017-08-01 00:00:00', '2017-08-01 00:00:00');
+INSERT INTO `master_merk` VALUES ('17', 'sdfsdf', '1', '2017-08-01 00:00:00', '2017-08-01 00:00:00');
+INSERT INTO `master_merk` VALUES ('18', 'asskk', '0', '2017-08-01 00:00:00', '2017-08-01 00:00:00');
+INSERT INTO `master_merk` VALUES ('19', 'asdasd', '1', '2017-08-01 00:00:00', '2017-08-01 00:00:00');
+INSERT INTO `master_merk` VALUES ('20', 'qweqwe', '1', '2017-08-01 00:00:00', '2017-08-01 00:00:00');
+INSERT INTO `master_merk` VALUES ('21', 'qwedsf', '0', '2017-08-01 00:00:00', '2017-08-01 00:00:00');
+INSERT INTO `master_merk` VALUES ('22', 'zxc', '1', '2017-08-01 00:00:00', '2017-08-01 00:00:00');
+INSERT INTO `master_merk` VALUES ('23', 'asdasd', '1', '2017-08-01 00:00:00', '2017-08-01 00:00:00');
+INSERT INTO `master_merk` VALUES ('24', 'qweq', '1', '2017-08-01 00:00:00', '2017-08-01 00:00:00');
+INSERT INTO `master_merk` VALUES ('25', 'qaqa', '1', '2017-08-01 00:00:00', '2017-08-01 00:00:00');
+INSERT INTO `master_merk` VALUES ('26', 'adasdasd', '0', '2017-08-01 00:00:00', '2017-08-01 00:00:00');
+INSERT INTO `master_merk` VALUES ('27', 'asdasdxzc', '0', '2017-08-01 00:00:00', '2017-08-01 00:00:00');
+INSERT INTO `master_merk` VALUES ('28', 'hahaha', '1', '2017-08-01 00:00:00', '2017-08-01 00:00:00');
+INSERT INTO `master_merk` VALUES ('29', 'cvxcv', '1', '2017-08-01 00:00:00', '2017-08-02 00:00:00');
+INSERT INTO `master_merk` VALUES ('30', 'zxczx', '1', '2017-08-01 00:00:00', '2017-08-01 00:00:00');
+INSERT INTO `master_merk` VALUES ('31', 'merk', '1', '2017-08-01 00:00:00', '2017-08-02 00:00:00');
+INSERT INTO `master_merk` VALUES ('32', 'tambahan', '1', '2017-08-02 00:00:00', '2017-08-02 04:03:21');
+INSERT INTO `master_merk` VALUES ('33', 'aiox', '1', '2017-08-02 00:00:00', '2017-08-04 04:22:54');
 
 -- ----------------------------
 -- Table structure for master_pembayaran
@@ -108,20 +116,21 @@ INSERT INTO `master_pembayaran` VALUES ('5', 'Cash', null, null);
 DROP TABLE IF EXISTS `master_unit`;
 CREATE TABLE `master_unit` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `merk_id` tinyint(3) DEFAULT NULL,
-  `kode` varchar(15) COLLATE latin1_general_ci DEFAULT NULL,
-  `type` tinyint(1) DEFAULT NULL,
-  `harga` decimal(15,2) DEFAULT NULL,
+  `merk_id` tinyint(3) NOT NULL,
+  `kode` varchar(15) COLLATE latin1_general_ci NOT NULL,
+  `type` varchar(10) COLLATE latin1_general_ci NOT NULL,
+  `harga` decimal(15,2) NOT NULL,
   `deskripsi` longtext COLLATE latin1_general_ci,
-  `created_at` date DEFAULT NULL,
-  `updated_at` date DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 -- ----------------------------
 -- Records of master_unit
 -- ----------------------------
-INSERT INTO `master_unit` VALUES ('1', '1', 'JB40AN1Z', '1', '450000.00', 'akui basah jb', null, null);
+INSERT INTO `master_unit` VALUES ('1', '1', 'JB40AN1Z', 'Gel', '450000.00', 'akui basah jb', '0', null, null);
 
 -- ----------------------------
 -- Table structure for migrations

@@ -62,5 +62,8 @@ $app->group('/dashboard', function() {
 
     $this->route(['GET'], '/customer', App\Http\Controllers\Master\CustomerController::class)->add(new App\Http\Middleware\AuthMiddleware($this->getContainer()))->setName('dashboard.master.customer');
 
-    $this->route(['GET', 'POST'], '/customer/{custId}[/]', App\Http\Controllers\Master\CustomerController::class, 'detail')->setName('dashboard.master.customer.detail');
+    $this->route(['GET', 'POST'], '/customer/{custId}[/]', App\Http\Controllers\Master\CustomerController::class, 'detail')->add(new App\Http\Middleware\AuthMiddleware($this->getContainer()))->setName('dashboard.master.customer.detail');
+
+    $this->route(['GET'], '/unit', App\Http\Controllers\Master\UnitController::class)->add(new App\Http\Middleware\AuthMiddleware($this->getContainer()))->setName('dashboard.master.unit');
+
 });
