@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-08-05 05:54:48
+Date: 2017-08-07 08:06:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,7 +26,10 @@ CREATE TABLE `master_customer` (
   `phone1` varchar(20) COLLATE latin1_general_ci NOT NULL,
   `phone2` varchar(20) COLLATE latin1_general_ci DEFAULT NULL,
   `email` varchar(50) COLLATE latin1_general_ci DEFAULT NULL,
-  `status` tinyint(1) DEFAULT '0',
+  `password` varchar(255) COLLATE latin1_general_ci DEFAULT NULL,
+  `active_hash` varchar(255) COLLATE latin1_general_ci DEFAULT NULL,
+  `recover_hash` varchar(255) COLLATE latin1_general_ci DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0',
   `statusMobile` tinyint(1) DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
@@ -36,8 +39,8 @@ CREATE TABLE `master_customer` (
 -- ----------------------------
 -- Records of master_customer
 -- ----------------------------
-INSERT INTO `master_customer` VALUES ('1', 'Franz Kafka', 'Jl. Imogiri Barat No. 12 Yogyakarta', '087754321190', '', 'franz@yahoo.com', '1', '0', null, '2017-08-04 04:28:33');
-INSERT INTO `master_customer` VALUES ('2', 'Dewi Sandrax', 'Jl. Kalimantan Raya No. 20 A Jakarta Barat 11530. INDONESIA', '0811987756', '0274555666', 'abc@abc.com', '0', '1', null, '2017-08-04 04:28:58');
+INSERT INTO `master_customer` VALUES ('1', 'Franz Kafka', 'Jl. Imogiri Barat No. 12 Yogyakarta', '087754321190', '', 'franz@yahoo.com', null, null, null, '1', '0', null, '2017-08-04 04:28:33');
+INSERT INTO `master_customer` VALUES ('2', 'Dewi Sandrax', 'Jl. Kalimantan Raya No. 20 A Jakarta Barat 11530. INDONESIA', '0811987756', '0274555666', 'abc@abc.com', null, null, null, '1', '0', null, '2017-08-06 15:38:43');
 
 -- ----------------------------
 -- Table structure for master_merk
@@ -111,26 +114,51 @@ INSERT INTO `master_pembayaran` VALUES ('4', 'Kartu Kredit', null, null);
 INSERT INTO `master_pembayaran` VALUES ('5', 'Cash', null, null);
 
 -- ----------------------------
+-- Table structure for master_type
+-- ----------------------------
+DROP TABLE IF EXISTS `master_type`;
+CREATE TABLE `master_type` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nama` varchar(15) COLLATE latin1_general_ci NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+-- ----------------------------
+-- Records of master_type
+-- ----------------------------
+INSERT INTO `master_type` VALUES ('1', 'Gel', '1', null, null);
+INSERT INTO `master_type` VALUES ('2', 'Basah', '1', null, null);
+INSERT INTO `master_type` VALUES ('3', 'Kering', '1', null, null);
+
+-- ----------------------------
 -- Table structure for master_unit
 -- ----------------------------
 DROP TABLE IF EXISTS `master_unit`;
 CREATE TABLE `master_unit` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `merk_id` tinyint(3) NOT NULL,
+  `merk_id` tinyint(1) DEFAULT NULL,
   `kode` varchar(15) COLLATE latin1_general_ci NOT NULL,
-  `type` varchar(10) COLLATE latin1_general_ci NOT NULL,
+  `type_id` tinyint(1) DEFAULT NULL,
   `harga` decimal(15,2) NOT NULL,
   `deskripsi` longtext COLLATE latin1_general_ci,
   `status` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 -- ----------------------------
 -- Records of master_unit
 -- ----------------------------
-INSERT INTO `master_unit` VALUES ('1', '1', 'JB40AN1Z', 'Gel', '450000.00', 'akui basah jb', '0', null, null);
+INSERT INTO `master_unit` VALUES ('1', '1', 'JB40AN1Z', '1', '450000.00', 'akui basah jb', '1', null, null);
+INSERT INTO `master_unit` VALUES ('2', '2', 'X123', '2', '675000.00', null, '0', null, null);
+INSERT INTO `master_unit` VALUES ('3', '4', '1234', '3', '1000000.00', 'asdasdas', '1', '2017-08-06 05:55:39', '2017-08-06 05:55:39');
+INSERT INTO `master_unit` VALUES ('4', '5', 'X112233', '2', '120000.00', 'Aki Motor', '1', '2017-08-06 05:56:14', '2017-08-06 05:56:14');
+INSERT INTO `master_unit` VALUES ('5', '5', 'X11', '3', '122000.00', 'abc', '1', '2017-08-06 05:56:56', '2017-08-06 05:56:56');
+INSERT INTO `master_unit` VALUES ('6', '2', '123', '2', '90000.00', 'motor', '1', '2017-08-06 05:57:39', '2017-08-06 05:57:39');
 
 -- ----------------------------
 -- Table structure for migrations
