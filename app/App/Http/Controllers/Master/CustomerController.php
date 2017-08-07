@@ -34,7 +34,7 @@ class CustomerController extends Controller
 	    $custMobile = $this->param('csmobile');
 
 	    $customer = Customer::where('id', $custId)->first();
-	    //print_r($custName); die();
+
 	    $customer->update([
 	    	'nama' => $custName,
 	    	'alamat' => $custAddr,

@@ -11,10 +11,11 @@
                 <span class="ks-icon la la-database"></span>
                 <span class="ks-text">Master</span>
             </a>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="{{ path_for('dashboard.master.merk') }}">Merk/Brand</a>
-                <a class="dropdown-item" href="{{ path_for('dashboard.master.unit') }}">Detail Produk</a>
-                <a class="dropdown-item" href="{{ path_for('dashboard.master.customer') }}">Customer</a>
+            <div class="dropdown-menu ks-info" aria-labelledby="Preview">
+                <a class="dropdown-item {{ page == "dashboard.master.merk" ? ' ks-active' }}" href="{{ path_for('dashboard.master.merk') }}">Merk/Brand</a>
+                <a class="dropdown-item {{ page == "dashboard.master.unit" ? ' active' }}" href="{{ path_for('dashboard.master.unit') }}">Detail Produk</a>
+                <a class="dropdown-item {{ page == "dashboard.master.customer" ? ' active' }}" href="{{ path_for('dashboard.master.customer') }}">Customer</a>
+                
             </div>
 
         </li>

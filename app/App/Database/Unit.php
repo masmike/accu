@@ -7,14 +7,21 @@ class Unit extends Model
 {
     protected $table = 'master_unit';
 
+    protected $fillable = ['merk_id', 'kode', 'type_id', 'harga', 'deskripsi', 'status'];
+
     public function merk()
     {
     	return $this->belongsTo(Merk::class);
     }
 
-    public function transaction()
+    // public function transaction()
+    // {
+    // 	return $this->hasMany(Transaction::class);
+    // }
+
+    public function type()
     {
-    	return $this->hasMany(Transaction::class);
+    	return $this->belongsTo(Type::class);
     }
 
 }

@@ -19,4 +19,9 @@ class Merk extends Model
    		return $this->hasMany(Transaction::class);
    	}
 
+    public function type()
+    {
+      return $this->hasMany(Type::class);
+    }
+
 }

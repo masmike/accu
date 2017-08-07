@@ -49,6 +49,10 @@ $app->get('/auth/logout', function($request, $response, $args) {
     return $response->withRedirect($this['router']->pathFor('home'));
 })->add(new App\Http\Middleware\AuthMiddleware($app->getContainer()))->setName('auth.logout');
 
+$app->group('/member', function() {
+    $this->route(['GET', 'POST'], '/login', App\Http\Controllers\Member\LoginController::class)->add(new App\Http\Middleware\GuestMiddleware($this->getContainer()))->setName('member.login');
+});  
+
 $app->group('/dashboard', function() {
     $this->route(['GET'], '[/]', App\Http\Controllers\Dashboard\DashboardController::class)->add(new App\Http\Middleware\AuthMiddleware($this->getContainer()))->setName('dashboard.home');
 
@@ -64,6 +68,8 @@ $app->group('/dashboard', function() {
 
     $this->route(['GET', 'POST'], '/customer/{custId}[/]', App\Http\Controllers\Master\CustomerController::class, 'detail')->add(new App\Http\Middleware\AuthMiddleware($this->getContainer()))->setName('dashboard.master.customer.detail');
 
-    $this->route(['GET'], '/unit', App\Http\Controllers\Master\UnitController::class)->add(new App\Http\Middleware\AuthMiddleware($this->getContainer()))->setName('dashboard.master.unit');
+    $this->route(['GET','POST'], '/unit', App\Http\Controllers\Master\UnitController::class)->add(new App\Http\Middleware\AuthMiddleware($this->getContainer()))->setName('dashboard.master.unit');
+
+    $this->route(['GET', 'POST'], '/unit/{unitId}[/]', App\Http\Controllers\Master\UnitController::class, 'detail')->add(new App\Http\Middleware\AuthMiddleware($this->getContainer()))->setName('dashboard.master.unit.detail');
 
 });
