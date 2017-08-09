@@ -11,7 +11,10 @@
                         <div class="col-sm-8 formgroup">
                             <select class="form-control ks-select" style="width: 100%;" id="umerk" name="umerk">
                                 <optgroup label="Merk Accu">
-                             
+                                    <option value="{{ unit.merk_id }}" selected="selected">{{ unit.merk.nama }}</option>
+                                {% for rowmerk in allMerk %}
+                                    <option value={{ rowmerk.id }}>{{ rowmerk.nama }}</option>
+                                {% endfor %}                                   
                                 </optgroup>
                             </select>
                         </div>
@@ -34,6 +37,7 @@
                         <div class="col-sm-8 formgroup">
                             <select class="form-control ks-select" style="width: 100%;" id="utype" name="utype">
                                 <optgroup label="Type Accu">
+                                    <option value="{{ unit.type_id }}" selected="selected">{{ unit.type.nama }}</option>
                                 {% for rowtype in allType %}
                                     <option value="{{ rowtype.id }}">{{ rowtype.nama }}</option>
                                 {% endfor %}
@@ -47,7 +51,7 @@
                         </div>
                         <div class="col-sm-8">
                             <fieldset id="fsHarga" class="form-group">
-                            <input class="form-control required" id="uharga" name="uharga" placeholder="Harga" type="text" maxlength="15" value="{{ unit.harga | number_format("2", ",", ".") }}">
+                            <input class="form-control required" id="uharga" name="uharga" placeholder="Harga" type="text" maxlength="15" value="{{ unit.harga | number_format("2", ".", ",") }}">
                             <small class="form-text text-muted"></small>
                             </fieldset>
                         </div>
@@ -66,32 +70,179 @@
                 </div>
             </div>
         </div>
-    <div class="col-lg-6 ks-panels-column-section">
-        <div class="card-block">
-            <h5 class="card-title">Options</h5>
-            <div class="col-sm-12 row" style="margin-top: 0px;">
-                <div class="col-sm-4">
-                    <p class="form-control-static">Status Aktif</p>
+        <div class="col-lg-6 ks-panels-column-section">
+            <div class="card-block">
+                <h5 class="card-title">Options</h5>
+                <div class="col-sm-12 row" style="margin-top: 0px;">
+                    <div class="col-sm-4">
+                        <p class="form-control-static">Status Aktif</p>
+                    </div>
+                    <div class="col-sm-8">
+                        <label class="ks-checkbox-slider ks-on-off ks-solid ks-primary">
+                            <input id ="statusActive" name="statusActive" type="hidden" value="{{ unit.status }}">
+                            <input id="checkonoff" name="checkonoff" {{ unit.status == "1" ? ' checked' : '' }} type="checkbox">
+                                <span class="ks-indicator"></span>
+                                <span class="ks-on">ON</span>
+                                <span class="ks-off">OFF</span>
+                        </label>
+                        <input name="uid" value="{{ unit.id }}" type="hidden">
+                        {{ csrf.field | raw }}
+                    </div>
                 </div>
-                <div class="col-sm-8">
-                    <label class="ks-checkbox-slider ks-on-off ks-solid ks-primary">
-                        <input id ="statusActive" name="statusActive" type="hidden" value="{{ unit.status }}">
-                        <input id="checkonoff" name="checkonoff" {{ unit.status == "1" ? ' checked' : '' }} type="checkbox">
-                            <span class="ks-indicator"></span>
-                            <span class="ks-on">ON</span>
-                            <span class="ks-off">OFF</span>
-                    </label>
-                    <input name="uid" value="{{ unit.id }}" type="hidden">
-                    {{ csrf.field | raw }}
-                </div>
-            </div>
-            <div class="col-sm-12 row" style="text-align: right;">
-                <div class="ks-item-block">
-                    <button class="btn btn-success simpan">Simpan</button>
-                    <button class="btn btn-danger" data-izimodal-close="" data-izimodal-transitionout="flipOutX">Keluar</button>
+                <div class="col-sm-12 row" style="text-align: right;">
+                    <div class="ks-item-block">
+                        <button class="btn btn-success simpan">Simpan</button>
+                        <button class="btn btn-danger" data-izimodal-close="" data-izimodal-transitionout="flipOutX">Keluar</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
-    </form>
+</form>
+<script type="application/javascript">
+(function ($) {
+    $(document).ready(function() {
+        $('select.ks-select').select2();
+        $('.text-muted').hide();
+
+        $('input').each(function(){ 
+            $(this).blur(function(){ 
+                if (! $(this).val()){
+                    return get_error_text(this);
+                } else {
+                    $(this).removeClass('form-control-danger');
+                    $(this).parent().find('.text-muted').hide();
+                    $(this).closest('div').removeClass('has-danger');
+                    $(this).closest('div').addClass('has-success');
+                    $(this).addClass('form-control-success');
+                }
+            });
+        });
+
+        $('textarea').each(function(){ 
+            $(this).blur(function(){ 
+                if (! $(this).val()){
+                    return get_error_text(this);
+                } else {
+                    $(this).removeClass('form-control-danger');
+                    $(this).parent().find('.text-muted').hide();
+                    $(this).closest('div').removeClass('has-danger');
+                    $(this).closest('div').addClass('has-success');
+                    $(this).addClass('form-control-success');
+                }
+            });
+        });
+
+        $('#ukode').blur(function(){
+            var kode=$(this).val();
+            var len=kode.length;
+            if (len>0 && len<=1){
+                $.alert({
+                    title: 'Error..',
+                    type: 'red',
+                    content: 'Kode harus lebih dari 1 karakter!',
+                });
+                return apply_feedback_error(this);
+            }
+        });
+
+        $('#uharga').blur(function(){
+            var harga=$(this).val();
+            var len=harga.length;
+            if (len>0 && len<=4){
+                $.alert({
+                    title: 'Error..',
+                    type: 'red',
+                    content: 'Format Harga Salah!',
+                });
+                return apply_feedback_error(this);
+            } else {
+                if (len>0){
+                if(!valid_harga(harga)){
+                    $.alert({
+                        title: 'Error..',
+                        type: 'red',
+                        content: 'Format Harga Salah!',
+                    });
+                    return apply_feedback_error(this);
+                }
+                }
+            }
+        });
+
+        $('#editUnit').submit(function(e){
+            e.preventDefault();
+            var valid=true;     
+            $(this).find('.required').each(function(){
+                if (! $(this).val()){
+                    get_error_text(this);
+                    valid = false;
+                } 
+                if ($(this).hasClass('form-control-danger')){
+                    valid = false;
+                }
+            });
+            if (valid){
+                $.confirm({
+                title: 'Simpan Data',
+                content: 'Apakah anda akan meproses data ini?',
+                icon: 'la la-question-circle',
+                animation: 'scale',
+                closeAnimation: 'scale',
+                opacity: 0.5,
+                type: 'orange',
+                buttons: {
+                    'confirm': {
+                        text: 'OK',
+                        btnClass: 'btn-info',
+                        action: function () {
+                            $.ajax({
+                                url: "unit/"+{{ unit.id }},
+                                type: "POST",
+                                data: $('#editUnit').serialize(),
+                                dataType: "json",
+                                success: function(response){      
+                                    if (response.status == 'OK'){
+                                        $('#q-add').iziModal('close');
+                                        $('#q-alert').iziModal('open');
+                                    } else {
+                                        $('#q-add').iziModal('close');
+                                        $('#q-alert2').iziModal('setTitle', 'Error!');
+                                        $('#q-alert2').iziModal('setSubtitle', response.message);
+                                        $('#q-alert2').iziModal('open');
+                                    }
+                                },
+                                error: function (xhr, ajaxOptions, thrownError) {
+                                    setTimeout(function(){
+                                       // $('#q-alert2').iziModal('open');
+                                    }, 2000);
+                                }
+                            });
+                        }
+                    },
+                    cancel: function () {
+                    }
+                }
+                });
+            }
+        });
+
+        function valid_harga(harga){
+            var pola = new RegExp(/^[0-9]+$/);
+            return pola.test(harga);
+        }
+
+        function apply_feedback_error(textbox){
+            $(textbox).addClass('form-control-danger');
+            $(textbox).parent().find('.text-muted').show();
+            $(textbox).closest('div').removeClass('has-success');
+            $(textbox).closest('div').addClass('has-danger');
+        }
+
+        function get_error_text(textbox){
+            $(textbox).parent().find('.text-muted').text("");
+            $(textbox).parent().find('.text-muted').text("Isian Ini Tidak Boleh Kosong");
+            return apply_feedback_error(textbox);
+        }
+    });
+})(jQuery);
