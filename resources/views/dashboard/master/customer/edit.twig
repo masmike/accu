@@ -54,7 +54,7 @@
                     </div>
                         <div class="col-sm-8">
                             <fieldset id="fsEmail" class="form-group">
-                            <input class="form-control required" id="cemail" name="cemail" placeholder="E-Mail" type="text" maxlength="50" value="{{ old.email ? old.email : customer.email }}">
+                            <input class="form-control" id="cemail" name="cemail" placeholder="E-Mail" type="text" maxlength="50" value="{{ old.email ? old.email : customer.email }}">
                             <small class="form-text text-muted"></small>
                             </fieldset>
                     </div>
@@ -113,7 +113,7 @@
     $(document).ready(function() {
 
         $('.text-muted').hide();
-        $('input').each(function(){ 
+        $('.required').each(function(){ 
             $(this).blur(function(){ 
                 if (! $(this).val()){
                     return get_error_text(this);
@@ -252,8 +252,8 @@
         });
 
         $('#cemail').blur(function(){
-            var email= $(this).val();
-            var len= email.length;
+            var email = $(this).val();
+            var len = email.length;
             if(len>0){ 
                 if(!valid_email(email)){ 
                     $.alert({
@@ -305,10 +305,17 @@
                                 url: "customer/"+{{ customer.id }},
                                 type: "POST",
                                 data: $('#editCustomer').serialize(),
-                                dataType: "html",
-                                success: function(){                
-                                    $('#q-main').iziModal('close');
-                                    $('#q-alert').iziModal('open');
+                                dataType: "json",
+                                success: function(response){  
+                                    if (response.status == 'OK'){              
+                                        $('#q-main').iziModal('close');
+                                        $('#q-alert').iziModal('open');
+                                    } else {
+                                        $('#q-add').iziModal('close');
+                                        $('#q-alert2').iziModal('setTitle', 'Error!');
+                                        $('#q-alert2').iziModal('setSubtitle', response.message);
+                                        $('#q-alert2').iziModal('open');
+                                    }
                                 },
                                 error: function (xhr, ajaxOptions, thrownError) {
                                     setTimeout(function(){
@@ -329,9 +336,14 @@
             if($('#onOffMobile').is(':checked')){
                 $('#csmobile').val('1');
                 $('#onOffMobile').attr('checked', true);
+                $('#cemail').addClass('required');
             } else {
                 $('#csmobile').val('0');
                 $('#onOffMobile').attr('checked', false);
+                $('#cemail').removeClass('required');
+                $('#cemail').removeClass('form-control-danger');
+                $('#cemail').parent().find('.text-muted').hide();
+                $('#cemail').closest('div').removeClass('has-danger');
             }
                     
         });

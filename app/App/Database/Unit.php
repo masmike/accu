@@ -14,10 +14,10 @@ class Unit extends Model
     	return $this->belongsTo(Merk::class);
     }
 
-    // public function transaction()
-    // {
-    // 	return $this->hasMany(Transaction::class);
-    // }
+    public function transaction()
+    {
+    	return $this->hasMany(Transaction::class);
+    }
 
     public function type()
     {

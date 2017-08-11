@@ -8,5 +8,9 @@ return [
         ],
         'auth_id' => env('APP_AUTH_ID', 'user_id'),
         'remember_id' => env('APP_REMEMBER_ID', 'APP_REMEMBER_TOKEN'),
+        'mobile_activation' => [
+        	'method' => env('MOBILE_ACTIVATION_METHOD', 'sms'),
+        ],
+        
     ]
 ];
