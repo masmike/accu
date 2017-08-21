@@ -51,7 +51,7 @@
                         </div>
                         <div class="col-sm-8">
                             <fieldset id="fsHarga" class="form-group">
-                            <input class="form-control required" id="uharga" name="uharga" placeholder="Harga" type="text" maxlength="15" value="{{ unit.harga | number_format("2", ".", ",") }}">
+                            <input class="form-control required" id="uharga" name="uharga" placeholder="Harga" type="text" maxlength="15" value="{{ unit.harga | number_format("0") }}">
                             <small class="form-text text-muted"></small>
                             </fieldset>
                         </div>

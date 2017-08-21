@@ -73,37 +73,39 @@ class CustomerController extends Controller
 		    			'password' => $this->hash->password($password),
 		    		]);
 
-		    		//send sms
-		    		$complete = '';
-		    		$message = 'Hallo, '.$custName.'. Gunakan password '.$password.' untuk login ke System Accu Mobile';
-		    		$user = 'admin';
-		    		$passwd = 'admin';
-		    		$modem = '7';
+		    		//verifikasi via sms kalau enable
+		    		if($this->config('app.mobile_activation.method') === 'mail') {
+			    		$complete = '';
+			    		$message = 'Hallo, '.$custName.'. Gunakan password '.$password.' untuk login ke System Accu Mobile';
+			    		$user = 'admin';
+			    		$passwd = 'admin';
+			    		$modem = '7';
 
-		    		$smsServer = 'http://124.40.249.222:7890/';
-		    		$smsKeyword = 'sendmsg?';
-		    		$smsAuth = 'user=' . $user . '&passwd=' . $passwd;
-        			$smsType = '&cat=1&modem=' . $modem;
-		    		$smsMessage = str_replace(' ', '%20', $message);
-		    		$smsData = '&to=' . $custP1 . '&text=' . $smsMessage;
-		    		$complete = $smsServer . $smsKeyword . $smsAuth . $smsType . $smsData;
-		    		
-		    		$ch = curl_init($complete);
-                	$timeout = 5;
-                	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	                curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
-	                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-	                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-	                $output = curl_exec($ch);
-	                curl_close($ch);
+			    		$smsServer = 'http://124.40.249.222:7890/';
+			    		$smsKeyword = 'sendmsg?';
+			    		$smsAuth = 'user=' . $user . '&passwd=' . $passwd;
+	        			$smsType = '&cat=1&modem=' . $modem;
+			    		$smsMessage = str_replace(' ', '%20', $message);
+			    		$smsData = '&to=' . $custP1 . '&text=' . $smsMessage;
+			    		$complete = $smsServer . $smsKeyword . $smsAuth . $smsType . $smsData;
+			    		
+			    		$ch = curl_init($complete);
+	                	$timeout = 5;
+	                	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		                curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
+		                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+		                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+		                $output = curl_exec($ch);
+		                curl_close($ch);
 
-	                if (strpos($output, 'Err')) {
-	                    $actsms = 'Failed';
+		                if (strpos($output, 'Err')) {
+		                    $actsms = 'Failed';
 
-	                } else {
-	                	$actsms = 'Success';
-	                }
-
+		                } else {
+		                	$actsms = 'Success';
+		                }
+		            };
+					$actsms = 'No SMS Verification';
 		    	}
 		    }
 

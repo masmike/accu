@@ -3,7 +3,7 @@ namespace App\Http\Controllers\Member;
 
 use Carbon\Carbon;
 
-use App\Database\Member;
+use App\Database\Customer;
 use App\Http\Controllers\Controller;
 use App\Lib\Cookie;
 use App\Lib\Session;
@@ -15,35 +15,41 @@ class LoginController extends Controller
         $email = $this->param('email');
         $password = $this->param('password');
 
-        // $validator = $this->validator()->validate([
-        //     'username|Username' => [$membername, 'required'],
-        //     'password|Password' => [$password, 'required'],
-        // ]);
-
-        if($validator->passes()) {
-            $member = User::where('email', $membername)->orWhere('phone1', $membername)->first();
+        $member = Customer::where('email', $email)->first();
+        $result = array();
 
             if(!$member || !$this->hash->verifyPassword($password, $member->password)) {
-                $this->flash("error", $this->lang('alerts.login.invalid'));
-                return $this->redirect('member.login');
-            } else if($member && !(bool)$member->status) {
-                Session::set('temp_user_id', $member->id);
-                $this->flash("raw_warning", "The account you are trying to access has not been activated. <a class='alert-link' href='" . $this->router()->pathFor('auth.activate.resend') . "'>Resend activation link</a>");
-                return $this->redirect('member.login');
+                // error password
+                $result['noauth'] = 'true';
+                $result['message'] = 'E-Mail / Password Salah!';
+                $result['time'] = microtime(true);
+                return json_encode($result, 200, JSON_PRETTY_PRINT);
+            } else if($member && !(bool)$member->statusMobile) {
+                Session::set('temp_member_id', $member->id);
+                // return not activated
+                $result['noauth'] = 'true';
+                $result['message'] = 'Account anda belum diaktivasi!';
+                $result['time'] = microtime(true);
+                return json_encode($result, 200, JSON_PRETTY_PRINT);
             } else if($member && $this->hash->verifyPassword($password, $member->password)) {
-                Session::set($this->config('app.auth_id'), $member->id);
+                Session::set($this->config('app.member_id'), $member->id);
                 
-                if(Session::exists('temp_user_id')) {
-                    Session::destroy('temp_user_id');
-                }
-                
-                return $this->redirect('dashboard.home');
+                if(Session::exists('temp_member_id')) {
+                    Session::destroy('temp_member_id');
+                }               
+                // return login success
+                $result['noauth'] = 'false';
+                $result['uid'] = $member['id'];
+                $result['name'] = $member['nama'];
+                $result['email'] = $member['email'];
+                $result['created_at'] = $member['created_at'];
+                return json_encode($result, 200, JSON_PRETTY_PRINT);
             }
-        }
 
-        $this->flashNow("error", $this->lang('alerts.login.error'));
-        return $this->render('auth/login', [
-            'errors' => $validator->errors(),
-        ]);
+        // error other
+        $result['noauth'] = 'true';
+        $result['message'] = 'Invalid Login';
+        $result['time'] = microtime(true);
+        
     }
 }

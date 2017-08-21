@@ -17,7 +17,6 @@
                 <a class="dropdown-item {{ page == "dashboard.master.customer" ? ' active' }}" href="{{ path_for('dashboard.master.customer') }}">Customer</a>
                 
             </div>
-
         </li>
 
         <li class="nav-item">
@@ -25,6 +24,17 @@
                 <span class="ks-icon la la-cubes"></span>
                 <span class="ks-text">Orders</span>
             </a>
+        </li>
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <span class="ks-icon la la-circle"></span>
+                <span class="ks-text">Website</span>
+            </a>
+            <div class="dropdown-menu ks-info" aria-labelledby="Preview">
+                <a class="dropdown-item {{ page == "dashboard.webbanner" ? ' active' }}" href="{{ path_for('dashboard.webbanner') }}">Banner Promo</a>
+                <a class="dropdown-item {{ page == "dashboard.webcompany" ? ' active' }}" href="{{ path_for('dashboard.webcompany') }}">Company</a>
+            </div>
         </li>
 
  

@@ -51,7 +51,7 @@
 				                            <td>{{ row.merk.nama }}</td>
 				                            <td>{{ row.kode }}</td>
 				                            <td>{{ row.type.nama }}</td>
-				                            <td align="right">{{ row.harga|number_format('2', ',', '.') }}</td>
+				                            <td align="right">{{ row.harga|number_format('2', '.', ',') }}</td>
 				                            <td>
 				                            	{% if row.status == 1 %}
 				                                    <span class="badge badge-mantis">Aktif</span>
