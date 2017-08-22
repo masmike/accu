@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Basic page needs -->
+<meta charset="utf-8">
+<!--[if IE]>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <![endif]-->
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>{{ pageId }} | {{ getenv('APP_NAME', 'Q.Informatics') }}</title>
+<meta name="description" content="">
+
+<!-- Mobile specific metas  -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Favicon  -->
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+<!-- Google Fonts -->
+<link href='https://fonts.googleapis.com/css?family=Poppins:400,300,500,600,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="{{ asset('css/fonts/montserrat/styles.css') }}">
+
+<!-- CSS Style -->
+<link rel="stylesheet" href="{{ asset('front/css/front_style.css') }}">
+</head>
+
+<body class="cms-index-index cms-home-page">
+
+<!--[if lt IE 8]>
+      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]--> 
+{% include 'templates/partials/nav_web.twig' %}
+
+{% block content %}
+{% include 'templates/partials/main_web.twig' %}
+{% endblock %}
+
+{% include 'templates/partials/footer_web.twig' %}

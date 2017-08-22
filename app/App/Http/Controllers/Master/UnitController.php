@@ -55,7 +55,7 @@ class UnitController extends Controller
         $type = Type::where([['status', '=', '1'], ['id', '!=', $columnId['type_id']]])->get();
 
         $data = array('page' => 'dashboard.master.unit.edit', 'unit' => $unit, 'allMerk' => $merk, 'allType' => $type);
-        //var_dump(json_encode($data));
+
         return $this->render('dashboard/master/unit/edit', $data);
     }
 
@@ -83,4 +83,13 @@ class UnitController extends Controller
         return json_encode(array('status' => 'OK'));
 
     }
+
+    public function getSlug($slug)
+    {
+        $unit = Unit::with('merk')->where('slug', $slug)->first();;
+        $data = array('pageId' => $unit['merk']['nama'].' '.$unit['kode'],'page' => 'produk.detail', 'unitDetail' => $unit);
+
+        return $this->render('products/products', $data);
+    }
+
 }

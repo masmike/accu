@@ -2,6 +2,8 @@
 
 $app->route(['GET'], '/', App\Http\Controllers\HomeController::class)->setName('home');
 
+$app->route(['GET'], '/produk/{slug}', App\Http\Controllers\Master\UnitController::class, 'slug')->setName('produk.detail');
+
 $app->group('/auth', function() {
     $this->route(['GET', 'POST'], '/login', App\Http\Controllers\Auth\LoginController::class)->add(new App\Http\Middleware\GuestMiddleware($this->getContainer()))->setName('auth.login');
     
