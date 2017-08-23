@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-xs-12">
           <ul>
-            <li class="home"> <a title="Go to Home Page" href="index.html">Home</a><span>&raquo;</span></li>
+            <li class="home"> <a title="Go to Home Page" href="{{ path_for('home') }}">Home</a><span>&raquo;</span></li>
             <li class=""> <a title="Go to Home Page" href="shop_grid.html">{{ unitDetail.merk.nama | title }}</a><span>&raquo;</span></li>
             <li><strong>{{ unitDetail.kode }}</strong></li>
           </ul>
@@ -21,15 +21,15 @@
         <div class="col-main">
           <div class="product-view-area">
             <div class="product-big-image col-xs-12 col-sm-5 col-lg-5 col-md-5">
-              <div class="icon-sale-label sale-left">Sale</div>
+              {% if unitDetail.harga_diskon > 0 %}
+              <div class="icon-sale-label sale-left">Diskon</div>
+              {% endif %}
               <div class="large-image"> <a href="{{ asset('img/front/products/') }}{{ unitDetail.gambar }}" class="cloud-zoom" id="zoom1" rel="useWrapper: false, adjustY:0, adjustX:20"> <img class="zoom-img" src="{{ asset('img/front/products/') }}{{ unitDetail.gambar }}" alt="products"> </a> </div>
               <div class="flexslider flexslider-thumb">
                 <ul class="previews-list slides">
-                  <li><a href='images/products/img01.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: 'images/products/img01.jpg' "><img src="images/products/img01.jpg" alt = "Thumbnail 2"/></a></li>
-                  <li><a href='images/products/img07.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: 'images/products/img07.jpg' "><img src="images/products/img07.jpg" alt = "Thumbnail 1"/></a></li>
-                  <li><a href='images/products/img02.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: 'images/products/img02.jpg' "><img src="images/products/img02.jpg" alt = "Thumbnail 1"/></a></li>
-                  <li><a href='images/products/img03.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: 'images/products/img03.jpg' "><img src="images/products/img03.jpg" alt = "Thumbnail 2"/></a></li>
-                  <li><a href='images/products/img04.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: 'images/products/img04.jpg' "><img src="images/products/img04.jpg" alt = "Thumbnail 2"/></a></li>
+                  {% for picture in unitPicture %}
+                  <li><a href='{{ asset('img/front/products/') }}{{ picture.picture }}' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '{{ asset('img/front/products/') }}{{ picture.picture }}' "><img src="{{ asset('img/front/products/') }}{{ picture.picture }}" alt = "{{ unitDetail.kode }}"/></a></li>
+                  {% endfor %}
                 </ul>
               </div>
               
@@ -53,9 +53,10 @@
               <div class="ratings">
                 <div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
                 <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Your Review</a> </p>
-                {% if unitDetail.stock > 0 %}
+                {% if unitDetail.outOfStock %}
                 <p class="availability in-stock pull-right">Ketersediaan: <span>Tersedia</span></p>
-                {% else %}
+                {% endif %}
+                {% if unit.outOfStock %}
                 <p class="availability out-of-stock pull-right">Ketersediaan: <span>Habis</span></p>
                 {% endif %}
               </div>
@@ -65,7 +66,7 @@
                 <p> Vivamus adipiscing nisl ut dolor dignissim semper. Nulla luctus malesuada tincidunt. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Integer enim purus, posuere at ultricies eu, placerat a felis. Suspendisse aliquet urna pretium eros convallis interdum. Quisque in arcu id dui vulputate mollis eget non arcu. Aenean et nulla purus. Mauris vel tellus non nunc mattis lobortis.</p>
               </div>
               
-              {% if unitDetail.stock > 0 %}
+              {% if unit.inStock %}
               <div class="product-variation">
                 <form action="#" method="post">
                   <div class="cart-plus-minus">
@@ -99,7 +100,6 @@
                   <ul id="product-detail-tab" class="nav nav-tabs product-tabs">
                     <li class="active"> <a href="#description" data-toggle="tab"> Description </a> </li>
                     <li> <a href="#reviews" data-toggle="tab">Reviews</a> </li>
-                    <li><a href="#product_tags" data-toggle="tab">Tags</a></li>
                     <li> <a href="#custom_tabs" data-toggle="tab">Custom Tab</a> </li>
                   </ul>
                   <div id="productTabContent" class="tab-content">
@@ -252,24 +252,6 @@
                             </div>
                           </form>
                         </div>
-                      </div>
-                    </div>
-                    <div class="tab-pane fade" id="product_tags">
-                      <div class="box-collateral box-tags">
-                        <div class="tags">
-                          <form id="addTagForm" action="#" method="get">
-                            <div class="form-add-tags">
-                              <div class="input-box">
-                                <label for="productTagName">Add Your Tags:</label>
-                                <input class="input-text" name="productTagName" id="productTagName" type="text">
-                                <button type="button" title="Add Tags" class="button add-tags"><i class="fa fa-plus"></i> &nbsp;<span>Add Tags</span> </button>
-                              </div>
-                              <!--input-box--> 
-                            </div>
-                          </form>
-                        </div>
-                        <!--tags-->
-                        <p class="note">Use spaces to separate tags. Use single quotes (') for phrases.</p>
                       </div>
                     </div>
                     <div class="tab-pane fade" id="custom_tabs">
@@ -468,4 +450,9 @@
       </div>
     </div>
   </div>
+  {% endblock %}
+
+  {% block scripts %}
+  <script type="text/javascript" src="{{ asset('front/js/cloud-zoom.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('front/js/jquery-flexslider.js') }}"></script> 
   {% endblock %}

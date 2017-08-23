@@ -1,7 +1,3 @@
-
-  
-  <!-- Home Slider Start -->
-  
   <div id="home-section" class="slider1">
     <div id="rev_slider_4_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container" data-alias="classicslider1" style="margin:0px auto;background-color:transparent;padding:0px;margin-top:0px;margin-bottom:0px;"> 
       <!-- START REVOLUTION SLIDER 5.0.7 auto mode -->
@@ -290,9 +286,9 @@
             {% for index, produk in products %}
             
             <div class="jtv-product">
-              <div class="product-img"> <a href="{{ produk.slug }}"> <img src="{{ asset('img/front/products/') }}{{ produk.gambar }}" alt=""> <img class="secondary-img" src="{{ asset('img/front/products/') }}{{ produk.gambar_alt }}" alt=""> </a> </div>
+              <div class="product-img"> <a href="{{ path_for('produk.detail', {slug: produk.slug}) }}"> <img src="{{ asset('img/front/products/') }}{{ produk.gambar }}" alt=""> <img class="secondary-img" src="{{ asset('img/front/products/') }}{{ produk.gambar }}" alt="{{ produk.merk.nama }} - {{ produk.kode }}"> </a> </div>
               <div class="jtv-product-content">
-                <h3><a href="{{ produk.slug }}">{{ produk.merk.nama }} - {{ produk.kode }}</a></h3>
+                <h3><a href="{{ path_for('produk.detail', {slug: produk.slug}) }}">{{ produk.merk.nama }} - {{ produk.kode }}</a></h3>
                 <div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
                 <div class="price-box"> <span class="regular-price"> <span class="price">Rp. {{ produk.harga | number_format(0, ',', '.') }}</span> </span> </div>
                 <div class="jtv-product-action">

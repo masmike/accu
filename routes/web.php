@@ -2,6 +2,7 @@
 
 $app->route(['GET'], '/', App\Http\Controllers\HomeController::class)->setName('home');
 
+
 $app->route(['GET'], '/produk/{slug}', App\Http\Controllers\Master\UnitController::class, 'slug')->setName('produk.detail');
 
 $app->group('/auth', function() {
