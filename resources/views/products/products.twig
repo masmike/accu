@@ -53,10 +53,10 @@
               <div class="ratings">
                 <div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
                 <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Your Review</a> </p>
-                {% if unitDetail.outOfStock %}
+                {% if unitDetail.stock >= 1 %}
                 <p class="availability in-stock pull-right">Ketersediaan: <span>Tersedia</span></p>
                 {% endif %}
-                {% if unit.outOfStock %}
+                {% if unitDetail.stock == 0 %}
                 <p class="availability out-of-stock pull-right">Ketersediaan: <span>Habis</span></p>
                 {% endif %}
               </div>

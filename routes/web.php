@@ -75,4 +75,8 @@ $app->group('/dashboard', function() {
 
     $this->route(['GET', 'POST'], '/unit/{unitId}[/]', App\Http\Controllers\Master\UnitController::class, 'detail')->add(new App\Http\Middleware\AuthMiddleware($this->getContainer()))->setName('dashboard.master.unit.detail');
 
+    $this->route(['GET', 'POST'], '/website/banner', App\Http\Controllers\Master\BannerController::class)->add(new App\Http\Middleware\AuthMiddleware($this->getContainer()))->setName('dashboard.webbanner');
+
+    $this->route(['GET', 'POST'], '/website/company', App\Http\Controllers\Master\CompanyController::class)->add(new App\Http\Middleware\AuthMiddleware($this->getContainer()))->setName('dashboard.webcompany');
+
 });

@@ -90,14 +90,11 @@ class UnitController extends Controller
         $unit = Unit::with('merk')->where('slug', $slug)->first();
         $gambar = UnitPicture::select('picture')->where('unit_id', $unit['id'])->get();
 
+
         $data = array('pageId' => $unit['merk']['nama'].' '.$unit['kode'],'page' => 'produk.detail', 'unitDetail' => $unit, 'unitPicture' => $gambar);
 
         return $this->render('products/products', $data);
     }
 
-    public function outOfStock()
-    {
-        return $this->stock === 0;
-    }
 
 }
