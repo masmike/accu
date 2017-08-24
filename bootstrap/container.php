@@ -53,6 +53,11 @@ return [
             'user' => $c->auth->user(),
         ]);
 
+        $view->getEnvironment()->addGlobal('authmember', [
+            'check' => $c->authmember->check(),
+            'customer' => $c->authmember->customer(),
+        ]);
+
         $view->addExtension(new \Slim\Views\TwigExtension($c['router'], $c['request']->getUri()));
         $view->addExtension(new \Twig_Extension_Debug);
         $view->addExtension(new \App\Twig\TwigExtension($c));

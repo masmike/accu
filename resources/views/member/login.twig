@@ -1,0 +1,75 @@
+{% extends 'templates/front.twig' %}
+{% block content %}
+<div class="breadcrumbs">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <ul>
+            <li class="home"> <a title="Go to Home Page" href="{{ path_for('home') }}">Home</a><span>&raquo;</span></li>
+            <li><strong>Member Login</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+</div>
+<section class="main-container col1-layout">
+    <div class="main container">              
+        <div class="page-content">     
+        <form action="{{ path_for('member.login') }}" method="post">     
+            <div class="account-login">                     
+              <div class="box-authentication">
+                <h4>Masuk ke akun anda</h4>
+                <p class="before-login-text">Selamat datang! Isi form di bawah untuk melanjutkan</p>
+                <div class="form-group has-error">
+                  <label for="email">Alamat E-mail<span class="required">*</span></label>
+                  <input id="email" name="email" type="text" class="form-control"><span class="help-block">asd</span>
+                </div>
+                <div class="form-group">
+                  <label for="password">Password<span class="required">*</span></label>
+                  <input id="password" name="password" type="password" class="form-control">
+                </div>
+                {{ csrf.field |raw }}
+                <p class="forgot-pass"><a href="#">Lupa password?</a></p>
+                <button class="button"><i class="fa fa-lock"></i>&nbsp; <span>Login</span></button><label class="inline" for="rememberme">
+				<input type="checkbox" value="forever" id="rememberme" name="rememberme"> Ingat saya</label>
+              </div>
+    
+        	</div>
+        </form>
+        </div>
+    </div>
+</section>
+<div class="jtv-service-area">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-sm-4 col-xs-12">
+          <div class="jtv-service">
+            <div class="ser-icon"> <i class="fa fa-truck flip-horizontal"></i> </div>
+            <div class="service-content">
+              <h5>FREE SHIPPING WORLDWIDE </h5>
+              <p>free ship-on oder over $299.00</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-4 col-xs-12">
+          <div class="jtv-service">
+            <div class="ser-icon"> <i class="fa fa-mail-forward"></i> </div>
+            <div class="service-content">
+              <h5>MONEY BACK GUARATEE! </h5>
+              <p>30 days money back guarantee!</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-4 col-xs-12">
+          <div class="jtv-service">
+            <div class="ser-icon"> <i class="fa fa-comments flip-horizontal"></i> </div>
+            <div class="service-content">
+              <h5>24/7 CUSTOMER SERVICE </h5>
+              <p>We support online 24 hours a day</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

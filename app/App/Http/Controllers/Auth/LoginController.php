@@ -17,6 +17,7 @@ class LoginController extends Controller
 
     public function post()
     {
+
         $username = $this->param('username');
         $password = $this->param('password');
         $remember = $this->param('remember');

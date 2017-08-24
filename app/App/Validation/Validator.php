@@ -8,11 +8,13 @@ class Validator extends Violin
 {
     protected $container;
     protected $auth;
+    protected $authmember;
 
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
         $this->auth = $container->auth;
+        $this->authmember = $container->authmember;
 
         $this->addFieldMessages([
             'username' => [

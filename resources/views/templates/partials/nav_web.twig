@@ -226,10 +226,27 @@
             
             <!-- top links -->
             <div class="headerlinkmenu col-lg-8 col-md-7 col-sm-8 col-xs-12">
-              <div class="links">
-                <div class="myaccount"><a title="My Account" href="account_page.html"><i class="fa fa-user"></i><span class="hidden-xs">Daftar</span></a></div>
-                <div class="login"><a href="account_page.html"><i class="fa fa-unlock-alt"></i><span class="hidden-xs">Log In</span></a></div>
+
+              {% if authmember.check %}
+              <div class="language-currency-wrapper">
+              <div class="inner-cl">
+                <div class="block block-currency">
+                    <div class="lg-cur"> <span> <i class="fa fa-user"></i> <span class="lg-fr">{{ authmember.customer.nama }}</span> <i class="fa fa-angle-down"></i> </span> </div>
+                    <ul>
+                      <li> <a href="#"> <span class="cur_icon"><i class="fa fa-shopping-cart"></i></span> History Belanja</a> </li>
+                      <li> <a href="#"> <span class="cur_icon"><i class="fa fa-user-secret"></i></span> Ubah Password</a> </li>
+                      <li> <a href="{{ path_for('member.logout') }}"> <span class="cur_icon"><i class="fa fa-lock"></i></span> Keluar</a> </li>
+                    </ul>
+                </div>
               </div>
+              </div>
+              {% else %}
+              <div class="links">
+                <div class="myaccount"><a title="Daftar" href="{{ path_for('member.register') }}"><i class="fa fa-user"></i><span class="hidden-xs">Daftar</span></a></div>
+                <div class="login"><a href="{{ path_for('member.login') }}"><i class="fa fa-unlock-alt"></i><span class="hidden-xs">Log In</span></a></div>
+              </div>
+              {% endif %}
+              
             </div>
           </div>
         </div>
@@ -238,14 +255,14 @@
         <div class="row">
           <div class="col-sm-4 col-md-3 col-xs-12"> 
             <!-- Header Logo -->
-            <div class="logo"><a title="e-commerce" href="index.html"><img alt="e-commerce" src="{{ asset('img/front/logo.png') }}"></a> </div>
+            <div class="logo"><a title="e-commerce" href="{{ path_for('home') }}"><img alt="Toko Aki" src="{{ asset('img/front/logo.png') }}"></a> </div>
             <!-- End Header Logo --> 
           </div>
           <div class="col-md-9 col-sm-8 hidden-xs">
             <div class="mtmegamenu">
               <ul>
                 <li class="mt-root demo_custom_link_cms">
-                  <div class="mt-root-item"><a href="index.html">
+                  <div class="mt-root-item"><a href="{{ path_for('home') }}">
                     <div class="title title_font"><span class="title-text">Home</span></div>
                     </a></div>
                   <ul class="menu-items col-md-3 col-sm-4 col-xs-12">
