@@ -14,6 +14,14 @@ return [
         return new \App\Auth\Auth;
     },
 
+    'member' => function($c) {
+        return new \App\Database\Customer;
+    },
+
+    'authmember' => function($c) {
+        return new \App\Auth\AuthMember;
+    },
+
     'hash' => function($c) {
         return new \App\Lib\Hash;
     },

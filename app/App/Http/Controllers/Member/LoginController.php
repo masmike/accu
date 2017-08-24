@@ -10,6 +10,11 @@ use App\Lib\Session;
 
 class LoginController extends Controller
 {
+    public function get()
+    {
+        return $this->render('auth/login');
+    }
+    
     public function post()
     {
         $email = $this->param('email');

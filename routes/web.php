@@ -2,8 +2,12 @@
 
 $app->route(['GET'], '/', App\Http\Controllers\HomeController::class)->setName('home');
 
-
 $app->route(['GET'], '/produk/{slug}', App\Http\Controllers\Master\UnitController::class, 'slug')->setName('produk.detail');
+
+
+$app->group('/member', function() {
+    $this->route(['GET', 'POST'], '/login', App\Http\Controllers\Member\LoginController::class)->add(new App\Http\Middleware\GuestMiddleware($this->getContainer()))->setName('member.login');
+});
 
 $app->group('/auth', function() {
     $this->route(['GET', 'POST'], '/login', App\Http\Controllers\Auth\LoginController::class)->add(new App\Http\Middleware\GuestMiddleware($this->getContainer()))->setName('auth.login');
@@ -49,12 +53,8 @@ $app->get('/auth/logout', function($request, $response, $args) {
 
     App\Lib\Session::destroy(env('APP_AUTH_ID', 'user_id'));
 
-    return $response->withRedirect($this['router']->pathFor('home'));
-})->add(new App\Http\Middleware\AuthMiddleware($app->getContainer()))->setName('auth.logout');
-
-$app->group('/member', function() {
-    $this->route(['GET', 'POST'], '/login', App\Http\Controllers\Member\LoginController::class)->add(new App\Http\Middleware\GuestMiddleware($this->getContainer()))->setName('member.login');
-});  
+    return $response->withRedirect($this['router']->pathFor('auth.login'));
+})->add(new App\Http\Middleware\AuthMiddleware($app->getContainer()))->setName('auth.logout');  
 
 $app->group('/dashboard', function() {
     $this->route(['GET'], '[/]', App\Http\Controllers\Dashboard\DashboardController::class)->add(new App\Http\Middleware\AuthMiddleware($this->getContainer()))->setName('dashboard.home');
