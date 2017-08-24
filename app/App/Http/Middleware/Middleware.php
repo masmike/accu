@@ -23,6 +23,16 @@ class Middleware
         return $this->auth()->user();
     }
 
+    public function authmember()
+    {
+        return $this->container->authmember;
+    }
+
+    public function member()
+    {
+        return $this->authmember()->member();
+    }
+
     public function flash($type, $message)
     {
         $this->container->flash->addMessage($type, $message);

@@ -15,7 +15,7 @@ class RequiredRule implements RuleContract
 
     public function error()
     {
-        return '{field} is required.';
+        return '{field} tidak boleh kosong.';
     }
 
     public function canSkip()
