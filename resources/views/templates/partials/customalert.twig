@@ -1,0 +1,19 @@
+{% if flash.getMessage('error').0 %}
+	<div class="alert alert-danger alert-dismissible show" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		{{ flash.getMessage('error').0 }}
+	</div>
+{% endif %}
+
+{% if flash.getMessage('warning').0 %}
+	<div class="alert alert-warning alert-dismissible show" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		{{ flash.getMessage('warning').0 }}
+	</div>
+{% endif %}
+
+

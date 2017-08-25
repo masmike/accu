@@ -10,6 +10,8 @@ $app->group('/member', function() {
 
     $this->route(['GET', 'POST'], '/register', App\Http\Controllers\Member\RegisterController::class)->add(new App\Http\Middleware\GuestMiddleware($this->getContainer()))->setName('member.register');
 
+    $this->route(['GET', 'POST'], '/profile/changepass', App\Http\Controller\Member\SettingsController::class)->add(new App\Http\Middleware\AuthMemberMiddleware($this->getContainer()))->setName('member.profile.password');
+
 });
 
 $app->group('/auth', function() {

@@ -31,11 +31,13 @@ class LoginController extends Controller
 
             if(!$member || !$this->hash->verifyPassword($password, $member->password)) {
                 // error password
+                $this->flash("error", $this->lang('alerts.login.invalid'));
                 return $this->redirect('member.login');
 
-            } else if($member && !(bool)$member->statusMobile) {
+            } else if($member && !(bool)$member->status) {
                 Session::set('temp_member_id', $member->id);
                 // return not activated
+                $this->flash("warning", $this->lang('alerts.registration.requires_mail_activation'));
                 return $this->redirect('member.login');
 
             } else if($member && $this->hash->verifyPassword($password, $member->password)) {

@@ -34,7 +34,7 @@ return [
             ],
 
             'login' => [
-                'invalid' => "Username/Password Salah!",
+                'invalid' => "Username atau Password yang anda masukkan salah. Silakan coba lagi!",
                 'error' => "Masukkan Username dan Password untuk melanjutkan.",
                 'resend_activation' => "Another activation e-mail has been sent. Please check your e-mail for instructions.",
             ],
