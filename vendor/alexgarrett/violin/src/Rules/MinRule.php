@@ -19,7 +19,7 @@ class MinRule implements RuleContract
 
     public function error()
     {
-        return '{field} must be a minimum of {$0}.';
+        return '{field} minimal {$0} karakter.';
     }
 
     public function canSkip()

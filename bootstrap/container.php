@@ -14,7 +14,7 @@ return [
         return new \App\Auth\Auth;
     },
 
-    'member' => function($c) {
+    'customer' => function($c) {
         return new \App\Database\Customer;
     },
 

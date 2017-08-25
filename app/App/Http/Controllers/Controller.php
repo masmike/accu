@@ -84,6 +84,16 @@ class Controller
         return $this->auth()->user();
     }
 
+    public function authmember()
+    {
+        return $this->authmember;
+    }
+
+    public function customer()
+    {
+        return $this->authmember()->customer();
+    }
+
     protected function router()
     {
         return $this->container['router'];

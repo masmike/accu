@@ -10,7 +10,9 @@ $app->group('/member', function() {
 
     $this->route(['GET', 'POST'], '/register', App\Http\Controllers\Member\RegisterController::class)->add(new App\Http\Middleware\GuestMiddleware($this->getContainer()))->setName('member.register');
 
-    $this->route(['GET', 'POST'], '/profile/changepass', App\Http\Controller\Member\SettingsController::class)->add(new App\Http\Middleware\AuthMemberMiddleware($this->getContainer()))->setName('member.profile.password');
+    $this->route(['GET', 'POST'], '/profile/changepass', App\Http\Controllers\Member\SettingsController::class, 'password')->add(new App\Http\Middleware\AuthMemberMiddleware($this->getContainer()))->setName('member.profile.password');
+
+    $this->route(['GET', 'POST'], '/profile/detail', App\Http\Controllers\Member\SettingsController::class, 'detail')->add(new App\Http\Middleware\AuthMemberMiddleware($this->getContainer()))->setName('member.profile.detail');
 
 });
 

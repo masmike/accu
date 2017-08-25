@@ -41,12 +41,18 @@ class Validator extends Violin
             'confirm_new_password' => [
                 'matches' => 'Confirm New Password must match New Password.'
             ],
+
+            'verifypassword' => [
+                'matches' => 'Verifikasi Password tidak sama dengan Password Baru.'
+            ],
+
         ]);
 
         $this->addRuleMessages([
-            'matchesCurrentPassword' => 'Your current password is incorrect.',
+            'matchesCurrentPassword' => 'Password lama salah.',
             'adminUniqueEmail' => "This e-mail is tied to another account.",
             'adminUniqueUsername' => "This username is taken by another account.",
+            'memberMatchesCurrentPassword' => "Password lama salah.",
         ]);
     }
 
@@ -103,5 +109,14 @@ class Validator extends Violin
         }
 
         return !(bool) $this->container->user->where('username', $value)->count();
+    }
+
+    public function validate_memberMatchesCurrentPassword($value, $input, $args)
+    {
+        if($this->authmember->check() && $this->container->hash->verifyPassword($value, $this->authmember->customer()->password)) {
+            return true;
+        }
+
+        return false;
     }
 }

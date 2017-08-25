@@ -234,6 +234,7 @@
                     <div class="lg-cur"> <span> <i class="fa fa-user"></i> <span class="lg-fr">{{ authmember.customer.nama }}</span> <i class="fa fa-angle-down"></i> </span> </div>
                     <ul>
                       <li> <a href="#"> <span class="cur_icon"><i class="fa fa-shopping-cart"></i></span> History Belanja</a> </li>
+                      <li> <a href="{{ path_for('member.profile.detail') }}"> <span class="cur_icon"><i class="fa  fa-drivers-license-o"></i></span> Profil</a> </li>
                       <li> <a href="{{ path_for('member.profile.password') }}"> <span class="cur_icon"><i class="fa fa-user-secret"></i></span> Ubah Password</a> </li>
                       <li> <a href="{{ path_for('member.logout') }}"> <span class="cur_icon"><i class="fa fa-lock"></i></span> Keluar</a> </li>
                     </ul>

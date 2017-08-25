@@ -30,7 +30,7 @@ return [
             'registration' => [
                 'successful' => "Your account has been created!",
                 'error' => "Please fix any errors with your registration and try again.",
-                'requires_mail_activation' => "Your account has been created but you will need to activate it. Please check your e-mail for instructions.",
+                'requires_mail_activation' => "Akun anda belum diaktivasi. Silahkan cek e-mail untuk informasi selanjutnya.",
             ],
 
             'login' => [
@@ -45,7 +45,7 @@ return [
                 'invalid_active_hash' => "The active hash you are trying to use has already expired or never existed.",
 
                 'password' => [
-                    'updated' => "Your password has been changed.",
+                    'updated' => "Password berhasil dirubah.",
                     'failed' => "Your password couldn't be changed at this time.",
                 ],
 
