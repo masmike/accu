@@ -15,13 +15,19 @@ class LoginController extends Controller
         return $this->render('member/login');
     }
 
-     public function post()
+    public function post()
     {
 
     	$email = $this->param('email');
         $password = $this->param('password');
 
-        $member = Customer::where('email', $email)->first();
+        $validator = $this->validator()->validate([
+            'email|Email' => [$email, 'email|required'],
+            'password|Password' => [$password, 'required'],
+        ]);
+
+        if($validator->passes()) {
+            $member = Customer::where('email', $email)->first();
 
             if(!$member || !$this->hash->verifyPassword($password, $member->password)) {
                 // error password
@@ -42,8 +48,15 @@ class LoginController extends Controller
                 return $this->redirect('home');
             }
 
+        }
+
         // error other
-        return $this->redirect('member.login');
+        $msg = array('error' => [
+            'email' => $validator->errors()->first('email'),
+            'password' => $validator->errors()->first('password')]
+            );
+
+        return $this->render('member/login', $msg);
 
     }
 }	
