@@ -3,13 +3,18 @@
 namespace App\Http\Controllers\Member;
 
 use App\Http\Controllers\Controller;
+use App\Database\Propinsi;
+use App\Database\Kota;
 
 class SettingsController extends Controller
 {
 
 	public function getDetail()
 	{
-		$this->render('/member/account/detail');
+		$propinsi = Propinsi::all();
+		$kota = Kota::all();
+
+		$this->render('/member/account/detail', array('allPropinsi' => $propinsi, 'allKota' => $kota));
 	}
 
 	public function getPassword()

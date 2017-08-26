@@ -1,1 +1,103 @@
-detail
+{% extends 'templates/front.twig' %}
+{% block content %}
+<div class="breadcrumbs">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <ul>
+            <li class="home"> <a title="Go to Home Page" href="{{ path_for('home') }}">Home</a><span>&raquo;</span></li>
+            <li><strong>Profil</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+</div>
+<section class="main-container col1-layout">
+    <div class="main container">              
+        <div class="page-content">     
+        <form action="{{ path_for('member.profile.detail') }}" method="post">     
+            <div class="account-login">                     
+              <div class="box-authentication">
+                <h4>Ubah Profil</h4>
+                <p class="before-login-text">Informasi lengkap akun!</p>
+                {% include 'templates/partials/customalert.twig' %}
+                <div class="form-group {{ error.nama ? ' has-error' : '' }}">
+                  <label for="nama">Nama<span class="required">*</span></label>
+                  <input id="nama" name="nama" type="text" value="{{ authmember.customer.nama }}" class="form-control"><span class="help-block">{{ error.nama }}</span>
+                </div>
+                <div class="form-group {{ error.handphone ? ' has-error' : '' }}">
+                  <label for="handphone">No. Telepon Selular<span class="required">*</span></label>
+                  <input id="handphone" name="handphone" type="text" value="{{ authmember.customer.phone1 }}" class="form-control"><span class="help-block">{{ error.handphone }}</span>
+                </div>
+                <div class="form-group {{ error.phone ? ' has-error' : '' }}">
+                  <label for="phone">No. Telepon Lain</label>
+                  <input id="phone" name="phone" type="text" value="{{ authmember.customer.phone2 }}" class="form-control"><span class="help-block">{{ error.phone }}</span>
+                </div>
+                <div class="form-group">
+                  <label for="email">E-Mail</label>
+                  <input id="email" name="email" type="text" value="{{ authmember.customer.email }}" class="form-control" readonly><span class="help-block"></span>
+                </div>
+                
+              </div>
+    		
+    			<div class="box-authentication">
+    				<h4>&nbsp;</h4>
+    				<p class="before-login-text">Informasi alamat</p>
+    				<div class="form-group {{ error.alamat ? ' has-error' : '' }}">
+	                	<label for="alamat">Alamat Utama<span class="required">*</span></label>
+	                	<textarea id="alamat" name="alamat" class="form-control" rows="4">{{ authmember.customer.alamat }}</textarea><span class="help-block">{{ error.alamat }}</span>
+	                </div>
+	                <div class="form-group {{ error.kodepos ? ' has-error' : '' }}">
+	                  	<label for="kodepos">Kode Pos<span class="required">*</span></label>
+	                  	<input id="kodepos" name="kodepos" type="text" value="{{ authmember.customer.kodepos }}" class="form-control"><span class="help-block">{{ error.kodepos }}</span>
+	                </div>
+	                <div class="form-group">
+	                	<label for="propinsi">Propinsi<span class="required">*</span></label>
+	                	<select class="form-control" id="kota">
+	                		{% for propinsi in allPropinsi %}
+	                		<option value="{{ propinsi.id }}">{{ propinsi.nama }}</option>
+	                		{% endfor %}
+	                	</select>
+	                </div>
+    				{{ csrf.field |raw }}
+                	<button class="button"><i class="fa fa-lock"></i>&nbsp; <span>Proses</span></button>
+    			</div>
+        	</div>
+        </form>
+        </div>
+    </div>
+</section>
+<div class="jtv-service-area">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-sm-4 col-xs-12">
+          <div class="jtv-service">
+            <div class="ser-icon"> <i class="fa fa-truck flip-horizontal"></i> </div>
+            <div class="service-content">
+              <h5>FREE SHIPPING WORLDWIDE </h5>
+              <p>free ship-on oder over $299.00</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-4 col-xs-12">
+          <div class="jtv-service">
+            <div class="ser-icon"> <i class="fa fa-mail-forward"></i> </div>
+            <div class="service-content">
+              <h5>MONEY BACK GUARATEE! </h5>
+              <p>30 days money back guarantee!</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-4 col-xs-12">
+          <div class="jtv-service">
+            <div class="ser-icon"> <i class="fa fa-comments flip-horizontal"></i> </div>
+            <div class="service-content">
+              <h5>24/7 CUSTOMER SERVICE </h5>
+              <p>We support online 24 hours a day</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -6777,7 +6777,7 @@ p.note {
 .box-authentication .forgot-pass {
 	margin-top: 15px;
 }
-.box-authentication input, .box-authentication textarea {
+.box-authentication input, .box-authentication textarea, .box-authentication select {
 	border-radius: 0px;
 	border: 1px solid #eaeaea;
 	-webkit-box-shadow: inherit;
@@ -6796,7 +6796,7 @@ p.note {
 .account-login .box-authentication:last-child {
 	margin-bottom: 0px;
 }
-.box-authentication input, .box-authentication textarea {
+.box-authentication input, .box-authentication textarea, .box-authentication select {
 	width: 90%;
 }
 }
