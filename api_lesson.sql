@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-08-26 08:13:43
+Date: 2017-08-28 07:30:24
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -87,6 +87,8 @@ CREATE TABLE `master_customer` (
   `alamat` varchar(255) COLLATE latin1_general_ci DEFAULT NULL,
   `phone1` varchar(20) COLLATE latin1_general_ci NOT NULL,
   `phone2` varchar(20) COLLATE latin1_general_ci DEFAULT NULL,
+  `kodepos` varchar(7) COLLATE latin1_general_ci NOT NULL,
+  `propinsi_id` int(11) NOT NULL,
   `email` varchar(50) COLLATE latin1_general_ci DEFAULT NULL,
   `password` varchar(255) COLLATE latin1_general_ci DEFAULT NULL,
   `active_hash` varchar(255) COLLATE latin1_general_ci DEFAULT NULL,
@@ -101,8 +103,8 @@ CREATE TABLE `master_customer` (
 -- ----------------------------
 -- Records of master_customer
 -- ----------------------------
-INSERT INTO `master_customer` VALUES ('1', 'Franz Kafka', 'Jl. Imogiri Barat No. 12 Yogyakarta', '087754321190', '', '', 'a', null, null, '1', '0', null, '2017-08-11 13:18:23');
-INSERT INTO `master_customer` VALUES ('2', 'Dewi Sandrax', 'Jl. Kalimantan Raya No. 20 A Jakarta Barat 11530. INDONESIA', '087738553857', '0274555666', 'abc@abc.com', '$2y$10$2X6e/KitRtLdvscJ7TMQG.X7CKgwq4Pd7Hxajx6zg7GTunabE5H52', null, null, '1', '1', null, '2017-08-25 07:45:09');
+INSERT INTO `master_customer` VALUES ('1', 'Franz Kafka', 'Jl. Imogiri Barat No. 12 Yogyakarta', '087754321190', '', '', '0', '', 'a', null, null, '1', '0', null, '2017-08-11 13:18:23');
+INSERT INTO `master_customer` VALUES ('2', 'Dewi Sandrax', 'Jl. Kalimantan Raya No. 20 A Jakarta Barat 11530. INDONESIA', '087738553857', '0274555666', '', '0', 'abc@abc.com', '$2y$10$2X6e/KitRtLdvscJ7TMQG.X7CKgwq4Pd7Hxajx6zg7GTunabE5H52', null, null, '1', '1', null, '2017-08-25 07:45:09');
 
 -- ----------------------------
 -- Table structure for master_kota
@@ -791,7 +793,7 @@ CREATE TABLE `master_unit` (
   `harga` float NOT NULL DEFAULT '0',
   `harga_diskon` float DEFAULT '0',
   `deskripsi` longtext COLLATE latin1_general_ci,
-  `gambar` varchar(100) COLLATE latin1_general_ci DEFAULT NULL,
+  `gambar` varchar(100) COLLATE latin1_general_ci NOT NULL DEFAULT 'no_image.jpg',
   `gambar_alt` varchar(100) COLLATE latin1_general_ci DEFAULT NULL,
   `stock` int(11) NOT NULL DEFAULT '0',
   `featured` tinyint(1) NOT NULL,
@@ -799,17 +801,117 @@ CREATE TABLE `master_unit` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 -- ----------------------------
 -- Records of master_unit
 -- ----------------------------
-INSERT INTO `master_unit` VALUES ('1', '1', 'N50Z', '1', 'jb-n50z', '450000', '0', 'akui basah jb', 'jb_n50z.jpg', 'jb_n50z_1.jpg', '0', '1', '1', null, '2017-08-23 16:56:04');
-INSERT INTO `master_unit` VALUES ('2', '2', 'XYZ', '2', '', '1200000', '0', 'a', '', null, '0', '0', '1', null, '2017-08-22 13:17:41');
-INSERT INTO `master_unit` VALUES ('3', '4', '1234', '3', '', '1000000', '0', 'asdasdas', null, null, '0', '0', '1', '2017-08-06 05:55:39', '2017-08-06 05:55:39');
+INSERT INTO `master_unit` VALUES ('1', '1', 'N50Z', '1', 'jb-n50z', '450000', '0', 'Our most popular bottle, available in a variety of colors to help brighten up anybody’s gear. The large opening on our wide-mouth bottles easily accommodates ice cubes, fits most water purifiers and filters, and makes hand washing a breeze. The attached loop-top never gets lost and screws on and off easily. Printed graduations let keep track of your hydration. Dishwasher safe (Please make sure the top does not touch the heating element, or it will melt).\r\n\r\nWhy we love it: It’s clear this is a product that customers love. The description clearly articulates the water bottles special perks and practicality. Nalgene is also very smart to include that its product is dishwasher safe; touching on what could be a pain point for its customers. Finally, the company makes an important disclaimer with the text “Please make sure the top does not touch the heating element” to provide valuable product care information that will help the company proactively reduce returns.', 'jb_n50z.jpg', 'jb_n50z_1.jpg', '0', '1', '1', null, '2017-08-26 09:51:02');
+INSERT INTO `master_unit` VALUES ('2', '2', 'XYZ', '2', 'xyz', '1200000', '0', 'a', 'no_image.jpg', null, '0', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('3', '4', '1234', '3', '1234', '1000000', '0', 'asdasdas', 'no_image.jpg', null, '0', '0', '1', '2017-08-06 05:55:39', '2017-08-26 09:30:41');
 INSERT INTO `master_unit` VALUES ('4', '5', 'YBX5335', '2', 'yuasa-ybx5335', '1200000', '1100000', 'Aki Motor', 'yuasa_ybx5335.jpg', null, '0', '1', '1', '2017-08-06 05:56:14', '2017-08-22 16:46:50');
-INSERT INTO `master_unit` VALUES ('5', '5', 'X11', '3', '', '122000', '0', 'abc', null, null, '0', '0', '1', '2017-08-06 05:56:56', '2017-08-06 05:56:56');
-INSERT INTO `master_unit` VALUES ('6', '2', 'X123', '2', 'gs-x123', '90000', '0', 'motor', 'gs_x123.jpg', null, '0', '1', '1', '2017-08-06 05:57:39', '2017-08-23 10:07:24');
+INSERT INTO `master_unit` VALUES ('5', '5', 'X11', '3', 'x11', '298000', '259000', 'abc', 'no_image.jpg', null, '0', '0', '1', '2017-08-06 05:56:56', '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('6', '2', 'X123', '2', 'gs-x123', '250000', '235000', 'motor', 'gs_x123.jpg', null, '0', '1', '1', '2017-08-06 05:57:39', '2017-08-26 09:05:38');
+INSERT INTO `master_unit` VALUES ('7', '0', '17089-296', '0', 'Zaam-Dox', '2527610', '0', 'Occlusion of Left Atrial Appendage, Open Approach', 'no_image.jpg', null, '22', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('8', '0', '21130-950', '0', 'Regrant', '803249', '0', 'Supplement of Left Upper Leg Subcutaneous Tissue and Fascia with Autologous Tissue Substitute, Percutaneous Approach', 'no_image.jpg', null, '17', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('9', '0', '62802-103', '0', 'Viva', '1776530', '0', 'Drainage of Left Common Carotid Artery, Open Approach, Diagnostic', 'no_image.jpg', null, '6', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('10', '0', '53489-146', '0', 'Quo Lux', '1866780', '0', 'Fusion of Cervicothoracic Vertebral Joint with Synthetic Substitute, Anterior Approach, Anterior Column, Percutaneous Endoscopic Approach', 'no_image.jpg', null, '13', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('11', '0', '0409-3390', '0', 'Asoka', '2713400', '0', 'Supplement Right Lower Extremity with Synthetic Substitute, Open Approach', 'no_image.jpg', null, '23', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('12', '2', '49349-144', '2', 'Fix San', '961661', '0', 'Revision of Synthetic Substitute in Tracheobronchial Tree, Percutaneous Endoscopic Approach', 'no_image.jpg', null, '6', '1', '1', null, '2017-08-26 09:31:01');
+INSERT INTO `master_unit` VALUES ('13', '0', '27293-014', '0', 'Zontrax', '2332430', '0', 'Supplement Left Lower Leg with Synthetic Substitute, Open Approach', 'no_image.jpg', null, '8', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('14', '0', '52125-924', '0', 'Konklux', '646253', '0', 'Replacement of Superior Vena Cava with Synthetic Substitute, Open Approach', 'no_image.jpg', null, '7', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('15', '0', '21695-453', '0', 'Zontrax', '1967210', '0', 'Insertion of Internal Fixation Device into Right Acetabulum, Percutaneous Endoscopic Approach', 'no_image.jpg', null, '10', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('16', '0', '55926-0020', '0', 'Viva', '1117340', '0', 'Occlusion of Right Vertebral Vein with Extraluminal Device, Percutaneous Endoscopic Approach', 'no_image.jpg', null, '20', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('17', '0', '24236-609', '0', 'Greenlam', '1322880', '0', 'Repair Left Upper Leg Tendon, Open Approach', 'no_image.jpg', null, '23', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('18', '0', '68428-028', '0', 'Quo Lux', '2858680', '0', 'Introduction of Monoclonal Antibody into Lower GI, Percutaneous Approach', 'no_image.jpg', null, '10', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('19', '0', '68382-035', '0', 'Daltfresh', '2096020', '0', 'Reposition Right Innominate Vein, Percutaneous Endoscopic Approach', 'no_image.jpg', null, '9', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('20', '1', '63354-125', '1', 'Overhold', '1883800', '0', 'Inspection of Larynx, Open Approach', 'no_image.jpg', null, '12', '1', '1', null, '2017-08-26 09:31:17');
+INSERT INTO `master_unit` VALUES ('21', '0', '0472-5242', '0', 'Zontrax', '2082810', '0', 'Extirpation of Matter from Left Lower Arm and Wrist Muscle, Open Approach', 'no_image.jpg', null, '17', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('22', '0', '51523-025', '0', 'Stronghold', '1558440', '0', 'Supplement Left Sternoclavicular Joint with Nonautologous Tissue Substitute, Open Approach', 'no_image.jpg', null, '8', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('23', '3', '0093-7154', '1', 'Gembucket', '2766340', '0', 'Extirpation of Matter from Left Main Bronchus, Percutaneous Endoscopic Approach', 'no_image.jpg', null, '4', '1', '1', null, '2017-08-26 09:31:19');
+INSERT INTO `master_unit` VALUES ('24', '0', '14222-2050', '0', 'Hatity', '290867', '0', 'Control Bleeding in Right Hand, Open Approach', 'no_image.jpg', null, '7', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('25', '0', '68084-305', '0', 'Alphazap', '1176400', '0', 'Destruction of Left Carpal Joint, Percutaneous Approach', 'no_image.jpg', null, '21', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('26', '0', '0295-1183', '0', 'Fixflex', '147067', '0', 'Restriction of Hepatic Artery with Intraluminal Device, Open Approach', 'no_image.jpg', null, '9', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('27', '0', '0168-0014', '0', 'Voyatouch', '2487450', '0', 'Drainage of Urethra, Percutaneous Approach', 'no_image.jpg', null, '9', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('28', '5', '68745-1095', '2', 'Span', '1288630', '0', 'Introduction of Other Therapeutic Substance into Nose, Via Natural or Artificial Opening', 'no_image.jpg', null, '10', '1', '1', null, '2017-08-26 09:31:21');
+INSERT INTO `master_unit` VALUES ('29', '0', '10356-553', '0', 'Pannier', '2101980', '0', 'Bypass Right Internal Iliac Artery to Lower Extremity Artery with Autologous Venous Tissue, Open Approach', 'no_image.jpg', null, '13', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('30', '0', '55289-012', '0', 'Home Ing', '2643160', '0', 'Excision of Right Zygomatic Bone, Percutaneous Endoscopic Approach, Diagnostic', 'no_image.jpg', null, '20', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('31', '5', '36987-2599', '1', 'Toughjoyfax', '2077910', '0', 'Extirpation of Matter from Inferior Mesenteric Artery, Bifurcation, Percutaneous Approach', 'no_image.jpg', null, '15', '1', '1', null, '2017-08-26 09:31:23');
+INSERT INTO `master_unit` VALUES ('32', '0', '55154-5499', '0', 'Fix San', '1140220', '0', 'Destruction of Left Greater Saphenous Vein, Percutaneous Endoscopic Approach', 'no_image.jpg', null, '18', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('33', '0', '0338-0553', '0', 'Keylex', '737636', '0', 'Repair Right Upper Lung Lobe, Via Natural or Artificial Opening Endoscopic', 'no_image.jpg', null, '14', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('34', '0', '76466-500', '11', 'Mat Lam Tam', '782440', '0', 'Restriction of Left External Carotid Artery with Extraluminal Device, Percutaneous Endoscopic Approach', 'no_image.jpg', null, '20', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('35', '3', '61957-0601', '2', 'Lotstring', '103632', '0', 'Resection of Nasal Turbinate, Percutaneous Endoscopic Approach', 'no_image.jpg', null, '21', '1', '1', null, '2017-08-26 09:31:24');
+INSERT INTO `master_unit` VALUES ('36', '3', '54868-6014', '2', 'Asoka', '1080570', '0', 'Low Dose Rate (LDR) Brachytherapy of Soft Palate using Palladium 103 (Pd-103)', 'no_image.jpg', null, '22', '1', '1', null, '2017-08-26 09:31:25');
+INSERT INTO `master_unit` VALUES ('37', '4', '64141-113', '2', 'Hatity', '1992500', '0', 'Bypass Bilateral Ureters to Ileum with Synthetic Substitute, Open Approach', 'no_image.jpg', null, '21', '1', '1', null, '2017-08-26 09:31:36');
+INSERT INTO `master_unit` VALUES ('38', '0', '36987-2847', '0', 'Sonsing', '528467', '0', 'Excision of Left Colic Artery, Percutaneous Endoscopic Approach, Diagnostic', 'no_image.jpg', null, '12', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('39', '0', '54868-5819', '0', 'Zontrax', '874155', '0', 'Fluoroscopy of Left Upper Extremity Veins using Other Contrast, Guidance', 'no_image.jpg', null, '4', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('40', '0', '0067-6024', '0', 'Pannier', '599062', '0', 'Replacement of Left Common Carotid Artery with Autologous Tissue Substitute, Percutaneous Endoscopic Approach', 'no_image.jpg', null, '10', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('41', '0', '67544-479', '0', 'Vagram', '956893', '0', 'Ear, Nose, Sinus, Bypass', 'no_image.jpg', null, '4', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('42', '0', '54569-0084', '0', 'Asoka', '1257070', '0', 'Fluoroscopy of Bilateral Upper Extremity Veins using Other Contrast, Guidance', 'no_image.jpg', null, '16', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('43', '0', '62756-827', '0', 'Biodex', '2495220', '0', 'Computerized Tomography (CT Scan) of Right Foot/Toe Joint', 'no_image.jpg', null, '4', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('44', '0', '13733-014', '0', 'Fintone', '375960', '0', 'Dilation of Left Popliteal Artery with Drug-eluting Intraluminal Device, Percutaneous Endoscopic Approach', 'no_image.jpg', null, '15', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('45', '0', '57520-1043', '0', 'Zoolab', '173401', '0', 'Insertion of Infusion Device into Thoracolumbar Vertebral Disc, Percutaneous Endoscopic Approach', 'no_image.jpg', null, '7', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('46', '0', '50804-370', '0', 'Y-find', '2581110', '0', 'Bypass Left Common Iliac Artery to Right External Iliac Artery with Synthetic Substitute, Percutaneous Endoscopic Approach', 'no_image.jpg', null, '17', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('47', '0', '50198-2826', '0', 'Lotstring', '2008610', '0', 'Restriction of Right Vertebral Vein with Extraluminal Device, Percutaneous Approach', 'no_image.jpg', null, '20', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('48', '0', '49967-611', '0', 'Wrapsafe', '1412040', '0', 'Removal of Extraluminal Device from Pancreatic Duct, Percutaneous Approach', 'no_image.jpg', null, '9', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('49', '0', '0904-6237', '0', 'Y-Solowarm', '1716140', '0', 'Supplement Clitoris with Nonautologous Tissue Substitute, Open Approach', 'no_image.jpg', null, '22', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('50', '0', '36987-1919', '0', 'Tresom', '534890', '0', 'Drainage of Left Common Iliac Vein, Percutaneous Endoscopic Approach, Diagnostic', 'no_image.jpg', null, '16', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('51', '0', '49288-0418', '0', 'Mat Lam Tam', '2295580', '0', 'Release Sigmoid Colon, Open Approach', 'no_image.jpg', null, '6', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('52', '2', '63304-459', '0', 'Bitwolf', '1017880', '0', 'Compression of Right Lower Leg using Pressure Dressing', 'no_image.jpg', null, '12', '1', '1', null, '2017-08-26 09:31:43');
+INSERT INTO `master_unit` VALUES ('53', '0', '54973-3124', '0', 'Ronstring', '1545980', '0', 'Dilation of Left External Carotid Artery, Percutaneous Endoscopic Approach', 'no_image.jpg', null, '8', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('54', '0', '43251-3340', '0', 'Sub-Ex', '254954', '0', 'Supplement Right Common Carotid Artery with Nonautologous Tissue Substitute, Open Approach', 'no_image.jpg', null, '11', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('55', '0', '50991-399', '0', 'Zaam-Dox', '1471790', '0', 'Division of Right Hip Tendon, Percutaneous Approach', 'no_image.jpg', null, '25', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('56', '0', '49738-206', '0', 'Flexidy', '1142480', '0', 'Drainage of Left Temporomandibular Joint with Drainage Device, Open Approach', 'no_image.jpg', null, '21', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('57', '0', '55111-355', '0', 'Zoolab', '2097880', '0', 'Removal of Synthetic Substitute from Left Metacarpophalangeal Joint, Open Approach', 'no_image.jpg', null, '5', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('58', '0', '64942-1223', '0', 'Viva', '1641150', '0', 'Removal of External Fixation Device from Right Wrist Joint, Percutaneous Endoscopic Approach', 'no_image.jpg', null, '8', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('59', '0', '60429-046', '0', 'Keylex', '1111580', '0', 'Change Drainage Device in Bone Marrow, External Approach', 'no_image.jpg', null, '22', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('60', '0', '66116-352', '0', 'Keylex', '953779', '0', 'Dilation of Right Basilic Vein with Intraluminal Device, Percutaneous Approach', 'no_image.jpg', null, '15', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('61', '0', '31720-201', '0', 'Asoka', '2666000', '0', 'Bypass Abdominal Aorta to Left Internal Iliac Artery with Nonautologous Tissue Substitute, Open Approach', 'no_image.jpg', null, '16', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('62', '0', '53808-0972', '0', 'Temp', '1796710', '0', 'Bypass Transverse Colon to Sigmoid Colon, Via Natural or Artificial Opening Endoscopic', 'no_image.jpg', null, '7', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('63', '0', '55648-716', '0', 'Stim', '774347', '0', 'Bypass Left Subclavian Artery to Right Lower Leg Artery with Autologous Arterial Tissue, Open Approach', 'no_image.jpg', null, '15', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('64', '0', '24846-0001', '0', 'Redhold', '2905800', '0', 'Drainage of Left Hip Bursa and Ligament with Drainage Device, Percutaneous Approach', 'no_image.jpg', null, '10', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('65', '0', '42291-232', '0', 'Temp', '486675', '0', 'Insertion of Infusion Pump into Right Upper Arm Subcutaneous Tissue and Fascia, Percutaneous Approach', 'no_image.jpg', null, '18', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('66', '0', '17156-613', '0', 'Sub-Ex', '1440090', '0', 'Revision of Synthetic Substitute in Vagina and Cul-de-sac, Open Approach', 'no_image.jpg', null, '23', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('67', '0', '57520-0521', '0', 'Bytecard', '2093300', '0', 'Change Other Device in Lymphatic, External Approach', 'no_image.jpg', null, '19', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('68', '0', '0904-6254', '0', 'Lotlux', '1065690', '0', 'Excision of Right Vas Deferens, Percutaneous Approach', 'no_image.jpg', null, '25', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('69', '0', '51824-012', '0', 'Overhold', '2659050', '0', 'Alteration of Left External Ear, Percutaneous Approach', 'no_image.jpg', null, '23', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('70', '0', '24338-611', '0', 'Tresom', '2018700', '0', 'Excision of Occipital-cervical Joint, Percutaneous Endoscopic Approach', 'no_image.jpg', null, '22', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('71', '0', '13811-676', '0', 'Holdlamis', '1868480', '0', 'Plain Radiography of Right Hand', 'no_image.jpg', null, '14', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('72', '0', '42884-442', '0', 'Regrant', '1573560', '0', 'Revision of Drainage Device in Upper Vein, Open Approach', 'no_image.jpg', null, '21', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('73', '0', '21695-234', '0', 'Solarbreeze', '1532970', '0', 'Supplement Thoracic Nerve with Autologous Tissue Substitute, Percutaneous Approach', 'no_image.jpg', null, '19', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('74', '0', '36987-1272', '0', 'Stronghold', '440889', '0', 'Replacement of Right Ankle Joint with Synthetic Substitute, Open Approach', 'no_image.jpg', null, '14', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('75', '0', '76237-250', '0', 'Flexidy', '1029500', '0', 'Excision of Left Pulmonary Artery, Open Approach, Diagnostic', 'no_image.jpg', null, '6', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('76', '0', '10202-751', '0', 'Otcom', '1852770', '0', 'Dilation of Right Femoral Artery with Four or More Intraluminal Devices, Percutaneous Endoscopic Approach', 'no_image.jpg', null, '18', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('77', '0', '68180-194', '0', 'Prodder', '1458780', '0', 'Replacement of Epiglottis with Nonautologous Tissue Substitute, Via Natural or Artificial Opening', 'no_image.jpg', null, '6', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('78', '0', '50685-001', '0', 'Gembucket', '1200190', '0', 'Repair Right Vocal Cord, Open Approach', 'no_image.jpg', null, '20', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('79', '0', '57237-102', '0', 'Konklux', '846549', '0', 'Division of Right Parietal Bone, Percutaneous Endoscopic Approach', 'no_image.jpg', null, '16', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('80', '0', '76049-008', '0', 'Regrant', '2376880', '0', 'Computerized Tomography (CT Scan) of Pelvic Arteries using Low Osmolar Contrast', 'no_image.jpg', null, '14', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('81', '0', '36987-1875', '0', 'Trippledex', '2777400', '0', 'Occlusion of Right External Iliac Artery with Extraluminal Device, Open Approach', 'no_image.jpg', null, '16', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('82', '0', '0781-5149', '0', 'Zoolab', '650037', '0', 'Dilation of Right Posterior Tibial Artery with Three Intraluminal Devices, Percutaneous Approach', 'no_image.jpg', null, '11', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('83', '0', '58892-126', '0', 'Quo Lux', '2297470', '0', 'Repair Lumbar Plexus, Percutaneous Endoscopic Approach', 'no_image.jpg', null, '4', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('84', '0', '62670-4245', '0', 'Holdlamis', '1950460', '0', 'Drainage of Nasal Bone, Percutaneous Approach, Diagnostic', 'no_image.jpg', null, '16', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('85', '0', '52567-124', '0', 'Voyatouch', '2274060', '0', 'Destruction of Buttock Skin, External Approach', 'no_image.jpg', null, '6', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('86', '0', '53808-0914', '0', 'Cookley', '324288', '0', 'Insertion of Infusion Device into Left Thyroid Artery, Percutaneous Approach', 'no_image.jpg', null, '6', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('87', '0', '76214-047', '0', 'Sub-Ex', '644246', '0', 'Dilation of Esophagus, Percutaneous Endoscopic Approach', 'no_image.jpg', null, '7', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('88', '0', '61442-122', '0', 'Otcom', '248248', '0', 'Division of Left Humeral Head, Percutaneous Endoscopic Approach', 'no_image.jpg', null, '19', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('89', '0', '64406-011', '0', 'Otcom', '1755970', '0', 'Supplement of Left Foot Subcutaneous Tissue and Fascia with Nonautologous Tissue Substitute, Open Approach', 'no_image.jpg', null, '24', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('90', '0', '51523-105', '0', 'Trippledex', '2124730', '0', 'Revision of Spacer in Right Metacarpophalangeal Joint, External Approach', 'no_image.jpg', null, '9', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('91', '0', '0268-1373', '0', 'Fixflex', '793721', '0', 'Occlusion of Abdominal Aorta, Percutaneous Endoscopic Approach', 'no_image.jpg', null, '24', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('92', '0', '49035-915', '0', 'Temp', '2863490', '0', 'Removal of Traction Apparatus on Right Lower Arm', 'no_image.jpg', null, '12', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('93', '0', '0395-0119', '0', 'Cardify', '491858', '0', 'Revision of Autologous Tissue Substitute in Thoracolumbar Vertebral Joint, Open Approach', 'no_image.jpg', null, '6', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('94', '0', '60512-8015', '0', 'Stronghold', '1229430', '0', 'Drainage of Right Wrist Joint, Open Approach, Diagnostic', 'no_image.jpg', null, '22', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('95', '0', '63717-877', '0', 'Trippledex', '1407510', '0', 'Drainage of Left Shoulder Bursa and Ligament, Open Approach', 'no_image.jpg', null, '5', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('96', '0', '30142-224', '0', 'Stim', '2845190', '0', 'Contact Radiation of Kidney', 'no_image.jpg', null, '23', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('97', '0', '41167-3002', '0', 'Wrapsafe', '2006410', '0', 'Alteration of Right Lower Leg with Nonautologous Tissue Substitute, Percutaneous Approach', 'no_image.jpg', null, '15', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('98', '0', '64720-137', '0', 'Quo Lux', '1928790', '0', 'Revision of Extraluminal Device in Trachea, External Approach', 'no_image.jpg', null, '7', '0', '1', null, '2017-08-26 09:30:41');
+INSERT INTO `master_unit` VALUES ('99', '2', '50458-563', '0', 'Flowdesk', '1014410', '0', 'Bypass Left Axillary Artery to Lower Arm Vein with Synthetic Substitute, Open Approach', 'no_image.jpg', null, '11', '0', '1', '2017-08-22 09:30:41', '2017-08-26 09:40:39');
+INSERT INTO `master_unit` VALUES ('100', '3', '60429-116', '0', 'Quo Lux', '744346', '0', 'Excision of Right Sternoclavicular Joint, Percutaneous Endoscopic Approach', 'no_image.jpg', null, '4', '0', '1', '2017-08-23 09:30:41', '2017-08-26 09:40:39');
+INSERT INTO `master_unit` VALUES ('101', '4', '10812-958', '0', 'Viva', '2326900', '0', 'Insertion of Intraluminal Device into Left Brachial Vein, Percutaneous Endoscopic Approach', 'no_image.jpg', null, '23', '0', '1', '2017-08-23 09:30:41', '2017-08-26 09:40:38');
+INSERT INTO `master_unit` VALUES ('102', '3', '0185-0063', '0', 'Bigtax', '763916', '0', 'Supplement Left Nipple with Autologous Tissue Substitute, Percutaneous Approach', 'no_image.jpg', null, '18', '0', '1', '2017-08-23 09:30:41', '2017-08-26 09:40:37');
+INSERT INTO `master_unit` VALUES ('103', '2', '41268-175', '0', 'Tin', '1301340', '1290000', 'Extirpation of Matter from Innominate Artery, Bifurcation, Open Approach', 'no_image.jpg', null, '10', '0', '1', '2017-08-24 09:30:41', '2017-08-26 09:42:56');
+INSERT INTO `master_unit` VALUES ('104', '1', '37205-738', '0', 'Zoolab', '1869530', '0', 'Reposition Left Renal Artery, Percutaneous Endoscopic Approach', 'no_image.jpg', null, '8', '0', '1', '2017-08-25 09:30:41', '2017-08-26 09:40:36');
+INSERT INTO `master_unit` VALUES ('105', '5', '0019-1324', '0', 'Tin', '270999', '0', 'Restriction of Left Ureter, Via Natural or Artificial Opening', 'no_image.jpg', null, '11', '0', '1', '2017-08-25 09:30:41', '2017-08-26 09:40:35');
+INSERT INTO `master_unit` VALUES ('106', '5', '43353-324', '0', 'Tresom', '2815830', '0', 'Release Right Upper Lung Lobe, Percutaneous Endoscopic Approach', 'no_image.jpg', null, '16', '0', '1', '2017-08-26 09:30:41', '2017-08-26 09:40:34');
 
 -- ----------------------------
 -- Table structure for master_unit_picture
@@ -827,7 +929,7 @@ CREATE TABLE `master_unit_picture` (
 -- ----------------------------
 -- Records of master_unit_picture
 -- ----------------------------
-INSERT INTO `master_unit_picture` VALUES ('1', '1', 'jb_n50z.jpg', null, '2017-08-23 11:57:22');
+INSERT INTO `master_unit_picture` VALUES ('1', '4', 'jb_n50z.jpg', null, '2017-08-26 08:42:43');
 INSERT INTO `master_unit_picture` VALUES ('2', '1', 'img11.jpg', null, '2017-08-23 12:55:09');
 INSERT INTO `master_unit_picture` VALUES ('3', '1', 'img10.jpg', null, null);
 INSERT INTO `master_unit_picture` VALUES ('4', '1', 'img11.jpg', null, null);
@@ -847,6 +949,79 @@ CREATE TABLE `migrations` (
 -- Records of migrations
 -- ----------------------------
 INSERT INTO `migrations` VALUES ('1', '2017_07_20_152703_create_users_table', '1');
+
+-- ----------------------------
+-- Table structure for orders
+-- ----------------------------
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE `orders` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `hash` varchar(255) COLLATE latin1_general_ci NOT NULL,
+  `total` float NOT NULL,
+  `address_id` int(11) NOT NULL,
+  `paid` tinyint(1) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+-- ----------------------------
+-- Records of orders
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for orders_payments
+-- ----------------------------
+DROP TABLE IF EXISTS `orders_payments`;
+CREATE TABLE `orders_payments` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL,
+  `failed` tinyint(4) NOT NULL,
+  `transaction_id` varchar(255) COLLATE latin1_general_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+-- ----------------------------
+-- Records of orders_payments
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for orders_products
+-- ----------------------------
+DROP TABLE IF EXISTS `orders_products`;
+CREATE TABLE `orders_products` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+-- ----------------------------
+-- Records of orders_products
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for orders_shippings
+-- ----------------------------
+DROP TABLE IF EXISTS `orders_shippings`;
+CREATE TABLE `orders_shippings` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `alamat1` varchar(255) COLLATE latin1_general_ci NOT NULL,
+  `alamat2` varchar(255) COLLATE latin1_general_ci DEFAULT NULL,
+  `kota` varchar(255) COLLATE latin1_general_ci NOT NULL,
+  `kodepos` int(7) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+-- ----------------------------
+-- Records of orders_shippings
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for permissions
