@@ -17,6 +17,11 @@ class SettingsController extends Controller
 		$this->render('/member/account/detail', array('allPropinsi' => $propinsi, 'allKota' => $kota));
 	}
 
+    public function postDetail()
+    {
+        
+    }
+
 	public function getPassword()
 	{
 		$this->render('member/password/change');

@@ -89,9 +89,10 @@ class UnitController extends Controller
     {
         $unit = Unit::with('merk')->where('slug', $slug)->first();
         $gambar = UnitPicture::select('picture')->where('unit_id', $unit['id'])->get();
+        $related = Unit::with('merk')->where('featured', '0')->limit('8')->get();
 
+        $data = array('pageId' => $unit['merk']['nama'].' '.$unit['kode'],'page' => 'produk.detail', 'unitDetail' => $unit, 'unitPicture' => $gambar, 'allRelatedProduct' => $related);
 
-        $data = array('pageId' => $unit['merk']['nama'].' '.$unit['kode'],'page' => 'produk.detail', 'unitDetail' => $unit, 'unitPicture' => $gambar);
 
         return $this->render('products/products', $data);
     }
