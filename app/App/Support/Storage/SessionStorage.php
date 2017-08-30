@@ -26,7 +26,7 @@ class SessionStorage implements StorageInterface, Countable
 
 	public function get($index)
 	{
-		if(!$this->exists($index))
+		if(!$this->exist($index))
 		{
 			return null;
 		}
@@ -34,7 +34,7 @@ class SessionStorage implements StorageInterface, Countable
 		return $_SESSION[$this->bucket][$index];
 	}
 
-	public function exists($index)
+	public function exist($index)
 	{
 		return isset($_SESSION[$this->bucket][$index]);
 	}
@@ -46,7 +46,7 @@ class SessionStorage implements StorageInterface, Countable
 
 	public function unset($index)
 	{
-		if($this->exists($index))
+		if($this->exist($index))
 		{
 			unset($_SESSION[$this->bucket][$index]);
 		}

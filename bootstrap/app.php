@@ -7,8 +7,6 @@ use App\App;
 use App\Http\Middleware\CsrfMiddleware;
 use App\Http\Middleware\OldInputMiddleware;
 use App\Http\Middleware\RememberMiddleware;
-use App\Support\Storage\Contracts\StorageInterface;
-use App\Basket\Basket;
 use Slim\Container;
 
 define('INC_ROOT', __DIR__);

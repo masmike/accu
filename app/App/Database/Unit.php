@@ -9,6 +9,11 @@ class Unit extends Model
 
     protected $fillable = ['merk_id', 'kode', 'type_id', 'slug', 'harga', 'harga_diskon', 'stock', 'deskripsi', 'status'];
 
+    public function hasStock($quantity)
+    {
+        return $this->stock >= $quantity;
+    }
+
     public function merk()
     {
     	return $this->belongsTo(Merk::class);
@@ -28,6 +33,8 @@ class Unit extends Model
     {
         return $this->hasMany(UnitPicture::class);
     }
+
+
 
 
 }

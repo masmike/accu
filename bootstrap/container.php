@@ -1,4 +1,5 @@
 <?php
+
 return [
     'settings' => [
         'displayErrorDetails' => getenv('APP_ENV') === "production" ? false : true,
@@ -34,14 +35,38 @@ return [
         return new \ReCaptcha\ReCaptcha($c->config->get('plugins.recaptcha.secret'));
     },
 
-    'storageinterface' => function($c) {
+    // SessionStorage::class => function($c) {
+    //     return new \App\Support\Storage\SessionStorage;
+    // },
+
+    'storageInterface' => function($c) {
         return new \App\Support\Storage\SessionStorage('cart');
     },
 
-    'basket' => function($c) {
-        return new \App\Basket\Basket(
-                $c->get(storageinterface)
-            );
+    'sessionStorage' => function($c) {
+        return new \App\Support\Storage\SessionStorage;
+    },
+    // 'storageinterface' => function($c) {
+    //     return new \App\Support\Storage\SessionStorage('cart');
+    // },
+
+    // 'basket' => function($c) {
+    //     return new \App\Basket\Basket;
+    // },
+
+    'unit' => function($c){
+        return new \App\Database\Unit;
+    },
+
+    // 'basket' => function($c) {
+    //     return new \App\Basket\Basket;
+    // },
+
+    'basket' => function($c){
+        return new \App\Basket\Basket (
+            $c['storageInterface'],
+            $c['unit']
+        );
     },
 
     'twig' => function($c) {
@@ -73,6 +98,10 @@ return [
         $view->addExtension(new \App\Twig\TwigExtension($c));
 
         $view->getEnvironment()->addGlobal('flash', $c['flash']);
+
+        $view->getEnvironment()->addGlobal('basket', $c['basket']);
+
+        $view->getEnvironment()->addGlobal('unit', $c['unit']);
 
         return $view;
     },
@@ -155,4 +184,5 @@ return [
 
         return new \App\Mail\Mailer($mailer, $c);
     },
+
 ];

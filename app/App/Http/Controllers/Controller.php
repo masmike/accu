@@ -94,6 +94,21 @@ class Controller
         return $this->authmember()->customer();
     }
 
+    public function unit()
+    {
+        return $this->unit;
+    }
+
+    // public function storage()
+    // {
+    //     return $this->storage;
+    // }
+
+    public function addToBasket($unit, $quantity)
+    {
+        return $this->basket->add($unit, $quantity);
+    }
+
     protected function router()
     {
         return $this->container['router'];

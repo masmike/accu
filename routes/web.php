@@ -6,6 +6,8 @@ $app->route(['GET'], '/produk/{slug}', App\Http\Controllers\Master\UnitControlle
 
 $app->route(['GET'], '/cart', App\Http\Controllers\Website\CartController::class)->setName('cart');
 
+$app->route(['GET'], '/cart/add/{slug}/{quantity}', App\Http\Controllers\Website\CartController::class, 'add')->setName('produk.add');
+
 
 $app->group('/member', function() {
     $this->route(['GET', 'POST'], '/login', App\Http\Controllers\Member\LoginController::class)->add(new App\Http\Middleware\GuestMiddleware($this->getContainer()))->setName('member.login');
