@@ -34,6 +34,16 @@ return [
         return new \ReCaptcha\ReCaptcha($c->config->get('plugins.recaptcha.secret'));
     },
 
+    'storageinterface' => function($c) {
+        return new \App\Support\Storage\SessionStorage('cart');
+    },
+
+    'basket' => function($c) {
+        return new \App\Basket\Basket(
+                $c->get(storageinterface)
+            );
+    },
+
     'twig' => function($c) {
         $twig = new \Twig_Environment(new \Twig_Loader_Filesystem($c['settings']['viewTemplatesDirectory']));
 
