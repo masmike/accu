@@ -99,10 +99,10 @@ class Controller
         return $this->unit;
     }
 
-    // public function storage()
-    // {
-    //     return $this->storage;
-    // }
+    public function storage()
+    {
+        return $this->storage;
+    }
 
     public function addToBasket($unit, $quantity)
     {

@@ -6,7 +6,6 @@ use App\Database\Unit;
 use App\Support\Storage\Contracts\StorageInterface;
 use App\Basket\Exceptions\QuantityExceededException;
 
-
 class Basket
 {
 	protected $storage;
@@ -22,7 +21,8 @@ class Basket
 	{
 
 	    if ($this->has($unit)) {
-	      $qty = $this->get($unit['quantity']) + $quantity;
+	      $quantity = $this->get($unit)['quantity'] + $quantity;
+	      echo $quantity;
 	    }
 
 	    $this->update($unit, $quantity);
