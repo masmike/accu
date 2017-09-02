@@ -14,6 +14,11 @@ class Unit extends Model
         return $this->stock >= $quantity;
     }
 
+    public function outOfStock()
+    {
+        return $this->stock === 0;
+    }
+
     public function merk()
     {
     	return $this->belongsTo(Merk::class);

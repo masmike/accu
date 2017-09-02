@@ -22,7 +22,6 @@ class Basket
 
 	    if ($this->has($unit)) {
 	      $quantity = $this->get($unit)['quantity'] + $quantity;
-	      echo $quantity;
 	    }
 
 	    $this->update($unit, $quantity);
@@ -45,7 +44,7 @@ class Basket
 	    ]);
 	}
 
-	public function remove(unit $unit)
+	public function remove($unit)
 	{
 	    $this->storage->unset($unit['id']);
 	}
@@ -82,7 +81,34 @@ class Basket
 	    return $items;
 	}
 
-	public function itemCount(){
+	public function itemCount()
+	{
 	    return count($this->storage);
+	}
+
+	public function subTotal()
+	{
+		$total = 0;
+
+		foreach($this->all() as $item) {
+			if ($item->outOfStock()){
+				continue;
+			}
+
+			$total = $total + $item->harga * $item->quantity;
+		}
+
+		return $total;
+	}
+
+	public function refresh()
+	{
+		foreach($this->all() as $item){
+			if(!$item->hasStock($item->quantity)){
+				$this->update($item, $item->stock);
+			} else if ($item->hasStock(1)  && $item->quantity === 0) {
+
+			}
+		}
 	}
 }

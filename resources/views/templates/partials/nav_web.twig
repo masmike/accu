@@ -667,35 +667,37 @@
             <div class="mini-cart">
               <div data-toggle="dropdown" data-hover="dropdown" class="basket dropdown-toggle"> <a href="#">
                 <div class="cart-icon"><i class="fa fa-shopping-basket"></i></div>
-                <div class="shoppingcart-inner hidden-xs hidden-sm"><span class="cart-title">Shopping Bag</span> <span class="cart-total">4 Item(s): $520.00</span></div>
+                <div class="shoppingcart-inner hidden-xs hidden-sm"><span class="cart-title">Keranjang Belanja</span> <span class="cart-total">{{ basket.itemCount }} Barang: Rp. {{ basket.subTotal | number_format('0', ',', '.') }}</span></div>
                 </a></div>
+              {% if basket.itemCount %}
               <div>
                 <div class="top-cart-content">
-                  <div class="block-subtitle hidden-xs">Recently added item(s)</div>
+                  <div class="block-subtitle hidden-xs">Produk di keranjang belanja</div>
                   <ul id="cart-sidebar" class="mini-products-list">
-                    <li class="item odd"> <a href="shopping_cart.html" title="Ipsums Dolors Untra" class="product-image"><img src="images/products/img07.jpg" alt="Lorem ipsum dolor" width="65"></a>
-                      <div class="product-details"> <a href="#" title="Remove This Item" class="remove-cart"><i class="icon-close"></i></a>
-                        <p class="product-name"><a href="shopping_cart.html">Lorem ipsum dolor sit amet Consectetur</a> </p>
-                        <strong>1</strong> x <span class="price">$20.00</span> </div>
+                    {% for belanjaan in basket.all %}
+                    {% if loop.first %}
+                      <li class="item odd">
+                    {% elseif loop.last %}
+                      <li class="item last odd">
+                    {% else %}
+                      <li class="item even">
+                    {% endif %}
+                     <a href="{{ path_for('produk.detail', {slug: belanjaan.slug}) }}" title="Ipsums Dolors Untra" class="product-image"><img src="{{ asset('img/front/products/') }}{{ belanjaan.gambar }}" alt="{{ belanjaan.kode }}" width="65"></a>
+                      <div class="product-details"> <a href="#" title="Hapus barang ini" class="remove-cart"><i class="icon-close"></i></a>
+                        <p class="product-name"><a href="{{ path_for('produk.detail', {slug: belanjaan.slug}) }}">{{ belanjaan.kode }}</a> </p>
+                        <strong>{{ belanjaan.quantity}}</strong> x <span class="price">Rp. {{ belanjaan.harga | number_format('0', ',', '.') }}</span> </div>
                     </li>
-                    <li class="item even"> <a href="shopping_cart.html" title="Ipsums Dolors Untra" class="product-image"><img src="images/products/img11.jpg" alt="Lorem ipsum dolor" width="65"></a>
-                      <div class="product-details"> <a href="#" title="Remove This Item" class="remove-cart"><i class="icon-close"></i></a>
-                        <p class="product-name"><a href="shopping_cart.html">Consectetur utes anet adipisicing elit</a> </p>
-                        <strong>1</strong> x <span class="price">$230.00</span> </div>
-                    </li>
-                    <li class="item last odd"> <a href="shopping_cart.html" title="Ipsums Dolors Untra" class="product-image"><img src="images/products/img10.jpg" alt="Lorem ipsum dolor" width="65"></a>
-                      <div class="product-details"> <a href="#" title="Remove This Item" class="remove-cart"><i class="icon-close"></i></a>
-                        <p class="product-name"><a href="shopping_cart.html">Sed do eiusmod tempor incidist</a> </p>
-                        <strong>2</strong> x <span class="price">$420.00</span> </div>
-                    </li>
+                
+                    {% endfor %}
                   </ul>
-                  <div class="top-subtotal">Subtotal: <span class="price">$520.00</span></div>
+                  <div class="top-subtotal">Subtotal: <span class="price">Rp. {{ basket.subTotal | number_format('0', ',', '.') }}</span></div>
                   <div class="actions">
-                    <button class="btn-checkout" type="button"><i class="fa fa-check"></i><span>Checkout</span></button>
-                    <button class="view-cart" type="button"><i class="fa fa-shopping-basket"></i> <span>View Cart</span></button>
+                    <button class="btn-checkout" type="button"><i class="fa fa-check"></i><span>Bayar</span></button>
+                    <a href="{{ path_for('cart') }}"><button class="view-cart" type="button"><i class="fa fa-shopping-basket"></i> <span>Keranjang</span></button></a>
                   </div>
                 </div>
               </div>
+              {%endif %}
             </div>
           </div>
         </div>

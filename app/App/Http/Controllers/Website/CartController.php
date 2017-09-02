@@ -8,18 +8,10 @@ use App\Basket\Exceptions\QuantityExceededException;
 
 class CartController extends Controller
 {
-	// protected $basket;
-	// protected $unit;
-
-	// public function __construct($basket, $unit)
-	// {
-	// 	$this->basket = $basket;
-	// 	$this->unit = $unit;
-	// }
 
     public function get()
     {
-    	
+    	$this->basket->refresh();
     	return $this->render('templates/cart');
     }
 
@@ -35,8 +27,10 @@ class CartController extends Controller
 
 			$this->addToBasket($produk, $quantity);
 		} catch (QuantityExceededException $e) {
-
+            //flash message here
 		}
+
+        return $this->redirect('cart');
     }
 
 

@@ -62,4 +62,8 @@ class SessionStorage implements StorageInterface, Countable
 		return count($this->all());
 	}
 
+	public function countTotal()
+	{
+		return count($this->all(['harga']));
+	}
 }
