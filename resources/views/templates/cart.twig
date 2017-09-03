@@ -5,9 +5,9 @@
     <div class="main container">
       <div class="col-main">
         <div class="cart">
-          
+          {% if basket.all %}
           <div class="page-content page-order"><div class="page-title">
-            <h2>Shopping Cart</h2>
+            <h2>Keranjang Belanja</h2>
           </div>
             
             
@@ -29,22 +29,21 @@
                   {% for belanjaan in basket.all %}
                     <tr>
                       <td class="cart_product"><a href="#"><img src="{{ asset('img/front/products/') }}{{ belanjaan.gambar }}" alt="Product"></a></td>
-                      <td class="cart_description"><p class="product-name"><a href="{{ path_for('produk.detail', {slug: belanjaan.slug}) }}">{{ belanjaan.kode }} </a></p>
+                      <td class="cart_description"><p class="product-name"><a href="#">{{ belanjaan.kode }} </a></p>
                         <small><a href="#">Color : Red</a></small><br>
                         <small><a href="#">Size : M</a></small></td>
                       <td class="availability in-stock"><span class="label">In stock</span></td>
                       <td class="price"><span>{{ belanjaan.harga | number_format('0', ',', '.') }}</span></td>
                       <td class="qty">
-                        <form method="post" class="form-inline" action="{{ path_for('home') }}">
+                        <form action="{{ path_for('cart.update', {slug: belanjaan.slug }) }}" method="POST" class="form-inline">
                           <select name="quantity" class="form-control input-sm">
-                          {% for num in 0..belanjaan.stock %}
+                          {% for num in 1..belanjaan.stock %}
                             <option value="{{ num }}" {% if num == belanjaan.quantity %} selected="selected" {% endif %}>{{ num }}</option>
                           {% endfor %}
                             <option value="0">-</option>
-                          }
-                          }
                           </select>
-                          update
+                          {{ csrf.field | raw }}
+                          <button type="submit"><i class="fa fa-refresh"></i><span> Update</span></button>
                         </form>
                       </td>
                       <td class="price"><span>{{ (belanjaan.quantity * belanjaan.harga) | number_format('0', ',', '.') }}</span></td>
@@ -65,46 +64,17 @@
                   </tfoot>
                 </table>
               </div>
-              <div class="cart_navigation"> <a class="continue-btn" href="#"><i class="fa fa-arrow-left"> </i>&nbsp; Continue shopping</a> <a class="checkout-btn" href="#"><i class="fa fa-check"></i> Proceed to checkout</a> </div>
+              <div class="cart_navigation"> <a class="continue-btn" href="#"><i class="fa fa-arrow-left"> </i>&nbsp; Lanjutkan Belanja</a> <a class="checkout-btn" href="#"><i class="fa fa-check"></i> Proses Pembayaran</a> </div>
             </div>
           </div>
+          {% else %}
+          Keranjang belanja kosong. <a href="{{ path_for('home') }}"><b>Klik disini</b></a> untuk memulai belanja..
+          {% endif %}
         </div>
       </div>
     </div>
   </section>
-   <!-- service section -->
-  
-  <div class="jtv-service-area">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-4 col-sm-4 col-xs-12">
-          <div class="jtv-service">
-            <div class="ser-icon"> <i class="fa fa-truck flip-horizontal"></i> </div>
-            <div class="service-content">
-              <h5>FREE SHIPPING WORLDWIDE </h5>
-              <p>free ship-on oder over $299.00</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-sm-4 col-xs-12">
-          <div class="jtv-service">
-            <div class="ser-icon"> <i class="fa fa-mail-forward"></i> </div>
-            <div class="service-content">
-              <h5>MONEY BACK GUARATEE! </h5>
-              <p>30 days money back guarantee!</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-sm-4 col-xs-12">
-          <div class="jtv-service">
-            <div class="ser-icon"> <i class="fa fa-comments flip-horizontal"></i> </div>
-            <div class="service-content">
-              <h5>24/7 CUSTOMER SERVICE </h5>
-              <p>We support online 24 hours a day</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+
+{% endblock %}
+{% block scripts %}
 {% endblock %}

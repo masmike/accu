@@ -1,7 +1,7 @@
 <!-- mobile menu -->
 <div id="mobile-menu">
   <div id="mobile-search">
-    <form>
+    <form action="#">
       <div class="input-group">
         <input type="text" class="form-control" placeholder="Search" name="search">
         <button class="btn-search" type="button"><i class="fa fa-search"></i></button>
@@ -636,7 +636,7 @@
           
           <div class="top-search">
             <div id="search">
-              <form>
+              <form action="">
                 <div class="input-group">
                   <input type="text" class="form-control" placeholder="Search" name="search">
                   <select class="cate-dropdown hidden-xs hidden-sm" name="category_id">
@@ -682,9 +682,9 @@
                     {% else %}
                       <li class="item even">
                     {% endif %}
-                     <a href="{{ path_for('produk.detail', {slug: belanjaan.slug}) }}" title="Ipsums Dolors Untra" class="product-image"><img src="{{ asset('img/front/products/') }}{{ belanjaan.gambar }}" alt="{{ belanjaan.kode }}" width="65"></a>
+                     <a href="{{ path_for('produk.info', {slug: belanjaan.slug}) }}" title="Ipsums Dolors Untra" class="product-image"><img src="{{ asset('img/front/products/') }}{{ belanjaan.gambar }}" alt="{{ belanjaan.kode }}" width="65"></a>
                       <div class="product-details"> <a href="#" title="Hapus barang ini" class="remove-cart"><i class="icon-close"></i></a>
-                        <p class="product-name"><a href="{{ path_for('produk.detail', {slug: belanjaan.slug}) }}">{{ belanjaan.kode }}</a> </p>
+                        <p class="product-name"><a href="{{ path_for('produk.info', {slug: belanjaan.slug}) }}">{{ belanjaan.kode }}</a> </p>
                         <strong>{{ belanjaan.quantity}}</strong> x <span class="price">Rp. {{ belanjaan.harga | number_format('0', ',', '.') }}</span> </div>
                     </li>
                 

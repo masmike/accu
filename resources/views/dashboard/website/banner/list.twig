@@ -1,7 +1,6 @@
 {% extends 'templates/dash_app.twig' %}
 {% block styles %}
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/dataTables.bootstrap4.min.css') }}">
-
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/datatables.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/select2.min_def.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/select2.min.css') }}">
@@ -18,9 +17,9 @@
                     <h3 class="ks-main-title">Banner Website</h3>
                     <div class="ks-sub-title">Daftar Banner untuk Promosi dan Produk di Website</div>
                 </div>
-                <button class="btn btn-primary-outline ks-solid ks-izi-modal-trigger" data-target="#q-main">
+                <a href="{{ path_for('dashboard.webbanner.add') }}"><button class="btn btn-primary-outline">
                     Tambah
-                </button>
+                </button></a>
             </section>
         </div>
 
@@ -48,7 +47,7 @@
                         {% for row in allBanner %}
                         <tr>
                             <td>{{ row.id }}</td>
-                            <td><img src="{{ asset('img/banner')}}/{{ row.path }}" width="90" height="40"></td>
+                            <td><img src="{{ asset('img/front/banner')}}/{{ row.path }}" width="90" height="40"></td>
                             <td>{{ row.name }}</td>
                             <td>{{ row.position.name }}</td>
                             <td>
@@ -71,15 +70,16 @@
     </div>
 </div>
 					
-<div id="ks-izi-modal-basic"
+<div id="q-main"
      class="ks-izi-modal"
      data-iziModal-fullscreen="true"
-     data-iziModal-title="Detail Order"
-     data-iziModal-subtitle="Konfirmasi atau Pembatalan Order Customer"
-     data-iziModal-icon="la la-shopping-cart"
+     data-iziModal-title="Tambah / Edit Banner"
+     data-iziModal-subtitle="Menambah atau edit konfigurasi Banner"
+     data-iziModal-icon="la la-image"
      data-iziModal-padding="20"
      data-iziModal-autoopen="false"
      data-iziModal-headercolor="#3a529b">
+     {% include 'dashboard/website/banner/add.twig' %}
 </div>
 <div id="ks-izi-modal-alert"></div>
 {% endblock %}		
@@ -124,10 +124,14 @@
             }
         });
 
-        table.buttons().container().appendTo( '#ks-datatable_wrapper .col-md-6:eq(0)' );
-        $('#ks-izi-modal-basic').iziModal({
-            width: 1000
+        $('.ks-izi-modal-trigger').on('click', function (e) {
+            $($(this).data('target')).iziModal('open');
         });
+
+        $('#q-main').iziModal({
+            width: 650,
+        });
+
         $('#dTable').on('dblclick', 'tr', function () {
             var data = table.row( this ).data();
             $.ajax({
@@ -135,8 +139,8 @@
                 url: "orders/"+data[0],
                 crossDomain: true,
                 success: function(response) {
-                    $("#ks-izi-modal-basic .iziModal-content").html(response);
-                    $('#ks-izi-modal-basic').iziModal('open');
+                    $("#q-main .iziModal-content").html(response);
+                    $('#q-main').iziModal('open');
                 },
                 error: function() {
                     console.log(response);

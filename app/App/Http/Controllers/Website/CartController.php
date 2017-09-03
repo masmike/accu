@@ -33,5 +33,24 @@ class CartController extends Controller
         return $this->redirect('cart');
     }
 
+    public function postUpdate($slug)
+    {
+        $produk = Unit::where('slug', $slug)->first();
+
+       if (!$produk) {
+            return $this->redirect('home');
+        }
+
+        try {
+            $qty = $this->param('quantity');
+
+            $this->updateBasket($produk, $qty);
+        } catch (QuantityExceededException $e) {
+
+        }
+
+        return $this->redirect('cart');
+    }
+
 
 }

@@ -1,13 +1,20 @@
 <?php
 
-$app->route(['GET'], '/', App\Http\Controllers\HomeController::class)->setName('home');
+$app->group('/', function() {
+    $this->route(['GET'], '[/]', App\Http\Controllers\HomeController::class)->add(new App\Http\Middleware\GuestMemberMiddleware($this->getContainer()))->setName('home');
 
-$app->route(['GET'], '/produk/{slug}', App\Http\Controllers\Master\UnitController::class, 'slug')->setName('produk.detail');
+    $this->route(['GET'], '/{slug}', App\Http\Controllers\Master\UnitController::class, 'info')->add(new App\Http\Middleware\GuestMemberMiddleware($this->getContainer()))->setName('produk.info');
 
-$app->route(['GET'], '/cart', App\Http\Controllers\Website\CartController::class)->setName('cart');
+});
 
-$app->route(['GET'], '/cart/add/{slug}/{quantity}', App\Http\Controllers\Website\CartController::class, 'add')->setName('produk.add');
 
+$app->group('/keranjang', function() {
+    $this->route(['GET'], '[/]', App\Http\Controllers\Website\CartController::class)->add(new App\Http\Middleware\GuestMemberMiddleware($this->getContainer()))->setName('cart');
+
+    $this->route(['GET'], '/add/{slug}/{quantity}', App\Http\Controllers\Website\CartController::class, 'add')->add(new App\Http\Middleware\GuestMemberMiddleware($this->getContainer()))->setName('cart.add');
+
+    $this->route(['POST'], '/update/{slug}', App\Http\Controllers\Website\CartController::class, 'update')->add(new App\Http\Middleware\GuestMemberMiddleware($this->getContainer()))->setName('cart.update');
+});
 
 $app->group('/member', function() {
     $this->route(['GET', 'POST'], '/login', App\Http\Controllers\Member\LoginController::class)->add(new App\Http\Middleware\GuestMiddleware($this->getContainer()))->setName('member.login');
@@ -76,7 +83,7 @@ $app->get('/member/logout', function($request, $response, $arg) {
     App\Lib\Session::destroy(env('APP_MEMBER_ID', 'member_id'));
 
     return $response->withRedirect($this['router']->pathFor('home'));
-})->setName('member.logout'); 
+})->add(new App\Http\Middleware\AuthMemberMiddleware($app->getContainer()))->setName('member.logout'); 
 
 $app->group('/dashboard', function() {
     $this->route(['GET'], '[/]', App\Http\Controllers\Dashboard\DashboardController::class)->add(new App\Http\Middleware\AuthMiddleware($this->getContainer()))->setName('dashboard.home');
@@ -97,7 +104,9 @@ $app->group('/dashboard', function() {
 
     $this->route(['GET', 'POST'], '/unit/{unitId}[/]', App\Http\Controllers\Master\UnitController::class, 'detail')->add(new App\Http\Middleware\AuthMiddleware($this->getContainer()))->setName('dashboard.master.unit.detail');
 
-    $this->route(['GET', 'POST'], '/website/banner', App\Http\Controllers\Master\BannerController::class)->add(new App\Http\Middleware\AuthMiddleware($this->getContainer()))->setName('dashboard.webbanner');
+    $this->route(['GET'], '/banner', App\Http\Controllers\Website\BannerController::class)->add(new App\Http\Middleware\AuthMiddleware($this->getContainer()))->setName('dashboard.webbanner');
+
+    $this->route(['GET', 'POST'], '/banner/add', App\Http\Controllers\Website\BannerController::class, 'add')->add(new App\Http\Middleware\AuthMiddleware($this->getContainer()))->setName('dashboard.webbanner.add');
 
     $this->route(['GET', 'POST'], '/website/company', App\Http\Controllers\Master\CompanyController::class)->add(new App\Http\Middleware\AuthMiddleware($this->getContainer()))->setName('dashboard.webcompany');
 

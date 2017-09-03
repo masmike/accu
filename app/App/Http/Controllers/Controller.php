@@ -106,8 +106,13 @@ class Controller
 
     public function addToBasket($unit, $quantity)
     {
-        return $this->basket->add($unit, $quantity);
+        return $this->basket->addBasket($unit, $quantity);
     }
+
+    public function updateBasket($unit, $quantity)
+    {
+        return $this->basket->updateBasket($unit, $quantity);
+    }    
 
     protected function router()
     {

@@ -85,13 +85,13 @@ class UnitController extends Controller
 
     }
 
-    public function getSlug($slug)
+    public function getInfo($slug)
     {
         $unit = Unit::with('merk')->where('slug', $slug)->first();
         $gambar = UnitPicture::select('picture')->where('unit_id', $unit['id'])->get();
         $related = Unit::with('merk')->where('featured', '0')->limit('8')->get();
 
-        $data = array('pageId' => $unit['merk']['nama'].' '.$unit['kode'],'page' => 'produk.detail', 'unitDetail' => $unit, 'unitPicture' => $gambar, 'allRelatedProduct' => $related);
+        $data = array('pageId' => $unit['merk']['nama'].' '.$unit['kode'], 'unitDetail' => $unit, 'unitPicture' => $gambar, 'allRelatedProduct' => $related);
 
 
         return $this->render('products/products', $data);

@@ -113,7 +113,7 @@ class Validator extends Violin
 
     public function validate_memberMatchesCurrentPassword($value, $input, $args)
     {
-        if($this->authmember->check() && $this->container->hash->verifyPassword($value, $this->authmember->customer()->password)) {
+        if($this->authmember->checks() && $this->container->hash->verifyPassword($value, $this->authmember->customer()->password)) {
             return true;
         }
 

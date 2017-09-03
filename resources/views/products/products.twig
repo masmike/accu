@@ -6,7 +6,7 @@
         <div class="col-xs-12">
           <ul>
             <li class="home"> <a title="Go to Home Page" href="{{ path_for('home') }}">Home</a><span>&raquo;</span></li>
-            <li class=""> <a title="Go to Home Page" href="shop_grid.html">{{ unitDetail.merk.nama | title }}</a><span>&raquo;</span></li>
+            <li class=""> <a title="Go to Home Page" href="{{ path_for('home') }}">{{ unitDetail.merk.nama | title }}</a><span>&raquo;</span></li>
             <li><strong>{{ unitDetail.kode }}</strong></li>
           </ul>
         </div>
@@ -75,7 +75,7 @@
                       <div onClick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty )) result.value++;return false;" class="inc qtybutton"><i class="fa fa-plus">&nbsp;</i></div>
                     </div>
                   </div>
-                  <a href="{{ path_for('produk.add', { slug: unitDetail.slug, quantity: 1 }) }}"><button class="button pro-add-to-cart" title="Beli Sekarang" type="button"><span><i class="fa fa-shopping-basket"></i> Beli Sekarang</span></button></a>
+                  <a href="{{ path_for('cart.add', { slug: unitDetail.slug, quantity: 1 }) }}"><button class="button pro-add-to-cart" title="Beli Sekarang" type="button"><span><i class="fa fa-shopping-basket"></i> Beli Sekarang</span></button></a>
                 </form>
               </div>
               {% endif %}
@@ -280,12 +280,12 @@
                   <div class="product-item">
                     <div class="item-inner">
                       <div class="product-thumb has-hover-img">
-                        <figure> <a title="{{ relatedproduct.merk.nama }} {{ relatedproduct.kode }}" href="{{ path_for('produk.detail', {slug: relatedproduct.slug}) }}"> <img class="first-img" src="{{ asset('img/front/products/') }}{{ relatedproduct.gambar }}" alt=""> <img class="hover-img" src="{{ asset('img/front/products/') }}{{ relatedproduct.gambar_alt }}" alt=""> </a></figure>
+                        <figure> <a title="{{ relatedproduct.merk.nama }} {{ relatedproduct.kode }}" href="{{ path_for('produk.info', {slug: relatedproduct.slug}) }}"> <img class="first-img" src="{{ asset('img/front/products/') }}{{ relatedproduct.gambar }}" alt=""> <img class="hover-img" src="{{ asset('img/front/products/') }}{{ relatedproduct.gambar_alt }}" alt=""> </a></figure>
                         <!-- <div class="pr-info-area animated animate6"><a href="quick_view.html" class="quick-view"><i class="fa fa-search"><span>Quick view</span></i></a> <a href="wishlist.html" class="wishlist"><i class="fa fa-heart"><span>Wishlist</span></i></a> <a href="compare.html" class="compare"><i class="fa fa-exchange"><span>Compare</span></i></a> </div> -->
                       </div>
                       <div class="item-info">
                         <div class="info-inner">
-                          <div class="item-title"> <a title="{{ relatedproduct.merk.nama }} {{ relatedproduct.kode }}" href="{{ path_for('produk.detail', {slug: relatedproduct.slug}) }}">{{ relatedproduct.merk.nama }} {{ relatedproduct.kode }} </a> </div>
+                          <div class="item-title"> <a title="{{ relatedproduct.merk.nama }} {{ relatedproduct.kode }}" href="{{ path_for('produk.info', {slug: relatedproduct.slug}) }}">{{ relatedproduct.merk.nama }} {{ relatedproduct.kode }} </a> </div>
                           <div class="item-content">
                             <div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> </div>
                             <div class="item-price">

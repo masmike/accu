@@ -1,0 +1,120 @@
+{% extends 'templates/dash_app.twig' %}
+{% block styles %}
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/select2.min_def.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/select2.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/uppy.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/uppy2.min.css') }}">
+{% endblock %}
+{% block content %}
+<div class="ks-page-container ks-dashboard-tabbed-sidebar-fixed-tabs">
+<div class="ks-column ks-page">
+        <div class="ks-page-header">
+            <section class="ks-title-and-subtitle">
+                <div class="ks-title-block">
+                    <h3 class="ks-main-title">Tambah / Edit Banner</h3>
+                    <div class="ks-sub-title">Tambah / Edit Gambar dan Posisi Banner Website</div>
+                </div>
+            </section>
+        </div>
+
+<div class="ks-page-content">
+	<div class="ks-page-content-body">
+        <div class="ks-dashboard-tabbed-sidebar">
+            <div class="ks-dashboard-tabbed-sidebar-widgets">
+				<form id="banner"> 
+				<div class="row">
+				    <div class="col-lg-12 ks-panels-column-section">
+				        <div class="card" style="border:0px">
+				            <div class="card-block">
+				                <h5 class="card-title">Data Banner</h5>
+				                <div class="col-sm-12 row">
+				                    <div class="col-sm-4">
+				                        <p class="form-control-static" style="margin-bottom: 15px;">Posisi</p>
+				                    </div>
+				                        <div class="col-sm-8">
+				                            <select class="form-control ks-select" style="width: 100%;" id="umerk" name="umerk">
+				                                <optgroup label="Posisi Banner">
+				                                	{% for posisi in banner_pos %}
+				                                	<option value={{ posisi.id }}>{{ posisi.name }}</option>
+				                                	{% endfor %}                          
+				                                </optgroup>
+				                            </select>
+				                    </div>
+				                </div>
+				                <div class="col-sm-12 row" style="margin-bottom:10px; margin-top:0px;">
+				                        <div class="col-sm-4">
+				                            <p class="form-control-static">Gambar</p>
+				                        </div>
+				                        <div class="col-sm-8">
+											<div class="UppyInput"></div>
+											<div class="UppyInput-Progress"></div>
+				                        </div>
+				                    </div>
+				                <div class="col-sm-12 row" style="margin-top: 0px;">
+				                    <div class="col-sm-4">
+				                        <p class="form-control-static">Status Aktif</p>
+				                    </div>
+				                    <div class="col-sm-8">
+				                        <label class="ks-checkbox-slider ks-on-off ks-solid ks-primary">
+				                            <input id ="statusAktif" name="statusAktif" type="hidden" value="{{ merk.status }}">
+				                            <input id="checkOnOff" name="checkOnOff"  type="checkbox" {{ merk.status == "1" ? ' checked' : '' }}>
+				                                <span class="ks-indicator"></span>
+				                                <span class="ks-on">ON</span>
+				                                <span class="ks-off">OFF</span>
+				                        </label>
+				                        <input type="hidden" name="id" value="{{ merk.id }}">
+				                        {{ csrf.field | raw }}
+				                    </div>
+				                </div>
+				                <div class="col-sm-12 row" style="text-align: right;">
+				                    <div class="ks-item-block">
+				                        <button class="btn btn-success" type="submit">Simpan</button>
+				                        <button class="btn btn-danger" data-izimodal-close="" data-izimodal-transitionout="flipOutX">Keluar</button>
+				                    </div>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				</form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+{% block scripts %}
+<script src="{{ asset('js/jquery.min.js') }}"></script>
+<script src="{{ asset('js/response.min.js') }}"></script>
+<script src="{{ asset('js/loadingoverlay.min.js') }}"></script>
+<script src="{{ asset('js/tether.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/jquery.jscrollpane.min.js') }}"></script>
+<script src="{{ asset('js/jquery.mousewheel.js') }}"></script>
+<script src="{{ asset('js/flexibility.js') }}"></script>
+<script src="{{ asset('js/common.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap-notify.min.js') }}"></script>
+<script src="{{ asset('js/select2.min.js') }}"></script>
+<script src="{{ asset('js/uppy.min.js') }}"></script>
+
+<script>
+var uppy = new Uppy.Core({debug: true, autoProceed: true});
+        
+uppy.use(Uppy.FileInput, {target: '.UppyInput', multiple: false});
+uppy.use(Uppy.Tus10, {endpoint: '//127.0.0.1:1080/files/', resume: true});
+uppy.use(Uppy.StatusBar, {target: '.UppyInput-Progress'});
+uppy.run();
+
+</script>
+
+<script type="application/javascript">
+(function ($) {
+    $(document).ready(function() {
+        $('select.ks-select').select2();
+        $('.text-muted').hide();
+
+        
+    });
+})(jQuery);
+{% endblock %}

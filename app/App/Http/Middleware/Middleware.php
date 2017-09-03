@@ -28,9 +28,9 @@ class Middleware
         return $this->container->authmember;
     }
 
-    public function member()
+    public function customer()
     {
-        return $this->authmember()->member();
+        return $this->authmember()->customer();
     }
 
     public function flash($type, $message)

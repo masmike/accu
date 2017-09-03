@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Banner extends Model
 {
-    protected $table = 'banner_promo';
+    protected $table = 'banner_image';
 
     protected $fillable = ['path', 'status'];
 

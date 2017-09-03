@@ -6,7 +6,7 @@ use App\Lib\Session;
 
 class AuthMember extends Customer
 {
-    public function check()
+    public function checks()
     {
         return Session::exists(env('APP_MEMBER_ID', 'member_id'));
     }

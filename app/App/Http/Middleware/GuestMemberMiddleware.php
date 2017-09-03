@@ -3,13 +3,13 @@ namespace App\Http\Middleware;
 
 use App\Http\Middleware\Middleware;
 
-class AuthMemberMiddleware extends Middleware
+class GuestMemberMiddleware extends Middleware
 {
     public function __invoke($request, $response, $next)
     {
-        if(!$this->authmember()->checks()) {
-            $this->flash('warning', $this->lang('alerts.requires_auth'));
-            return $this->redirect($response, 'member.login');
+
+        if($this->authmember()->checks()) {
+            return $this->redirect($response, 'home');
         }
         
         $response = $next($request, $response);

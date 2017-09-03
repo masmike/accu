@@ -17,24 +17,24 @@ class Basket
 	    $this->unit = $unit;
 	}
 
-	public function add($unit, $quantity)
+	public function addBasket($unit, $quantity)
 	{
 
 	    if ($this->has($unit)) {
 	      $quantity = $this->get($unit)['quantity'] + $quantity;
 	    }
 
-	    $this->update($unit, $quantity);
+	    $this->updateBasket($unit, $quantity);
 	}
 
-	public function update($unit, $quantity)
+	public function updateBasket($unit, $quantity)
 	{
 	    if (!$this->unit->find($unit->id)->hasStock($quantity)) {
 	       throw new QuantityExceededException;
 	    }
 
-	    if ($quantity === 0) {
-	      $this->remove($unit);
+	    if ($quantity == 0) {
+	      $this->removeBasket($unit);
 	      return;
 	    }
 
@@ -44,7 +44,7 @@ class Basket
 	    ]);
 	}
 
-	public function remove($unit)
+	public function removeBasket($unit)
 	{
 	    $this->storage->unset($unit['id']);
 	}

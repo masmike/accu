@@ -1,3 +1,5 @@
+  {% extends 'templates/front.twig' %}
+  {% block content %}
   <div id="home-section" class="slider1">
     <div id="rev_slider_4_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container" data-alias="classicslider1" style="margin:0px auto;background-color:transparent;padding:0px;margin-top:0px;margin-bottom:0px;"> 
       <!-- START REVOLUTION SLIDER 5.0.7 auto mode -->
@@ -238,41 +240,8 @@
     </div>
   </div>
   <!-- End home Slider -->
-  <!-- service section -->
   
-  <div class="jtv-service-area">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-4 col-sm-4 col-xs-12">
-          <div class="jtv-service">
-            <div class="ser-icon"> <i class="fa fa-truck flip-horizontal"></i> </div>
-            <div class="service-content">
-              <h5>FREE SHIPPING WORLDWIDE </h5>
-              <p>free ship-on oder over $299.00</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-sm-4 col-xs-12">
-          <div class="jtv-service">
-            <div class="ser-icon"> <i class="fa fa-mail-forward"></i> </div>
-            <div class="service-content">
-              <h5>MONEY BACK GUARATEE! </h5>
-              <p>30 days money back guarantee!</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-sm-4 col-xs-12">
-          <div class="jtv-service">
-            <div class="ser-icon"> <i class="fa fa-comments flip-horizontal"></i> </div>
-            <div class="service-content">
-              <h5>24/7 CUSTOMER SERVICE </h5>
-              <p>We support online 24 hours a day</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  {% include 'templates/partials/service_section.twig' %}
   
   <!-- category area start -->
   <div class="jtv-category-area">
@@ -286,9 +255,9 @@
             {% for index, produk in products %}
             
             <div class="jtv-product">
-              <div class="product-img"> <a href="{{ path_for('produk.detail', {slug: produk.slug}) }}"> <img src="{{ asset('img/front/products/') }}{{ produk.gambar }}" alt=""> <img class="secondary-img" src="{{ asset('img/front/products/') }}{{ produk.gambar }}" alt="{{ produk.merk.nama }} - {{ produk.kode }}"> </a> </div>
+              <div class="product-img"> <a href="{{ path_for('produk.info', {slug: produk.slug}) }}"> <img src="{{ asset('img/front/products/') }}{{ produk.gambar }}" alt=""> <img class="secondary-img" src="{{ asset('img/front/products/') }}{{ produk.gambar }}" alt="{{ produk.merk.nama }} - {{ produk.kode }}"> </a> </div>
               <div class="jtv-product-content">
-                <h3><a href="{{ path_for('produk.detail', {slug: produk.slug}) }}">{{ produk.merk.nama }} - {{ produk.kode }}</a></h3>
+                <h3><a href="{{ path_for('produk.info', {slug: produk.slug}) }}">{{ produk.merk.nama }} - {{ produk.kode }}</a></h3>
                 <div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
                 <div class="price-box"> <span class="regular-price"> <span class="price">Rp. {{ produk.harga | number_format(0, ',', '.') }}</span> </span> </div>
                 <div class="jtv-product-action">
@@ -345,14 +314,14 @@
             {% for pbaru in produkbaru %}
               <div class="product-item">
                 <div class="item-inner">
-                  <div class="product-thumb has-hover-img"> <a title="{{ pbaru.merk.nama }}{{ pbaru.kode }}" href="{{ path_for('produk.detail', {slug: pbaru.slug}) }}">
+                  <div class="product-thumb has-hover-img"> <a title="{{ pbaru.merk.nama }}{{ pbaru.kode }}" href="{{ path_for('produk.info', {slug: pbaru.slug}) }}">
                     <figure> <img src="{{ asset('img/front/products/') }}{{ pbaru.gambar }}" alt=""> <img class="hover-img" src="{{ asset('img/front/products/') }}{{ pbaru.gambar_alt }}" alt=""></figure>
                     </a>
                     <div class="pr-info-area animated animate6"><a href="quick_view.html" class="quick-view"><i class="fa fa-search"><span>Quick view</span></i></a> <a href="wishlist.html" class="wishlist"><i class="fa fa-heart"><span>Wishlist</span></i></a> <a href="compare.html" class="compare"><i class="fa fa-exchange"><span>Compare</span></i></a> </div>
                   </div>
                   <div class="item-info">
                     <div class="info-inner">
-                      <div class="item-title"> <a title="{{ pbaru.merk.nama }}{{ pbaru.kode }}" href="{{ path_for('produk.detail', {slug: pbaru.slug}) }}">{{ pbaru.merk.nama }} {{ pbaru.kode }}</a> </div>
+                      <div class="item-title"> <a title="{{ pbaru.merk.nama }}{{ pbaru.kode }}" href="{{ path_for('produk.info', {slug: pbaru.slug}) }}">{{ pbaru.merk.nama }} {{ pbaru.kode }}</a> </div>
                       <div class="item-content">
                         <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
                         <div class="item-price">
@@ -928,3 +897,108 @@
     </div>
   </div>
   {% endif %}
+  {% endblock %}
+  {% block scripts %}
+  <script type="text/javascript" src="{{ asset('front/js/revslider.js') }}"></script> 
+<script type="text/javascript" src="{{ asset('front/js/revolution.extension.js') }}"></script> 
+<script type="text/javascript">
+                    var tpj = jQuery;
+var revapi4;
+tpj(document).ready(function() {
+    if (tpj("#rev_slider_4_1").revolution == undefined) {
+        revslider_showDoubleJqueryError("#rev_slider_4_1");
+    } else {
+        revapi4 = tpj("#rev_slider_4_1").show().revolution({
+            sliderType: "standard",
+            jsFileLocation: "js/",
+            sliderLayout: "fullwidth",
+            dottedOverlay: "none",
+            delay: 9000,
+            navigation: {
+                keyboardNavigation: "off",
+                keyboard_direction: "horizontal",
+                mouseScrollNavigation: "off",
+                onHoverStop: "off",
+                touch: {
+                    touchenabled: "on",
+                    swipe_threshold: 75,
+                    swipe_min_touches: 1,
+                    swipe_direction: "horizontal",
+                    drag_block_vertical: false
+                },
+                arrows: {
+                    style: "zeus",
+                    enable: true,
+                    hide_onmobile: true,
+                    hide_under: 600,
+                    hide_onleave: true,
+                    hide_delay: 200,
+                    hide_delay_mobile: 1200,
+                    tmp: '<div class="tp-title-wrap">   <div class="tp-arr-imgholder"></div> </div>',
+                    left: {
+                        h_align: "left",
+                        v_align: "center",
+                        h_offset: 30,
+                        v_offset: 0
+                    },
+                    right: {
+                        h_align: "right",
+                        v_align: "center",
+                        h_offset: 30,
+                        v_offset: 0
+                    }
+                },
+                bullets: {
+                    enable: true,
+                    hide_onmobile: true,
+                    hide_under: 600,
+                    style: "metis",
+                    hide_onleave: true,
+                    hide_delay: 200,
+                    hide_delay_mobile: 1200,
+                    direction: "horizontal",
+                    h_align: "center",
+                    v_align: "bottom",
+                    h_offset: 0,
+                    v_offset: 30,
+                    space: 5,
+                    tmp: '<span class="tp-bullet-img-wrap">  <span class="tp-bullet-image"></span></span><span class="tp-bullet-title">{{title}}</span>'
+                }
+            },
+            viewPort: {
+                enable: true,
+                outof: "pause",
+                visible_area: "80%"
+            },
+            responsiveLevels: [1240, 1024, 778, 480],
+            gridwidth: [1240, 1024, 778, 480],
+            gridheight: [600, 600, 500, 400],
+            lazyType: "none",
+            parallax: {
+                type: "mouse",
+                origo: "slidercenter",
+                speed: 2000,
+                levels: [2, 3, 4, 5, 6, 7, 12, 16, 10, 50],
+            },
+            shadow: 0,
+            spinner: "off",
+            stopLoop: "off",
+            stopAfterLoops: -1,
+            stopAtSlide: -1,
+            shuffle: "off",
+            autoHeight: "off",
+            hideThumbsOnMobile: "off",
+            hideSliderAtLimit: 0,
+            hideCaptionAtLimit: 0,
+            hideAllCaptionAtLilmit: 0,
+            debugMode: false,
+            fallbacks: {
+                simplifyAll: "off",
+                nextSlideOnWindowFocus: "off",
+                disableFocusListener: false,
+            }
+        });
+    }
+}); /*ready*/
+                </script>
+ {% endblock %}

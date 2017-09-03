@@ -35,10 +35,6 @@ return [
         return new \ReCaptcha\ReCaptcha($c->config->get('plugins.recaptcha.secret'));
     },
 
-    // SessionStorage::class => function($c) {
-    //     return new \App\Support\Storage\SessionStorage;
-    // },
-
     'storageInterface' => function($c) {
         return new \App\Support\Storage\SessionStorage('cart');
     },
@@ -46,23 +42,12 @@ return [
     'sessionStorage' => function($c) {
         return new \App\Support\Storage\SessionStorage;
     },
-    // 'storageinterface' => function($c) {
-    //     return new \App\Support\Storage\SessionStorage('cart');
-    // },
 
-    // 'basket' => function($c) {
-    //     return new \App\Basket\Basket;
-    // },
-
-    'unit' => function($c){
+    'unit' => function($c) {
         return new \App\Database\Unit;
     },
 
-    // 'basket' => function($c) {
-    //     return new \App\Basket\Basket;
-    // },
-
-    'basket' => function($c){
+    'basket' => function($c) {
         return new \App\Basket\Basket (
             $c['storageInterface'],
             $c['unit']
@@ -89,7 +74,7 @@ return [
         ]);
 
         $view->getEnvironment()->addGlobal('authmember', [
-            'check' => $c->authmember->check(),
+            'check' => $c->authmember->checks(),
             'customer' => $c->authmember->customer(),
         ]);
 
